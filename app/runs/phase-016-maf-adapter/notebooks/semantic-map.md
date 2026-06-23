@@ -1,0 +1,22 @@
+# Semantic Map
+
+- `city_week_event_spending` -> `turn-01-crowd-spending`
+- `msa_week_coverage` -> `turn-02-market-coverage`
+- `msa_week_coverage` -> `turn-03-market-coverage`
+- `msa_week_coverage` -> `turn-04-market-coverage`
+- `msa_week_coverage` -> `turn-05-market-coverage`
+- `msa_week_coverage` -> `turn-06-market-coverage`
+- `msa_week_coverage` -> `turn-07-market-coverage`
+- `msa_week_coverage` -> `turn-08-market-coverage`
+- `msa_week_coverage` -> `turn-09-market-coverage`
+- `msa_week_coverage` -> `turn-10-market-coverage`
+- `msa_week_coverage` -> `turn-11-market-coverage`
+- `msa_week_coverage` -> `turn-12-market-coverage`
+- `msa_week_coverage` -> `turn-13-market-coverage`
+- `msa_week_coverage` -> `turn-14-market-coverage`
+- `msa_week_coverage` -> `turn-15-market-coverage`
+- `msa_week_coverage` -> `turn-16-market-coverage`
+- `msa_week_coverage` -> `turn-17-market-coverage`
+- `msa_week_coverage` -> `turn-18-market-coverage`
+- `msa_week_coverage` -> `turn-19-market-coverage`
+- `msa_week_coverage` -> `turn-20-market-coverage`

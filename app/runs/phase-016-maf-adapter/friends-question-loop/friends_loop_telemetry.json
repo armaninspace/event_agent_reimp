@@ -1,0 +1,4751 @@
+[
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0001",
+    "event_type": "memory.seeded",
+    "payload": {
+      "prior_selected_ids": []
+    },
+    "sequence": 1,
+    "summary": "Seeded deterministic in-memory loop state.",
+    "time_offset_ms": 0,
+    "turn": 0
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0002",
+    "event_type": "forum.loaded",
+    "payload": {
+      "forum_path": "data/question_forum/questions.json",
+      "question_ids": [
+        "crowd-spending",
+        "market-coverage",
+        "confounding-risk"
+      ]
+    },
+    "sequence": 2,
+    "summary": "Loaded 3 QuestionForum records.",
+    "time_offset_ms": 10,
+    "turn": 0
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0003",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 1
+    },
+    "sequence": 3,
+    "summary": "Started turn 1.",
+    "time_offset_ms": 20,
+    "turn": 1
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0004",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 4,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 30,
+    "turn": 1
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0005",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-01-confounding-risk",
+        "turn-01-crowd-spending",
+        "turn-01-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 5,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 40,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0006",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-01-confounding-risk": 3,
+        "turn-01-crowd-spending": 1,
+        "turn-01-market-coverage": 2
+      }
+    },
+    "sequence": 6,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 50,
+    "turn": 1
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0007",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-01-confounding-risk": "needs-review",
+        "turn-01-crowd-spending": "pass",
+        "turn-01-market-coverage": "pass"
+      }
+    },
+    "sequence": 7,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 60,
+    "turn": 1
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0008",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-01-confounding-risk": "split",
+        "turn-01-crowd-spending": "carry_forward",
+        "turn-01-market-coverage": "combine"
+      }
+    },
+    "sequence": 8,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 70,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0009",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-01-crowd-spending",
+        "turn-01-market-coverage",
+        "turn-01-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-01-market-coverage",
+        "turn-01-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-01-crowd-spending",
+      "tournament_ranks": {
+        "turn-01-confounding-risk": 3,
+        "turn-01-crowd-spending": 1,
+        "turn-01-market-coverage": 2
+      }
+    },
+    "sequence": 9,
+    "summary": "Selected turn-01-crowd-spending.",
+    "time_offset_ms": 80,
+    "turn": 1
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0010",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Observational data cannot prove that crowds caused spending changes.",
+      "selected_candidate_id": "turn-01-crowd-spending"
+    },
+    "sequence": 10,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 90,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0011",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 11,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 100,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0012",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-01-crowd-spending",
+      "forum": {
+        "kind": "event_impact",
+        "persona": "downtown business owner",
+        "popularity": 9,
+        "priority": 10,
+        "question_id": "crowd-spending",
+        "source_url": "local://question-forum/crowd-spending",
+        "status": "selected",
+        "tags": [
+          "sports-events",
+          "local-spending",
+          "city-week"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 12,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 110,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0013",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 13,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 120,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0014",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-01-turn-01-crowd-spending.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-01-turn-01-crowd-spending.ipynb"
+    },
+    "sequence": 14,
+    "summary": "Wrote scaffolded notebook for turn 1.",
+    "time_offset_ms": 130,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0015",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 15,
+    "summary": "Updated notebook workspace wiki for turn 1.",
+    "time_offset_ms": 140,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0016",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-01-crowd-spending"
+    },
+    "sequence": 16,
+    "summary": "Completed turn 1.",
+    "time_offset_ms": 150,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0017",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 2
+    },
+    "sequence": 17,
+    "summary": "Started turn 2.",
+    "time_offset_ms": 160,
+    "turn": 2
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0018",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 18,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 170,
+    "turn": 2
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0019",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-02-confounding-risk",
+        "turn-02-crowd-spending",
+        "turn-02-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 19,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 180,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0020",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-02-confounding-risk": 3,
+        "turn-02-crowd-spending": 2,
+        "turn-02-market-coverage": 1
+      }
+    },
+    "sequence": 20,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 190,
+    "turn": 2
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0021",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-02-confounding-risk": "needs-review",
+        "turn-02-crowd-spending": "pass",
+        "turn-02-market-coverage": "pass"
+      }
+    },
+    "sequence": 21,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 200,
+    "turn": 2
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0022",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-02-confounding-risk": "split",
+        "turn-02-crowd-spending": "strengthen",
+        "turn-02-market-coverage": "combine"
+      }
+    },
+    "sequence": 22,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 210,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0023",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-02-market-coverage",
+        "turn-02-crowd-spending",
+        "turn-02-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-02-crowd-spending",
+        "turn-02-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-02-market-coverage",
+      "tournament_ranks": {
+        "turn-02-confounding-risk": 3,
+        "turn-02-crowd-spending": 2,
+        "turn-02-market-coverage": 1
+      }
+    },
+    "sequence": 23,
+    "summary": "Selected turn-02-market-coverage.",
+    "time_offset_ms": 220,
+    "turn": 2
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0024",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-02-market-coverage"
+    },
+    "sequence": 24,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 230,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0025",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 25,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 240,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0026",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-02-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 26,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 250,
+    "turn": 2
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0027",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 27,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 260,
+    "turn": 2
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0028",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-02-turn-02-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-02-turn-02-market-coverage.ipynb"
+    },
+    "sequence": 28,
+    "summary": "Wrote scaffolded notebook for turn 2.",
+    "time_offset_ms": 270,
+    "turn": 2
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0029",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 29,
+    "summary": "Updated notebook workspace wiki for turn 2.",
+    "time_offset_ms": 280,
+    "turn": 2
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0030",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-02-market-coverage"
+    },
+    "sequence": 30,
+    "summary": "Completed turn 2.",
+    "time_offset_ms": 290,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0031",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 3
+    },
+    "sequence": 31,
+    "summary": "Started turn 3.",
+    "time_offset_ms": 300,
+    "turn": 3
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0032",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 32,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 310,
+    "turn": 3
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0033",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-03-confounding-risk",
+        "turn-03-crowd-spending",
+        "turn-03-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 33,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 320,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0034",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-03-confounding-risk": 3,
+        "turn-03-crowd-spending": 2,
+        "turn-03-market-coverage": 1
+      }
+    },
+    "sequence": 34,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 330,
+    "turn": 3
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0035",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-03-confounding-risk": "needs-review",
+        "turn-03-crowd-spending": "pass",
+        "turn-03-market-coverage": "pass"
+      }
+    },
+    "sequence": 35,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 340,
+    "turn": 3
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0036",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-03-confounding-risk": "split",
+        "turn-03-crowd-spending": "strengthen",
+        "turn-03-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 36,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 350,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0037",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-03-market-coverage",
+        "turn-03-crowd-spending",
+        "turn-03-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-03-crowd-spending",
+        "turn-03-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-03-market-coverage",
+      "tournament_ranks": {
+        "turn-03-confounding-risk": 3,
+        "turn-03-crowd-spending": 2,
+        "turn-03-market-coverage": 1
+      }
+    },
+    "sequence": 37,
+    "summary": "Selected turn-03-market-coverage.",
+    "time_offset_ms": 360,
+    "turn": 3
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0038",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-03-market-coverage"
+    },
+    "sequence": 38,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 370,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0039",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 39,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 380,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0040",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-03-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 40,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 390,
+    "turn": 3
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0041",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 41,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 400,
+    "turn": 3
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0042",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-03-turn-03-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-03-turn-03-market-coverage.ipynb"
+    },
+    "sequence": 42,
+    "summary": "Wrote scaffolded notebook for turn 3.",
+    "time_offset_ms": 410,
+    "turn": 3
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0043",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 43,
+    "summary": "Updated notebook workspace wiki for turn 3.",
+    "time_offset_ms": 420,
+    "turn": 3
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0044",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-03-market-coverage"
+    },
+    "sequence": 44,
+    "summary": "Completed turn 3.",
+    "time_offset_ms": 430,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0045",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 4
+    },
+    "sequence": 45,
+    "summary": "Started turn 4.",
+    "time_offset_ms": 440,
+    "turn": 4
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0046",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 46,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 450,
+    "turn": 4
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0047",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-04-confounding-risk",
+        "turn-04-crowd-spending",
+        "turn-04-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 47,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 460,
+    "turn": 4
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0048",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-04-confounding-risk": 3,
+        "turn-04-crowd-spending": 2,
+        "turn-04-market-coverage": 1
+      }
+    },
+    "sequence": 48,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 470,
+    "turn": 4
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0049",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-04-confounding-risk": "needs-review",
+        "turn-04-crowd-spending": "pass",
+        "turn-04-market-coverage": "pass"
+      }
+    },
+    "sequence": 49,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 480,
+    "turn": 4
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0050",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-04-confounding-risk": "split",
+        "turn-04-crowd-spending": "strengthen",
+        "turn-04-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 50,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 490,
+    "turn": 4
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0051",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-04-market-coverage",
+        "turn-04-crowd-spending",
+        "turn-04-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-04-crowd-spending",
+        "turn-04-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-04-market-coverage",
+      "tournament_ranks": {
+        "turn-04-confounding-risk": 3,
+        "turn-04-crowd-spending": 2,
+        "turn-04-market-coverage": 1
+      }
+    },
+    "sequence": 51,
+    "summary": "Selected turn-04-market-coverage.",
+    "time_offset_ms": 500,
+    "turn": 4
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0052",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-04-market-coverage"
+    },
+    "sequence": 52,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 510,
+    "turn": 4
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0053",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 53,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 520,
+    "turn": 4
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0054",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-04-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 54,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 530,
+    "turn": 4
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0055",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 55,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 540,
+    "turn": 4
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0056",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-04-turn-04-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-04-turn-04-market-coverage.ipynb"
+    },
+    "sequence": 56,
+    "summary": "Wrote scaffolded notebook for turn 4.",
+    "time_offset_ms": 550,
+    "turn": 4
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0057",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 57,
+    "summary": "Updated notebook workspace wiki for turn 4.",
+    "time_offset_ms": 560,
+    "turn": 4
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0058",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-04-market-coverage"
+    },
+    "sequence": 58,
+    "summary": "Completed turn 4.",
+    "time_offset_ms": 570,
+    "turn": 4
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0059",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 5
+    },
+    "sequence": 59,
+    "summary": "Started turn 5.",
+    "time_offset_ms": 580,
+    "turn": 5
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0060",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 60,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 590,
+    "turn": 5
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0061",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-05-confounding-risk",
+        "turn-05-crowd-spending",
+        "turn-05-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 61,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 600,
+    "turn": 5
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0062",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-05-confounding-risk": 3,
+        "turn-05-crowd-spending": 2,
+        "turn-05-market-coverage": 1
+      }
+    },
+    "sequence": 62,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 610,
+    "turn": 5
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0063",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-05-confounding-risk": "needs-review",
+        "turn-05-crowd-spending": "pass",
+        "turn-05-market-coverage": "pass"
+      }
+    },
+    "sequence": 63,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 620,
+    "turn": 5
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0064",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-05-confounding-risk": "split",
+        "turn-05-crowd-spending": "strengthen",
+        "turn-05-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 64,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 630,
+    "turn": 5
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0065",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-05-market-coverage",
+        "turn-05-crowd-spending",
+        "turn-05-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-05-crowd-spending",
+        "turn-05-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-05-market-coverage",
+      "tournament_ranks": {
+        "turn-05-confounding-risk": 3,
+        "turn-05-crowd-spending": 2,
+        "turn-05-market-coverage": 1
+      }
+    },
+    "sequence": 65,
+    "summary": "Selected turn-05-market-coverage.",
+    "time_offset_ms": 640,
+    "turn": 5
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0066",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-05-market-coverage"
+    },
+    "sequence": 66,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 650,
+    "turn": 5
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0067",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 67,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 660,
+    "turn": 5
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0068",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-05-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 68,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 670,
+    "turn": 5
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0069",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 69,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 680,
+    "turn": 5
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0070",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-05-turn-05-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-05-turn-05-market-coverage.ipynb"
+    },
+    "sequence": 70,
+    "summary": "Wrote scaffolded notebook for turn 5.",
+    "time_offset_ms": 690,
+    "turn": 5
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0071",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 71,
+    "summary": "Updated notebook workspace wiki for turn 5.",
+    "time_offset_ms": 700,
+    "turn": 5
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0072",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-05-market-coverage"
+    },
+    "sequence": 72,
+    "summary": "Completed turn 5.",
+    "time_offset_ms": 710,
+    "turn": 5
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0073",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 6
+    },
+    "sequence": 73,
+    "summary": "Started turn 6.",
+    "time_offset_ms": 720,
+    "turn": 6
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0074",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 74,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 730,
+    "turn": 6
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0075",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-06-confounding-risk",
+        "turn-06-crowd-spending",
+        "turn-06-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 75,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 740,
+    "turn": 6
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0076",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-06-confounding-risk": 3,
+        "turn-06-crowd-spending": 2,
+        "turn-06-market-coverage": 1
+      }
+    },
+    "sequence": 76,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 750,
+    "turn": 6
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0077",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-06-confounding-risk": "needs-review",
+        "turn-06-crowd-spending": "pass",
+        "turn-06-market-coverage": "pass"
+      }
+    },
+    "sequence": 77,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 760,
+    "turn": 6
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0078",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-06-confounding-risk": "split",
+        "turn-06-crowd-spending": "strengthen",
+        "turn-06-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 78,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 770,
+    "turn": 6
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0079",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-06-market-coverage",
+        "turn-06-crowd-spending",
+        "turn-06-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-06-crowd-spending",
+        "turn-06-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-06-market-coverage",
+      "tournament_ranks": {
+        "turn-06-confounding-risk": 3,
+        "turn-06-crowd-spending": 2,
+        "turn-06-market-coverage": 1
+      }
+    },
+    "sequence": 79,
+    "summary": "Selected turn-06-market-coverage.",
+    "time_offset_ms": 780,
+    "turn": 6
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0080",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-06-market-coverage"
+    },
+    "sequence": 80,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 790,
+    "turn": 6
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0081",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 81,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 800,
+    "turn": 6
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0082",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-06-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 82,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 810,
+    "turn": 6
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0083",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 83,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 820,
+    "turn": 6
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0084",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-06-turn-06-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-06-turn-06-market-coverage.ipynb"
+    },
+    "sequence": 84,
+    "summary": "Wrote scaffolded notebook for turn 6.",
+    "time_offset_ms": 830,
+    "turn": 6
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0085",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 85,
+    "summary": "Updated notebook workspace wiki for turn 6.",
+    "time_offset_ms": 840,
+    "turn": 6
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0086",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-06-market-coverage"
+    },
+    "sequence": 86,
+    "summary": "Completed turn 6.",
+    "time_offset_ms": 850,
+    "turn": 6
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0087",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 7
+    },
+    "sequence": 87,
+    "summary": "Started turn 7.",
+    "time_offset_ms": 860,
+    "turn": 7
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0088",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 88,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 870,
+    "turn": 7
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0089",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-07-confounding-risk",
+        "turn-07-crowd-spending",
+        "turn-07-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 89,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 880,
+    "turn": 7
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0090",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-07-confounding-risk": 3,
+        "turn-07-crowd-spending": 2,
+        "turn-07-market-coverage": 1
+      }
+    },
+    "sequence": 90,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 890,
+    "turn": 7
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0091",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-07-confounding-risk": "needs-review",
+        "turn-07-crowd-spending": "pass",
+        "turn-07-market-coverage": "pass"
+      }
+    },
+    "sequence": 91,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 900,
+    "turn": 7
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0092",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-07-confounding-risk": "split",
+        "turn-07-crowd-spending": "strengthen",
+        "turn-07-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 92,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 910,
+    "turn": 7
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0093",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-07-market-coverage",
+        "turn-07-crowd-spending",
+        "turn-07-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-07-crowd-spending",
+        "turn-07-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-07-market-coverage",
+      "tournament_ranks": {
+        "turn-07-confounding-risk": 3,
+        "turn-07-crowd-spending": 2,
+        "turn-07-market-coverage": 1
+      }
+    },
+    "sequence": 93,
+    "summary": "Selected turn-07-market-coverage.",
+    "time_offset_ms": 920,
+    "turn": 7
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0094",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-07-market-coverage"
+    },
+    "sequence": 94,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 930,
+    "turn": 7
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0095",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 95,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 940,
+    "turn": 7
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0096",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-07-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 96,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 950,
+    "turn": 7
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0097",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 97,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 960,
+    "turn": 7
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0098",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-07-turn-07-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-07-turn-07-market-coverage.ipynb"
+    },
+    "sequence": 98,
+    "summary": "Wrote scaffolded notebook for turn 7.",
+    "time_offset_ms": 970,
+    "turn": 7
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0099",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 99,
+    "summary": "Updated notebook workspace wiki for turn 7.",
+    "time_offset_ms": 980,
+    "turn": 7
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0100",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-07-market-coverage"
+    },
+    "sequence": 100,
+    "summary": "Completed turn 7.",
+    "time_offset_ms": 990,
+    "turn": 7
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0101",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 8
+    },
+    "sequence": 101,
+    "summary": "Started turn 8.",
+    "time_offset_ms": 1000,
+    "turn": 8
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0102",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 102,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1010,
+    "turn": 8
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0103",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-08-confounding-risk",
+        "turn-08-crowd-spending",
+        "turn-08-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 103,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 1020,
+    "turn": 8
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0104",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-08-confounding-risk": 3,
+        "turn-08-crowd-spending": 2,
+        "turn-08-market-coverage": 1
+      }
+    },
+    "sequence": 104,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 1030,
+    "turn": 8
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0105",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-08-confounding-risk": "needs-review",
+        "turn-08-crowd-spending": "pass",
+        "turn-08-market-coverage": "pass"
+      }
+    },
+    "sequence": 105,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 1040,
+    "turn": 8
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0106",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-08-confounding-risk": "split",
+        "turn-08-crowd-spending": "strengthen",
+        "turn-08-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 106,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 1050,
+    "turn": 8
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0107",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-08-market-coverage",
+        "turn-08-crowd-spending",
+        "turn-08-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-08-crowd-spending",
+        "turn-08-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-08-market-coverage",
+      "tournament_ranks": {
+        "turn-08-confounding-risk": 3,
+        "turn-08-crowd-spending": 2,
+        "turn-08-market-coverage": 1
+      }
+    },
+    "sequence": 107,
+    "summary": "Selected turn-08-market-coverage.",
+    "time_offset_ms": 1060,
+    "turn": 8
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0108",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-08-market-coverage"
+    },
+    "sequence": 108,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 1070,
+    "turn": 8
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0109",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 109,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 1080,
+    "turn": 8
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0110",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-08-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 110,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 1090,
+    "turn": 8
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0111",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 111,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 1100,
+    "turn": 8
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0112",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-08-turn-08-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-08-turn-08-market-coverage.ipynb"
+    },
+    "sequence": 112,
+    "summary": "Wrote scaffolded notebook for turn 8.",
+    "time_offset_ms": 1110,
+    "turn": 8
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0113",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 113,
+    "summary": "Updated notebook workspace wiki for turn 8.",
+    "time_offset_ms": 1120,
+    "turn": 8
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0114",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-08-market-coverage"
+    },
+    "sequence": 114,
+    "summary": "Completed turn 8.",
+    "time_offset_ms": 1130,
+    "turn": 8
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0115",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 9
+    },
+    "sequence": 115,
+    "summary": "Started turn 9.",
+    "time_offset_ms": 1140,
+    "turn": 9
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0116",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 116,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1150,
+    "turn": 9
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0117",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-09-confounding-risk",
+        "turn-09-crowd-spending",
+        "turn-09-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 117,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 1160,
+    "turn": 9
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0118",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-09-confounding-risk": 3,
+        "turn-09-crowd-spending": 2,
+        "turn-09-market-coverage": 1
+      }
+    },
+    "sequence": 118,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 1170,
+    "turn": 9
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0119",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-09-confounding-risk": "needs-review",
+        "turn-09-crowd-spending": "pass",
+        "turn-09-market-coverage": "pass"
+      }
+    },
+    "sequence": 119,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 1180,
+    "turn": 9
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0120",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-09-confounding-risk": "split",
+        "turn-09-crowd-spending": "strengthen",
+        "turn-09-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 120,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 1190,
+    "turn": 9
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0121",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-09-market-coverage",
+        "turn-09-crowd-spending",
+        "turn-09-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-09-crowd-spending",
+        "turn-09-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-09-market-coverage",
+      "tournament_ranks": {
+        "turn-09-confounding-risk": 3,
+        "turn-09-crowd-spending": 2,
+        "turn-09-market-coverage": 1
+      }
+    },
+    "sequence": 121,
+    "summary": "Selected turn-09-market-coverage.",
+    "time_offset_ms": 1200,
+    "turn": 9
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0122",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-09-market-coverage"
+    },
+    "sequence": 122,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 1210,
+    "turn": 9
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0123",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 123,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 1220,
+    "turn": 9
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0124",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-09-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 124,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 1230,
+    "turn": 9
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0125",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 125,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 1240,
+    "turn": 9
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0126",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-09-turn-09-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-09-turn-09-market-coverage.ipynb"
+    },
+    "sequence": 126,
+    "summary": "Wrote scaffolded notebook for turn 9.",
+    "time_offset_ms": 1250,
+    "turn": 9
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0127",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 127,
+    "summary": "Updated notebook workspace wiki for turn 9.",
+    "time_offset_ms": 1260,
+    "turn": 9
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0128",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-09-market-coverage"
+    },
+    "sequence": 128,
+    "summary": "Completed turn 9.",
+    "time_offset_ms": 1270,
+    "turn": 9
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0129",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 10
+    },
+    "sequence": 129,
+    "summary": "Started turn 10.",
+    "time_offset_ms": 1280,
+    "turn": 10
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0130",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 130,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1290,
+    "turn": 10
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0131",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-10-confounding-risk",
+        "turn-10-crowd-spending",
+        "turn-10-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 131,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 1300,
+    "turn": 10
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0132",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-10-confounding-risk": 3,
+        "turn-10-crowd-spending": 2,
+        "turn-10-market-coverage": 1
+      }
+    },
+    "sequence": 132,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 1310,
+    "turn": 10
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0133",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-10-confounding-risk": "needs-review",
+        "turn-10-crowd-spending": "pass",
+        "turn-10-market-coverage": "pass"
+      }
+    },
+    "sequence": 133,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 1320,
+    "turn": 10
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0134",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-10-confounding-risk": "split",
+        "turn-10-crowd-spending": "strengthen",
+        "turn-10-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 134,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 1330,
+    "turn": 10
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0135",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-10-market-coverage",
+        "turn-10-crowd-spending",
+        "turn-10-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-10-crowd-spending",
+        "turn-10-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-10-market-coverage",
+      "tournament_ranks": {
+        "turn-10-confounding-risk": 3,
+        "turn-10-crowd-spending": 2,
+        "turn-10-market-coverage": 1
+      }
+    },
+    "sequence": 135,
+    "summary": "Selected turn-10-market-coverage.",
+    "time_offset_ms": 1340,
+    "turn": 10
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0136",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-10-market-coverage"
+    },
+    "sequence": 136,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 1350,
+    "turn": 10
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0137",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 137,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 1360,
+    "turn": 10
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0138",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-10-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 138,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 1370,
+    "turn": 10
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0139",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 139,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 1380,
+    "turn": 10
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0140",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-10-turn-10-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-10-turn-10-market-coverage.ipynb"
+    },
+    "sequence": 140,
+    "summary": "Wrote scaffolded notebook for turn 10.",
+    "time_offset_ms": 1390,
+    "turn": 10
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0141",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 141,
+    "summary": "Updated notebook workspace wiki for turn 10.",
+    "time_offset_ms": 1400,
+    "turn": 10
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0142",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-10-market-coverage"
+    },
+    "sequence": 142,
+    "summary": "Completed turn 10.",
+    "time_offset_ms": 1410,
+    "turn": 10
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0143",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 11
+    },
+    "sequence": 143,
+    "summary": "Started turn 11.",
+    "time_offset_ms": 1420,
+    "turn": 11
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0144",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 144,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1430,
+    "turn": 11
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0145",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-11-confounding-risk",
+        "turn-11-crowd-spending",
+        "turn-11-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 145,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 1440,
+    "turn": 11
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0146",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-11-confounding-risk": 3,
+        "turn-11-crowd-spending": 2,
+        "turn-11-market-coverage": 1
+      }
+    },
+    "sequence": 146,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 1450,
+    "turn": 11
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0147",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-11-confounding-risk": "needs-review",
+        "turn-11-crowd-spending": "pass",
+        "turn-11-market-coverage": "pass"
+      }
+    },
+    "sequence": 147,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 1460,
+    "turn": 11
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0148",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-11-confounding-risk": "split",
+        "turn-11-crowd-spending": "strengthen",
+        "turn-11-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 148,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 1470,
+    "turn": 11
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0149",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-11-market-coverage",
+        "turn-11-crowd-spending",
+        "turn-11-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-11-crowd-spending",
+        "turn-11-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-11-market-coverage",
+      "tournament_ranks": {
+        "turn-11-confounding-risk": 3,
+        "turn-11-crowd-spending": 2,
+        "turn-11-market-coverage": 1
+      }
+    },
+    "sequence": 149,
+    "summary": "Selected turn-11-market-coverage.",
+    "time_offset_ms": 1480,
+    "turn": 11
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0150",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-11-market-coverage"
+    },
+    "sequence": 150,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 1490,
+    "turn": 11
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0151",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 151,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 1500,
+    "turn": 11
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0152",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-11-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 152,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 1510,
+    "turn": 11
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0153",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 153,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 1520,
+    "turn": 11
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0154",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-11-turn-11-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-11-turn-11-market-coverage.ipynb"
+    },
+    "sequence": 154,
+    "summary": "Wrote scaffolded notebook for turn 11.",
+    "time_offset_ms": 1530,
+    "turn": 11
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0155",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 155,
+    "summary": "Updated notebook workspace wiki for turn 11.",
+    "time_offset_ms": 1540,
+    "turn": 11
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0156",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-11-market-coverage"
+    },
+    "sequence": 156,
+    "summary": "Completed turn 11.",
+    "time_offset_ms": 1550,
+    "turn": 11
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0157",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 12
+    },
+    "sequence": 157,
+    "summary": "Started turn 12.",
+    "time_offset_ms": 1560,
+    "turn": 12
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0158",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 158,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1570,
+    "turn": 12
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0159",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-12-confounding-risk",
+        "turn-12-crowd-spending",
+        "turn-12-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 159,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 1580,
+    "turn": 12
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0160",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-12-confounding-risk": 3,
+        "turn-12-crowd-spending": 2,
+        "turn-12-market-coverage": 1
+      }
+    },
+    "sequence": 160,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 1590,
+    "turn": 12
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0161",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-12-confounding-risk": "needs-review",
+        "turn-12-crowd-spending": "pass",
+        "turn-12-market-coverage": "pass"
+      }
+    },
+    "sequence": 161,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 1600,
+    "turn": 12
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0162",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-12-confounding-risk": "split",
+        "turn-12-crowd-spending": "strengthen",
+        "turn-12-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 162,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 1610,
+    "turn": 12
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0163",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-12-market-coverage",
+        "turn-12-crowd-spending",
+        "turn-12-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-12-crowd-spending",
+        "turn-12-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-12-market-coverage",
+      "tournament_ranks": {
+        "turn-12-confounding-risk": 3,
+        "turn-12-crowd-spending": 2,
+        "turn-12-market-coverage": 1
+      }
+    },
+    "sequence": 163,
+    "summary": "Selected turn-12-market-coverage.",
+    "time_offset_ms": 1620,
+    "turn": 12
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0164",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-12-market-coverage"
+    },
+    "sequence": 164,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 1630,
+    "turn": 12
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0165",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 165,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 1640,
+    "turn": 12
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0166",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-12-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 166,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 1650,
+    "turn": 12
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0167",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 167,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 1660,
+    "turn": 12
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0168",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-12-turn-12-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-12-turn-12-market-coverage.ipynb"
+    },
+    "sequence": 168,
+    "summary": "Wrote scaffolded notebook for turn 12.",
+    "time_offset_ms": 1670,
+    "turn": 12
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0169",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 169,
+    "summary": "Updated notebook workspace wiki for turn 12.",
+    "time_offset_ms": 1680,
+    "turn": 12
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0170",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-12-market-coverage"
+    },
+    "sequence": 170,
+    "summary": "Completed turn 12.",
+    "time_offset_ms": 1690,
+    "turn": 12
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0171",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 13
+    },
+    "sequence": 171,
+    "summary": "Started turn 13.",
+    "time_offset_ms": 1700,
+    "turn": 13
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0172",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 172,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1710,
+    "turn": 13
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0173",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-13-confounding-risk",
+        "turn-13-crowd-spending",
+        "turn-13-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 173,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 1720,
+    "turn": 13
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0174",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-13-confounding-risk": 3,
+        "turn-13-crowd-spending": 2,
+        "turn-13-market-coverage": 1
+      }
+    },
+    "sequence": 174,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 1730,
+    "turn": 13
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0175",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-13-confounding-risk": "needs-review",
+        "turn-13-crowd-spending": "pass",
+        "turn-13-market-coverage": "pass"
+      }
+    },
+    "sequence": 175,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 1740,
+    "turn": 13
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0176",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-13-confounding-risk": "split",
+        "turn-13-crowd-spending": "strengthen",
+        "turn-13-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 176,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 1750,
+    "turn": 13
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0177",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-13-market-coverage",
+        "turn-13-crowd-spending",
+        "turn-13-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-13-crowd-spending",
+        "turn-13-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-13-market-coverage",
+      "tournament_ranks": {
+        "turn-13-confounding-risk": 3,
+        "turn-13-crowd-spending": 2,
+        "turn-13-market-coverage": 1
+      }
+    },
+    "sequence": 177,
+    "summary": "Selected turn-13-market-coverage.",
+    "time_offset_ms": 1760,
+    "turn": 13
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0178",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-13-market-coverage"
+    },
+    "sequence": 178,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 1770,
+    "turn": 13
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0179",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 179,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 1780,
+    "turn": 13
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0180",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-13-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 180,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 1790,
+    "turn": 13
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0181",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 181,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 1800,
+    "turn": 13
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0182",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-13-turn-13-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-13-turn-13-market-coverage.ipynb"
+    },
+    "sequence": 182,
+    "summary": "Wrote scaffolded notebook for turn 13.",
+    "time_offset_ms": 1810,
+    "turn": 13
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0183",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 183,
+    "summary": "Updated notebook workspace wiki for turn 13.",
+    "time_offset_ms": 1820,
+    "turn": 13
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0184",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-13-market-coverage"
+    },
+    "sequence": 184,
+    "summary": "Completed turn 13.",
+    "time_offset_ms": 1830,
+    "turn": 13
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0185",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 14
+    },
+    "sequence": 185,
+    "summary": "Started turn 14.",
+    "time_offset_ms": 1840,
+    "turn": 14
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0186",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 186,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1850,
+    "turn": 14
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0187",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-14-confounding-risk",
+        "turn-14-crowd-spending",
+        "turn-14-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 187,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 1860,
+    "turn": 14
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0188",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-14-confounding-risk": 3,
+        "turn-14-crowd-spending": 2,
+        "turn-14-market-coverage": 1
+      }
+    },
+    "sequence": 188,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 1870,
+    "turn": 14
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0189",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-14-confounding-risk": "needs-review",
+        "turn-14-crowd-spending": "pass",
+        "turn-14-market-coverage": "pass"
+      }
+    },
+    "sequence": 189,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 1880,
+    "turn": 14
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0190",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-14-confounding-risk": "split",
+        "turn-14-crowd-spending": "strengthen",
+        "turn-14-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 190,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 1890,
+    "turn": 14
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0191",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-14-market-coverage",
+        "turn-14-crowd-spending",
+        "turn-14-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-14-crowd-spending",
+        "turn-14-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-14-market-coverage",
+      "tournament_ranks": {
+        "turn-14-confounding-risk": 3,
+        "turn-14-crowd-spending": 2,
+        "turn-14-market-coverage": 1
+      }
+    },
+    "sequence": 191,
+    "summary": "Selected turn-14-market-coverage.",
+    "time_offset_ms": 1900,
+    "turn": 14
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0192",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-14-market-coverage"
+    },
+    "sequence": 192,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 1910,
+    "turn": 14
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0193",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 193,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 1920,
+    "turn": 14
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0194",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-14-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 194,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 1930,
+    "turn": 14
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0195",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 195,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 1940,
+    "turn": 14
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0196",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-14-turn-14-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-14-turn-14-market-coverage.ipynb"
+    },
+    "sequence": 196,
+    "summary": "Wrote scaffolded notebook for turn 14.",
+    "time_offset_ms": 1950,
+    "turn": 14
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0197",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 197,
+    "summary": "Updated notebook workspace wiki for turn 14.",
+    "time_offset_ms": 1960,
+    "turn": 14
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0198",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-14-market-coverage"
+    },
+    "sequence": 198,
+    "summary": "Completed turn 14.",
+    "time_offset_ms": 1970,
+    "turn": 14
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0199",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 15
+    },
+    "sequence": 199,
+    "summary": "Started turn 15.",
+    "time_offset_ms": 1980,
+    "turn": 15
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0200",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 200,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 1990,
+    "turn": 15
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0201",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-15-confounding-risk",
+        "turn-15-crowd-spending",
+        "turn-15-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 201,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 2000,
+    "turn": 15
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0202",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-15-confounding-risk": 3,
+        "turn-15-crowd-spending": 2,
+        "turn-15-market-coverage": 1
+      }
+    },
+    "sequence": 202,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 2010,
+    "turn": 15
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0203",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-15-confounding-risk": "needs-review",
+        "turn-15-crowd-spending": "pass",
+        "turn-15-market-coverage": "pass"
+      }
+    },
+    "sequence": 203,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 2020,
+    "turn": 15
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0204",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-15-confounding-risk": "split",
+        "turn-15-crowd-spending": "strengthen",
+        "turn-15-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 204,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 2030,
+    "turn": 15
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0205",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-15-market-coverage",
+        "turn-15-crowd-spending",
+        "turn-15-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-15-crowd-spending",
+        "turn-15-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-15-market-coverage",
+      "tournament_ranks": {
+        "turn-15-confounding-risk": 3,
+        "turn-15-crowd-spending": 2,
+        "turn-15-market-coverage": 1
+      }
+    },
+    "sequence": 205,
+    "summary": "Selected turn-15-market-coverage.",
+    "time_offset_ms": 2040,
+    "turn": 15
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0206",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-15-market-coverage"
+    },
+    "sequence": 206,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 2050,
+    "turn": 15
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0207",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 207,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 2060,
+    "turn": 15
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0208",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-15-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 208,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 2070,
+    "turn": 15
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0209",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 209,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 2080,
+    "turn": 15
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0210",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-15-turn-15-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-15-turn-15-market-coverage.ipynb"
+    },
+    "sequence": 210,
+    "summary": "Wrote scaffolded notebook for turn 15.",
+    "time_offset_ms": 2090,
+    "turn": 15
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0211",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 211,
+    "summary": "Updated notebook workspace wiki for turn 15.",
+    "time_offset_ms": 2100,
+    "turn": 15
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0212",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-15-market-coverage"
+    },
+    "sequence": 212,
+    "summary": "Completed turn 15.",
+    "time_offset_ms": 2110,
+    "turn": 15
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0213",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 16
+    },
+    "sequence": 213,
+    "summary": "Started turn 16.",
+    "time_offset_ms": 2120,
+    "turn": 16
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0214",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 214,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 2130,
+    "turn": 16
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0215",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-16-confounding-risk",
+        "turn-16-crowd-spending",
+        "turn-16-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 215,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 2140,
+    "turn": 16
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0216",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-16-confounding-risk": 3,
+        "turn-16-crowd-spending": 2,
+        "turn-16-market-coverage": 1
+      }
+    },
+    "sequence": 216,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 2150,
+    "turn": 16
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0217",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-16-confounding-risk": "needs-review",
+        "turn-16-crowd-spending": "pass",
+        "turn-16-market-coverage": "pass"
+      }
+    },
+    "sequence": 217,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 2160,
+    "turn": 16
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0218",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-16-confounding-risk": "split",
+        "turn-16-crowd-spending": "strengthen",
+        "turn-16-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 218,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 2170,
+    "turn": 16
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0219",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-16-market-coverage",
+        "turn-16-crowd-spending",
+        "turn-16-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-16-crowd-spending",
+        "turn-16-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-16-market-coverage",
+      "tournament_ranks": {
+        "turn-16-confounding-risk": 3,
+        "turn-16-crowd-spending": 2,
+        "turn-16-market-coverage": 1
+      }
+    },
+    "sequence": 219,
+    "summary": "Selected turn-16-market-coverage.",
+    "time_offset_ms": 2180,
+    "turn": 16
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0220",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-16-market-coverage"
+    },
+    "sequence": 220,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 2190,
+    "turn": 16
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0221",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 221,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 2200,
+    "turn": 16
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0222",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-16-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 222,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 2210,
+    "turn": 16
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0223",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 223,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 2220,
+    "turn": 16
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0224",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-16-turn-16-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-16-turn-16-market-coverage.ipynb"
+    },
+    "sequence": 224,
+    "summary": "Wrote scaffolded notebook for turn 16.",
+    "time_offset_ms": 2230,
+    "turn": 16
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0225",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 225,
+    "summary": "Updated notebook workspace wiki for turn 16.",
+    "time_offset_ms": 2240,
+    "turn": 16
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0226",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-16-market-coverage"
+    },
+    "sequence": 226,
+    "summary": "Completed turn 16.",
+    "time_offset_ms": 2250,
+    "turn": 16
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0227",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 17
+    },
+    "sequence": 227,
+    "summary": "Started turn 17.",
+    "time_offset_ms": 2260,
+    "turn": 17
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0228",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 228,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 2270,
+    "turn": 17
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0229",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-17-confounding-risk",
+        "turn-17-crowd-spending",
+        "turn-17-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 229,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 2280,
+    "turn": 17
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0230",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-17-confounding-risk": 3,
+        "turn-17-crowd-spending": 2,
+        "turn-17-market-coverage": 1
+      }
+    },
+    "sequence": 230,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 2290,
+    "turn": 17
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0231",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-17-confounding-risk": "needs-review",
+        "turn-17-crowd-spending": "pass",
+        "turn-17-market-coverage": "pass"
+      }
+    },
+    "sequence": 231,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 2300,
+    "turn": 17
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0232",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-17-confounding-risk": "split",
+        "turn-17-crowd-spending": "strengthen",
+        "turn-17-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 232,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 2310,
+    "turn": 17
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0233",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-17-market-coverage",
+        "turn-17-crowd-spending",
+        "turn-17-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-17-crowd-spending",
+        "turn-17-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-17-market-coverage",
+      "tournament_ranks": {
+        "turn-17-confounding-risk": 3,
+        "turn-17-crowd-spending": 2,
+        "turn-17-market-coverage": 1
+      }
+    },
+    "sequence": 233,
+    "summary": "Selected turn-17-market-coverage.",
+    "time_offset_ms": 2320,
+    "turn": 17
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0234",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-17-market-coverage"
+    },
+    "sequence": 234,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 2330,
+    "turn": 17
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0235",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 235,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 2340,
+    "turn": 17
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0236",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-17-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 236,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 2350,
+    "turn": 17
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0237",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 237,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 2360,
+    "turn": 17
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0238",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-17-turn-17-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-17-turn-17-market-coverage.ipynb"
+    },
+    "sequence": 238,
+    "summary": "Wrote scaffolded notebook for turn 17.",
+    "time_offset_ms": 2370,
+    "turn": 17
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0239",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 239,
+    "summary": "Updated notebook workspace wiki for turn 17.",
+    "time_offset_ms": 2380,
+    "turn": 17
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0240",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-17-market-coverage"
+    },
+    "sequence": 240,
+    "summary": "Completed turn 17.",
+    "time_offset_ms": 2390,
+    "turn": 17
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0241",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 18
+    },
+    "sequence": 241,
+    "summary": "Started turn 18.",
+    "time_offset_ms": 2400,
+    "turn": 18
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0242",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 242,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 2410,
+    "turn": 18
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0243",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-18-confounding-risk",
+        "turn-18-crowd-spending",
+        "turn-18-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 243,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 2420,
+    "turn": 18
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0244",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-18-confounding-risk": 3,
+        "turn-18-crowd-spending": 2,
+        "turn-18-market-coverage": 1
+      }
+    },
+    "sequence": 244,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 2430,
+    "turn": 18
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0245",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-18-confounding-risk": "needs-review",
+        "turn-18-crowd-spending": "pass",
+        "turn-18-market-coverage": "pass"
+      }
+    },
+    "sequence": 245,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 2440,
+    "turn": 18
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0246",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-18-confounding-risk": "split",
+        "turn-18-crowd-spending": "strengthen",
+        "turn-18-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 246,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 2450,
+    "turn": 18
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0247",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-18-market-coverage",
+        "turn-18-crowd-spending",
+        "turn-18-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-18-crowd-spending",
+        "turn-18-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-18-market-coverage",
+      "tournament_ranks": {
+        "turn-18-confounding-risk": 3,
+        "turn-18-crowd-spending": 2,
+        "turn-18-market-coverage": 1
+      }
+    },
+    "sequence": 247,
+    "summary": "Selected turn-18-market-coverage.",
+    "time_offset_ms": 2460,
+    "turn": 18
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0248",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-18-market-coverage"
+    },
+    "sequence": 248,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 2470,
+    "turn": 18
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0249",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 249,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 2480,
+    "turn": 18
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0250",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-18-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 250,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 2490,
+    "turn": 18
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0251",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 251,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 2500,
+    "turn": 18
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0252",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-18-turn-18-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-18-turn-18-market-coverage.ipynb"
+    },
+    "sequence": 252,
+    "summary": "Wrote scaffolded notebook for turn 18.",
+    "time_offset_ms": 2510,
+    "turn": 18
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0253",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 253,
+    "summary": "Updated notebook workspace wiki for turn 18.",
+    "time_offset_ms": 2520,
+    "turn": 18
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0254",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-18-market-coverage"
+    },
+    "sequence": 254,
+    "summary": "Completed turn 18.",
+    "time_offset_ms": 2530,
+    "turn": 18
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0255",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 19
+    },
+    "sequence": 255,
+    "summary": "Started turn 19.",
+    "time_offset_ms": 2540,
+    "turn": 19
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0256",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 256,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 2550,
+    "turn": 19
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0257",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-19-confounding-risk",
+        "turn-19-crowd-spending",
+        "turn-19-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 257,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 2560,
+    "turn": 19
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0258",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-19-confounding-risk": 3,
+        "turn-19-crowd-spending": 2,
+        "turn-19-market-coverage": 1
+      }
+    },
+    "sequence": 258,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 2570,
+    "turn": 19
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0259",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-19-confounding-risk": "needs-review",
+        "turn-19-crowd-spending": "pass",
+        "turn-19-market-coverage": "pass"
+      }
+    },
+    "sequence": 259,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 2580,
+    "turn": 19
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0260",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-19-confounding-risk": "split",
+        "turn-19-crowd-spending": "strengthen",
+        "turn-19-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 260,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 2590,
+    "turn": 19
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0261",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-19-market-coverage",
+        "turn-19-crowd-spending",
+        "turn-19-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-19-crowd-spending",
+        "turn-19-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-19-market-coverage",
+      "tournament_ranks": {
+        "turn-19-confounding-risk": 3,
+        "turn-19-crowd-spending": 2,
+        "turn-19-market-coverage": 1
+      }
+    },
+    "sequence": 261,
+    "summary": "Selected turn-19-market-coverage.",
+    "time_offset_ms": 2600,
+    "turn": 19
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0262",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-19-market-coverage"
+    },
+    "sequence": 262,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 2610,
+    "turn": 19
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0263",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 263,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 2620,
+    "turn": 19
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0264",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-19-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 264,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 2630,
+    "turn": 19
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0265",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 265,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 2640,
+    "turn": 19
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0266",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-19-turn-19-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-19-turn-19-market-coverage.ipynb"
+    },
+    "sequence": 266,
+    "summary": "Wrote scaffolded notebook for turn 19.",
+    "time_offset_ms": 2650,
+    "turn": 19
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0267",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 267,
+    "summary": "Updated notebook workspace wiki for turn 19.",
+    "time_offset_ms": 2660,
+    "turn": 19
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0268",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-19-market-coverage"
+    },
+    "sequence": 268,
+    "summary": "Completed turn 19.",
+    "time_offset_ms": 2670,
+    "turn": 19
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0269",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 20
+    },
+    "sequence": 269,
+    "summary": "Started turn 20.",
+    "time_offset_ms": 2680,
+    "turn": 20
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0270",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 270,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 2690,
+    "turn": 20
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0271",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-20-confounding-risk",
+        "turn-20-crowd-spending",
+        "turn-20-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 271,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 2700,
+    "turn": 20
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0272",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-20-confounding-risk": 3,
+        "turn-20-crowd-spending": 2,
+        "turn-20-market-coverage": 1
+      }
+    },
+    "sequence": 272,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 2710,
+    "turn": 20
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0273",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-20-confounding-risk": "needs-review",
+        "turn-20-crowd-spending": "pass",
+        "turn-20-market-coverage": "pass"
+      }
+    },
+    "sequence": 273,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 2720,
+    "turn": 20
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0274",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-20-confounding-risk": "split",
+        "turn-20-crowd-spending": "strengthen",
+        "turn-20-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 274,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 2730,
+    "turn": 20
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0275",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-20-market-coverage",
+        "turn-20-crowd-spending",
+        "turn-20-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-20-crowd-spending",
+        "turn-20-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-20-market-coverage",
+      "tournament_ranks": {
+        "turn-20-confounding-risk": 3,
+        "turn-20-crowd-spending": 2,
+        "turn-20-market-coverage": 1
+      }
+    },
+    "sequence": 275,
+    "summary": "Selected turn-20-market-coverage.",
+    "time_offset_ms": 2740,
+    "turn": 20
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0276",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-20-market-coverage"
+    },
+    "sequence": 276,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 2750,
+    "turn": 20
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0277",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 277,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 2760,
+    "turn": 20
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0278",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-20-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 278,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 2770,
+    "turn": 20
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0279",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 279,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 2780,
+    "turn": 20
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0280",
+    "event_type": "notebook.created",
+    "payload": {
+      "markdown_path": "app/runs/phase-016-maf-adapter/notebooks/turn-20-turn-20-market-coverage.md",
+      "notebook_path": "app/runs/phase-016-maf-adapter/notebooks/turn-20-turn-20-market-coverage.ipynb"
+    },
+    "sequence": 280,
+    "summary": "Wrote scaffolded notebook for turn 20.",
+    "time_offset_ms": 2790,
+    "turn": 20
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0281",
+    "event_type": "wiki.updated",
+    "payload": {
+      "notebook_dir": "app/runs/phase-016-maf-adapter/notebooks"
+    },
+    "sequence": 281,
+    "summary": "Updated notebook workspace wiki for turn 20.",
+    "time_offset_ms": 2800,
+    "turn": 20
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0282",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-20-market-coverage"
+    },
+    "sequence": 282,
+    "summary": "Completed turn 20.",
+    "time_offset_ms": 2810,
+    "turn": 20
+  }
+]

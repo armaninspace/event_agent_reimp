@@ -1,0 +1,14 @@
+{
+  "executor_id": "codex-governance-summary",
+  "framework_name": "Microsoft Agent Framework",
+  "input_message": "replicate governed thesis workflow",
+  "model_calls_performed": false,
+  "output_count": 1,
+  "outputs": [
+    "MAF deterministic orchestration accepted: replicate governed thesis workflow"
+  ],
+  "package_name": "agent-framework",
+  "package_version": "1.9.0",
+  "schema_version": "phase-016.maf-adapter.v1",
+  "workflow_name": "codex-thesis-replication-workflow"
+}
