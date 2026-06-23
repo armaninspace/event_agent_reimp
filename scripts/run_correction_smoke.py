@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""Run p-value and multiple-testing correction smoke checks."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from app.multiple_testing import build_correction_report, write_correction_smoke
+
+
+def build_parser() -> argparse.ArgumentParser:
+    """Create parser for correction smoke command."""
+    parser = argparse.ArgumentParser(description="Run p-value and multiple-testing correction smoke checks.")
+    parser.add_argument("--reference-dir", type=Path, default=Path("data/reference"))
+    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-013-pvalues-multiple-testing"))
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Run correction smoke checks."""
+    args = build_parser().parse_args(argv)
+    report = build_correction_report(args.reference_dir)
+    json_path, markdown_path = write_correction_smoke(report, args.output_dir)
+    print(f"wrote {json_path}")
+    print(f"wrote {markdown_path}")
+    print(f"result_count={report['result_count']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -34,3 +34,9 @@ Existing container tooling was used for scaffolding and validation:
 | Tool/package | Version | Install command | Reason installed | Classification | Reproducibility or cleanup notes |
 | --- | --- | --- | --- | --- | --- |
 | duckdb | 1.5.4 | `python3 -m pip install duckdb` | Local analytical SQL semantic layer over final CSV runtime files | runtime | Installed in user site-packages; pinned in `pyproject.toml` |
+
+## Phase 013
+
+| Tool/package | Version | Install command | Reason installed | Classification | Reproducibility or cleanup notes |
+| --- | --- | --- | --- | --- | --- |
+| scipy | 1.18.0 | `python3 -m pip install scipy` | Statistical p-values for exploratory and matched tests | runtime | Installed in user site-packages; pinned in `pyproject.toml` |
