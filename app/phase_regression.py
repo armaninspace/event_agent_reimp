@@ -34,6 +34,7 @@ class PhaseRegressionResult:
     workflow_task_statistical_misroutes: int
     selected_candidate_count: int
     selected_candidates_have_required_metadata: bool
+    turns_have_statistical_evidence: bool
     current_required_artifacts_exist: bool
     artifact_checks: dict[str, bool]
     notebook_workspace_present: bool
@@ -79,6 +80,10 @@ def run_phase_regression(
     turns_data = session["turns"]
     assert isinstance(turns_data, list)
     selected_candidates = [turn["selected_candidate"] for turn in turns_data]
+    turns_have_statistical_evidence = all(
+        isinstance(turn, dict) and _has_statistical_evidence(turn.get("statistical_evidence"))
+        for turn in turns_data
+    )
     selected_candidates_have_required_metadata = all(
         isinstance(candidate, dict)
         and all(
@@ -130,6 +135,7 @@ def run_phase_regression(
         workflow_task_statistical_misroutes=count_workflow_statistical_misroutes(turns_data),
         selected_candidate_count=len(selected_candidates),
         selected_candidates_have_required_metadata=selected_candidates_have_required_metadata,
+        turns_have_statistical_evidence=turns_have_statistical_evidence,
         current_required_artifacts_exist=all(artifact_checks.values()),
         artifact_checks=artifact_checks,
         notebook_workspace_present=notebook_workspace_present,
@@ -180,4 +186,21 @@ def _has_evolution_metadata(value: object) -> bool:
     if not isinstance(value, dict):
         return False
     required = {"action", "source_question_id", "rationale"}
+    return required <= value.keys()
+
+
+def _has_statistical_evidence(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    required = {
+        "schema_version",
+        "method",
+        "candidate_id",
+        "semantic_slot",
+        "result_count",
+        "result_ids",
+        "has_adjusted_significance",
+        "results",
+        "caveats",
+    }
     return required <= value.keys()

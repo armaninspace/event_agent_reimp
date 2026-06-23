@@ -1,0 +1,131 @@
+{
+  "method": "Benjamini-Hochberg FDR correction",
+  "results": [
+    {
+      "adjusted_p_value": 3.9335732598356994e-05,
+      "caveats": [
+        "Exploratory observational association only; this is not causal proof.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "city_week",
+      "family": "exploratory",
+      "outcome": "revenue_all",
+      "p_value": 2.9501799448767745e-05,
+      "result_id": "exploratory:city_week:revenue_all",
+      "statistic": 4.181367060174857,
+      "status": "ok"
+    },
+    {
+      "adjusted_p_value": 2.4226335941393745e-68,
+      "caveats": [
+        "Exploratory observational association only; this is not causal proof.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "city_week",
+      "family": "exploratory",
+      "outcome": "merchants_all",
+      "p_value": 3.028291992674218e-69,
+      "result_id": "exploratory:city_week:merchants_all",
+      "statistic": 17.862124097096256,
+      "status": "ok"
+    },
+    {
+      "adjusted_p_value": 1.1579892028238945e-28,
+      "caveats": [
+        "Exploratory observational association only; this is not causal proof.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "msa_week",
+      "family": "exploratory",
+      "outcome": "revenue_all",
+      "p_value": 4.3424595105896045e-29,
+      "result_id": "exploratory:msa_week:revenue_all",
+      "statistic": -11.285241611258792,
+      "status": "ok"
+    },
+    {
+      "adjusted_p_value": 6.264109922127072e-48,
+      "caveats": [
+        "Exploratory observational association only; this is not causal proof.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "msa_week",
+      "family": "exploratory",
+      "outcome": "merchants_all",
+      "p_value": 1.566027480531768e-48,
+      "result_id": "exploratory:msa_week:merchants_all",
+      "statistic": 14.864294420741325,
+      "status": "ok"
+    },
+    {
+      "adjusted_p_value": 8.018939027100663e-08,
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "city_week",
+      "family": "matched",
+      "outcome": "revenue_all",
+      "p_value": 4.0094695135503316e-08,
+      "result_id": "matched:city_week:revenue_all",
+      "statistic": -5.511935022976931,
+      "status": "ok"
+    },
+    {
+      "adjusted_p_value": 5.60597360390953e-07,
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "city_week",
+      "family": "matched",
+      "outcome": "merchants_all",
+      "p_value": 3.503733502443456e-07,
+      "result_id": "matched:city_week:merchants_all",
+      "statistic": -5.111369774020397,
+      "status": "ok"
+    },
+    {
+      "adjusted_p_value": 0.0003290399622908803,
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "msa_week",
+      "family": "matched",
+      "outcome": "revenue_all",
+      "p_value": 0.0002879099670045203,
+      "result_id": "matched:msa_week:revenue_all",
+      "statistic": 3.630995332495127,
+      "status": "ok"
+    },
+    {
+      "adjusted_p_value": 0.06810014888764189,
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain.",
+        "P-values are exploratory metadata only.",
+        "Adjusted p-values do not remove observational confounding."
+      ],
+      "dataset": "msa_week",
+      "family": "matched",
+      "outcome": "merchants_all",
+      "p_value": 0.06810014888764189,
+      "result_id": "matched:msa_week:merchants_all",
+      "statistic": 1.825120765485406,
+      "status": "ok"
+    }
+  ],
+  "schema_version": "phase-017.statistical-execution.v1",
+  "source_report_schema": "phase-013.pvalues-multiple-testing.v1"
+}

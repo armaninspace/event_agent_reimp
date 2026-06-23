@@ -14,6 +14,7 @@ from app.question_reflection import reflect_candidates
 from app.question_tournament import run_question_tournament
 from app.reference_data import build_reference_quality_report
 from app.reporting import render_business_report, render_playback_ui
+from app.statistical_execution import build_statistical_execution_report, evidence_for_candidate
 
 
 DEFAULT_QUESTIONS = (
@@ -266,6 +267,7 @@ def run_friends_question_loop(
     moderator = Moderator()
     data_agent = DataAgent()
     telemetry = TelemetryRecorder()
+    statistical_execution_report = build_statistical_execution_report(reference_dir)
     prior_selected_ids: set[str] = set()
     prior_selected_forum_ids: set[str] = set()
     turns: list[dict[str, object]] = []
@@ -392,14 +394,28 @@ def run_friends_question_loop(
             summary=f"Recorded workflow route {classification.route}.",
             payload={"route": classification.route},
         )
+        selected_record = _candidate_record(selected, tournament, reflections, evolutions)
+        statistical_evidence = evidence_for_candidate(selected_record, statistical_execution_report)
         turn_record = {
             "turn": turn,
-            "selected_candidate": _candidate_record(selected, tournament, reflections, evolutions),
+            "selected_candidate": selected_record,
             "rejected_candidates": [_candidate_record(candidate, tournament, reflections, evolutions) for candidate in rejected],
             "classification": classification.to_dict(),
+            "statistical_evidence": statistical_evidence,
             "reviews": reviews,
             "mapping": mapped,
         }
+        telemetry.record(
+            event_type="statistics.attached",
+            turn=turn,
+            actor="DataAgent",
+            summary="Attached candidate-scoped statistical execution evidence.",
+            payload={
+                "candidate_id": selected.candidate_id,
+                "result_count": statistical_evidence["result_count"],
+                "has_adjusted_significance": statistical_evidence["has_adjusted_significance"],
+            },
+        )
         if notebook_dir is not None:
             notebook_artifacts = write_turn_notebook(notebook_dir, turn=turn_record)
             turn_record["notebook_artifacts"] = notebook_artifacts.to_dict()

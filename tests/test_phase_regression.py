@@ -42,6 +42,7 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
     assert summary.workflow_task_statistical_misroutes == 0
     assert summary.selected_candidate_count == 3
     assert summary.selected_candidates_have_required_metadata is True
+    assert summary.turns_have_statistical_evidence is True
     assert summary.current_required_artifacts_exist is True
     assert summary.notebook_workspace_present is True
     assert summary.notebook_workspace["notebook_count"] == 3
@@ -61,6 +62,7 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
     assert summary_path.exists()
     loaded = json.loads(summary_path.read_text(encoding="utf-8"))
     assert loaded["schema_version"] == "phase-004.phase-regression-summary.v1"
+    assert loaded["turns_have_statistical_evidence"] is True
 
 
 def test_run_phase_regression_supports_nbclient_backend(tmp_path: Path) -> None:
