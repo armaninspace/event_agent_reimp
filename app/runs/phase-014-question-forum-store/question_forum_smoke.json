@@ -1,0 +1,65 @@
+{
+  "forum_path": "data/question_forum/questions.json",
+  "question_ids": [
+    "crowd-spending",
+    "market-coverage",
+    "confounding-risk"
+  ],
+  "record_count": 3,
+  "records": [
+    {
+      "kind": "event_impact",
+      "persona": "downtown business owner",
+      "popularity": 9,
+      "priority": 10,
+      "question": "Do big sports crowds actually turn into more local spending?",
+      "question_id": "crowd-spending",
+      "rationale": "Business owners need to know whether high-attendance weeks show measurable spending differences.",
+      "source_url": "local://question-forum/crowd-spending",
+      "status": "selected",
+      "tags": [
+        "sports-events",
+        "local-spending",
+        "city-week"
+      ]
+    },
+    {
+      "kind": "coverage",
+      "persona": "regional economic analyst",
+      "popularity": 8,
+      "priority": 9,
+      "question": "Which markets have enough event exposure for a careful spending comparison?",
+      "question_id": "market-coverage",
+      "rationale": "Analysts need coverage checks before interpreting event-week comparisons.",
+      "source_url": "local://question-forum/market-coverage",
+      "status": "proposed",
+      "tags": [
+        "coverage",
+        "msa-week",
+        "readiness"
+      ]
+    },
+    {
+      "kind": "identification_review",
+      "persona": "skeptical policy reviewer",
+      "popularity": 7,
+      "priority": 8,
+      "question": "Where should a skeptic worry that game weeks and spending are confounded?",
+      "question_id": "confounding-risk",
+      "rationale": "Policy readers need claim boundaries before accepting event-impact narratives.",
+      "source_url": "local://question-forum/confounding-risk",
+      "status": "needs-review",
+      "tags": [
+        "confounding",
+        "matched-controls",
+        "claim-boundaries"
+      ]
+    }
+  ],
+  "schema_version": "phase-014.question-forum-smoke.v1",
+  "statuses": [
+    "needs-review",
+    "proposed",
+    "selected"
+  ]
+}

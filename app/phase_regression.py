@@ -83,8 +83,9 @@ def run_phase_regression(
         isinstance(candidate, dict)
         and all(
             key in candidate
-            for key in ("candidate_id", "question", "rationale", "semantic_slot", "score", "caveat")
+            for key in ("candidate_id", "question", "rationale", "semantic_slot", "score", "caveat", "forum")
         )
+        and _has_forum_metadata(candidate["forum"])
         for candidate in selected_candidates
     )
     if notebook_execution_backend == "lightweight":
@@ -129,3 +130,19 @@ def run_phase_regression(
     summary_path = phase_dir / "phase_regression_summary.json"
     summary_path.write_text(json.dumps(summary.to_dict(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary, summary_path
+
+
+def _has_forum_metadata(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    required = {
+        "question_id",
+        "kind",
+        "persona",
+        "priority",
+        "popularity",
+        "source_url",
+        "status",
+        "tags",
+    }
+    return required <= value.keys()

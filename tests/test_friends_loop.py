@@ -33,6 +33,8 @@ def test_run_friends_question_loop_completes_two_turns_with_selected_and_rejecte
     assert len(session["turns"]) == 2
     for turn in session["turns"]:
         assert turn["selected_candidate"]["candidate_id"]
+        assert turn["selected_candidate"]["forum"]["question_id"]
+        assert turn["selected_candidate"]["forum"]["persona"]
         assert len(turn["rejected_candidates"]) == 2
         assert turn["classification"]["classification"] in {
             "eda_question",
@@ -66,6 +68,7 @@ def test_run_friends_question_loop_writes_artifacts_and_telemetry(tmp_path: Path
     telemetry = json.loads(Path(artifact_paths["telemetry_json"]).read_text(encoding="utf-8"))
     assert telemetry[0]["event_type"] == "memory.seeded"
     assert {event["event_type"] for event in telemetry} >= {
+        "forum.loaded",
         "turn.started",
         "knowledge.read",
         "board.proposed",
@@ -77,6 +80,8 @@ def test_run_friends_question_loop_writes_artifacts_and_telemetry(tmp_path: Path
         "turn.completed",
     }
     assert all("payload" in event for event in telemetry)
+    submitted = [event for event in telemetry if event["event_type"] == "question.submitted"]
+    assert all(event["payload"]["forum"]["question_id"] for event in submitted)
     assert "Discovery Decision Summary" in Path(artifact_paths["discovery_decision_summary"]).read_text(
         encoding="utf-8"
     )

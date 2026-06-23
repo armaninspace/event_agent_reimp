@@ -8,6 +8,7 @@ from pathlib import Path
 
 from app.hypothesis_routing import classify_question
 from app.notebook_workspace import write_turn_notebook
+from app.question_forum import DEFAULT_FORUM_PATH, QuestionForumRecord, load_question_forum
 from app.reference_data import build_reference_quality_report
 from app.reporting import render_business_report, render_playback_ui
 
@@ -31,6 +32,7 @@ class Candidate:
     testability: int
     novelty: int
     caveat: str
+    forum: dict[str, object]
 
     @property
     def score(self) -> int:
@@ -93,41 +95,79 @@ class TelemetryRecorder:
 class Spark:
     """Proposes public, stakeholder-readable research candidates."""
 
+    def __init__(self, forum_records: list[QuestionForumRecord]) -> None:
+        self._forum_records = {record.question_id: record for record in forum_records}
+
     def propose(self, *, turn: int, prior_selected_ids: set[str]) -> list[Candidate]:
         """Return deterministic candidate proposals."""
         candidates = [
             Candidate(
                 candidate_id=f"turn-{turn:02d}-crowd-spending",
-                question=DEFAULT_QUESTIONS[0],
-                rationale="High-attendance weeks are the clearest public question for the available files.",
+                question=self._question("crowd-spending", DEFAULT_QUESTIONS[0]),
+                rationale=self._rationale(
+                    "crowd-spending",
+                    "High-attendance weeks are the clearest public question for the available files.",
+                ),
                 semantic_slot="city_week_event_spending",
                 evidence_value=5,
                 testability=5,
                 novelty=3 if "turn-01-crowd-spending" in prior_selected_ids else 4,
                 caveat="Observational data cannot prove that crowds caused spending changes.",
+                forum=self._forum_metadata("crowd-spending"),
             ),
             Candidate(
                 candidate_id=f"turn-{turn:02d}-market-coverage",
-                question=DEFAULT_QUESTIONS[1],
-                rationale="Coverage checks identify which markets can support later statistical comparisons.",
+                question=self._question("market-coverage", DEFAULT_QUESTIONS[1]),
+                rationale=self._rationale(
+                    "market-coverage",
+                    "Coverage checks identify which markets can support later statistical comparisons.",
+                ),
                 semantic_slot="msa_week_coverage",
                 evidence_value=4,
                 testability=5,
                 novelty=5,
                 caveat="Coverage strength is not the same as evidence of impact.",
+                forum=self._forum_metadata("market-coverage"),
             ),
             Candidate(
                 candidate_id=f"turn-{turn:02d}-confounding-risk",
-                question=DEFAULT_QUESTIONS[2],
-                rationale="A skeptic needs to surface where event timing may coincide with other spending drivers.",
+                question=self._question("confounding-risk", DEFAULT_QUESTIONS[2]),
+                rationale=self._rationale(
+                    "confounding-risk",
+                    "A skeptic needs to surface where event timing may coincide with other spending drivers.",
+                ),
                 semantic_slot="identification_risk",
                 evidence_value=4,
                 testability=3,
                 novelty=4,
                 caveat="This is a review task until matched controls exist.",
+                forum=self._forum_metadata("confounding-risk"),
             ),
         ]
         return sorted(candidates, key=lambda candidate: candidate.candidate_id)
+
+    def _question(self, question_id: str, fallback: str) -> str:
+        record = self._forum_records.get(question_id)
+        return record.question if record else fallback
+
+    def _rationale(self, question_id: str, fallback: str) -> str:
+        record = self._forum_records.get(question_id)
+        return record.rationale if record else fallback
+
+    def _forum_metadata(self, question_id: str) -> dict[str, object]:
+        record = self._forum_records.get(question_id)
+        if record:
+            return record.candidate_metadata()
+        return {
+            "question_id": question_id,
+            "kind": "fallback",
+            "persona": "system fallback",
+            "priority": 0,
+            "popularity": 0,
+            "source_url": "local://question-forum/fallback",
+            "status": "proposed",
+            "tags": ["fallback"],
+        }
 
 
 class Skeptic:
@@ -213,9 +253,11 @@ def run_friends_question_loop(
     output_dir: Path = Path("app/runs/phase-003-friends-loop-skeleton/friends-question-loop"),
     reference_dir: Path = Path("data/reference"),
     notebook_dir: Path | None = None,
+    question_forum_path: Path = DEFAULT_FORUM_PATH,
 ) -> dict[str, object]:
     """Run a deterministic friends question loop and write durable artifacts."""
-    spark = Spark()
+    forum_records = load_question_forum(question_forum_path) if question_forum_path.exists() else []
+    spark = Spark(forum_records)
     skeptic = Skeptic()
     mapper = Mapper()
     moderator = Moderator()
@@ -230,6 +272,16 @@ def run_friends_question_loop(
         actor="DataAgent",
         summary="Seeded deterministic in-memory loop state.",
         payload={"prior_selected_ids": []},
+    )
+    telemetry.record(
+        event_type="forum.loaded",
+        turn=0,
+        actor="Spark",
+        summary=f"Loaded {len(forum_records)} QuestionForum records.",
+        payload={
+            "forum_path": str(question_forum_path),
+            "question_ids": [record.question_id for record in forum_records],
+        },
     )
 
     for turn in range(1, turn_count + 1):
@@ -253,7 +305,10 @@ def run_friends_question_loop(
             turn=turn,
             actor="Spark",
             summary=f"Proposed {len(candidates)} candidates.",
-            payload={"candidate_ids": [candidate.candidate_id for candidate in candidates]},
+            payload={
+                "candidate_ids": [candidate.candidate_id for candidate in candidates],
+                "forum_question_ids": [str(candidate.forum["question_id"]) for candidate in candidates],
+            },
         )
         reviews = skeptic.review(candidates)
         mapped = mapper.map_candidates(candidates=candidates, reference_dir=reference_dir)
@@ -291,7 +346,11 @@ def run_friends_question_loop(
             turn=turn,
             actor="Moderator",
             summary="Submitted selected public question to the routed workflow.",
-            payload={"candidate_id": selected.candidate_id, "route": classification.route},
+            payload={
+                "candidate_id": selected.candidate_id,
+                "route": classification.route,
+                "forum": selected.forum,
+            },
         )
         telemetry.record(
             event_type="workflow.stage",
