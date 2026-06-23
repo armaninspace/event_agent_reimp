@@ -43,6 +43,9 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
     assert summary.selected_candidate_count == 3
     assert summary.selected_candidates_have_required_metadata is True
     assert summary.current_required_artifacts_exist is True
+    assert summary.notebook_workspace_present is True
+    assert summary.notebook_workspace["notebook_count"] == 3
+    assert summary.notebook_workspace["markdown_export_count"] == 3
     assert summary.artifact_checks == {
         "session_json": True,
         "session_markdown": True,

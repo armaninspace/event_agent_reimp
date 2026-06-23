@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from app.friends_loop import run_friends_question_loop
+from app.notebook_workspace import summarize_workspace
 
 
 CURRENT_REQUIRED_ARTIFACTS = (
@@ -31,6 +32,8 @@ class PhaseRegressionResult:
     selected_candidates_have_required_metadata: bool
     current_required_artifacts_exist: bool
     artifact_checks: dict[str, bool]
+    notebook_workspace_present: bool
+    notebook_workspace: dict[str, object]
     telemetry_event_count: int
     telemetry_event_types: list[str]
     known_future_artifacts: dict[str, str]
@@ -50,7 +53,13 @@ def run_phase_regression(
     """Run a deterministic phase regression and write its summary."""
     phase_dir = runs_dir / phase_id
     loop_dir = phase_dir / "friends-question-loop"
-    session = run_friends_question_loop(turn_count=turns, output_dir=loop_dir, reference_dir=reference_dir)
+    notebook_dir = phase_dir / "notebooks"
+    session = run_friends_question_loop(
+        turn_count=turns,
+        output_dir=loop_dir,
+        reference_dir=reference_dir,
+        notebook_dir=notebook_dir,
+    )
     artifact_paths = session["artifact_paths"]
     assert isinstance(artifact_paths, dict)
 
@@ -72,6 +81,12 @@ def run_phase_regression(
         )
         for candidate in selected_candidates
     )
+    notebook_workspace = summarize_workspace(notebook_dir)
+    notebook_workspace_present = (
+        bool(notebook_workspace["wiki_files_exist"])
+        and notebook_workspace["notebook_count"] == turns
+        and notebook_workspace["markdown_export_count"] == turns
+    )
 
     summary = PhaseRegressionResult(
         schema_version="phase-004.phase-regression-summary.v1",
@@ -84,12 +99,13 @@ def run_phase_regression(
         selected_candidates_have_required_metadata=selected_candidates_have_required_metadata,
         current_required_artifacts_exist=all(artifact_checks.values()),
         artifact_checks=artifact_checks,
+        notebook_workspace_present=notebook_workspace_present,
+        notebook_workspace=notebook_workspace,
         telemetry_event_count=len(telemetry),
         telemetry_event_types=sorted({event["event_type"] for event in telemetry}),
         known_future_artifacts={
             "business_html": "deferred until report phase",
             "playback_html": "deferred until playback UI phase",
-            "notebook_workspace": "deferred until notebook/wiki phase",
         },
     )
     summary_path = phase_dir / "phase_regression_summary.json"

@@ -6,6 +6,7 @@ import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+from app.notebook_workspace import write_turn_notebook
 from app.reference_data import build_reference_quality_report
 
 
@@ -202,6 +203,7 @@ def run_friends_question_loop(
     turn_count: int = 2,
     output_dir: Path = Path("app/runs/phase-003-friends-loop-skeleton/friends-question-loop"),
     reference_dir: Path = Path("data/reference"),
+    notebook_dir: Path | None = None,
 ) -> dict[str, object]:
     """Run a deterministic friends question loop and write durable artifacts."""
     spark = Spark()
@@ -267,6 +269,30 @@ def run_friends_question_loop(
             summary="Recorded public caveat for selected candidate.",
             payload={"selected_candidate_id": selected.candidate_id, "caveat": selected.caveat},
         )
+        turn_record = {
+            "turn": turn,
+            "selected_candidate": selected.to_dict(),
+            "rejected_candidates": [candidate.to_dict() for candidate in rejected],
+            "reviews": reviews,
+            "mapping": mapped,
+        }
+        if notebook_dir is not None:
+            notebook_artifacts = write_turn_notebook(notebook_dir, turn=turn_record)
+            turn_record["notebook_artifacts"] = notebook_artifacts.to_dict()
+            telemetry.record(
+                event_type="notebook.created",
+                turn=turn,
+                actor="DataAgent",
+                summary=f"Wrote scaffolded notebook for turn {turn}.",
+                payload=notebook_artifacts.to_dict(),
+            )
+            telemetry.record(
+                event_type="wiki.updated",
+                turn=turn,
+                actor="DataAgent",
+                summary=f"Updated notebook workspace wiki for turn {turn}.",
+                payload={"notebook_dir": str(notebook_dir)},
+            )
         telemetry.record(
             event_type="turn.completed",
             turn=turn,
@@ -274,15 +300,7 @@ def run_friends_question_loop(
             summary=f"Completed turn {turn}.",
             payload={"selected_candidate_id": selected.candidate_id},
         )
-        turns.append(
-            {
-                "turn": turn,
-                "selected_candidate": selected.to_dict(),
-                "rejected_candidates": [candidate.to_dict() for candidate in rejected],
-                "reviews": reviews,
-                "mapping": mapped,
-            }
-        )
+        turns.append(turn_record)
 
     session: dict[str, object] = {
         "schema_version": "phase-003.friends-loop-session.v1",

@@ -44,6 +44,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"stopped_early={summary.stopped_early}")
     print(f"workflow_task_statistical_misroutes={summary.workflow_task_statistical_misroutes}")
     print(f"current_required_artifacts_exist={summary.current_required_artifacts_exist}")
+    print(f"notebook_workspace_present={summary.notebook_workspace_present}")
     return 0
 
 

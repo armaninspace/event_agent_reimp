@@ -72,3 +72,21 @@ def test_run_friends_question_loop_writes_artifacts_and_telemetry(tmp_path: Path
     assert "Discovery Decision Summary" in Path(artifact_paths["discovery_decision_summary"]).read_text(
         encoding="utf-8"
     )
+
+
+def test_run_friends_question_loop_writes_notebook_workspace_when_requested(tmp_path: Path) -> None:
+    reference_dir = tmp_path / "reference"
+    _write_reference_files(reference_dir)
+
+    session = run_friends_question_loop(
+        turn_count=2,
+        output_dir=tmp_path / "run",
+        reference_dir=reference_dir,
+        notebook_dir=tmp_path / "notebooks",
+    )
+
+    assert all("notebook_artifacts" in turn for turn in session["turns"])
+    telemetry = json.loads(Path(session["artifact_paths"]["telemetry_json"]).read_text(encoding="utf-8"))
+    event_types = {event["event_type"] for event in telemetry}
+    assert "notebook.created" in event_types
+    assert "wiki.updated" in event_types

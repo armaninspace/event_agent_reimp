@@ -1,0 +1,42 @@
+# Caveats
+
+- Turn 1: Observational data cannot prove that crowds caused spending changes.
+- Turn 2: Coverage strength is not the same as evidence of impact.
+- Turn 3: Coverage strength is not the same as evidence of impact.
+- Turn 4: Coverage strength is not the same as evidence of impact.
+- Turn 5: Coverage strength is not the same as evidence of impact.
+- Turn 6: Coverage strength is not the same as evidence of impact.
+- Turn 7: Coverage strength is not the same as evidence of impact.
+- Turn 8: Coverage strength is not the same as evidence of impact.
+- Turn 9: Coverage strength is not the same as evidence of impact.
+- Turn 10: Coverage strength is not the same as evidence of impact.
+- Turn 11: Coverage strength is not the same as evidence of impact.
+- Turn 12: Coverage strength is not the same as evidence of impact.
+- Turn 13: Coverage strength is not the same as evidence of impact.
+- Turn 14: Coverage strength is not the same as evidence of impact.
+- Turn 15: Coverage strength is not the same as evidence of impact.
+- Turn 16: Coverage strength is not the same as evidence of impact.
+- Turn 17: Coverage strength is not the same as evidence of impact.
+- Turn 18: Coverage strength is not the same as evidence of impact.
+- Turn 19: Coverage strength is not the same as evidence of impact.
+- Turn 20: Coverage strength is not the same as evidence of impact.
+- Turn 1: Observational data cannot prove that crowds caused spending changes.
+- Turn 2: Coverage strength is not the same as evidence of impact.
+- Turn 3: Coverage strength is not the same as evidence of impact.
+- Turn 4: Coverage strength is not the same as evidence of impact.
+- Turn 5: Coverage strength is not the same as evidence of impact.
+- Turn 6: Coverage strength is not the same as evidence of impact.
+- Turn 7: Coverage strength is not the same as evidence of impact.
+- Turn 8: Coverage strength is not the same as evidence of impact.
+- Turn 9: Coverage strength is not the same as evidence of impact.
+- Turn 10: Coverage strength is not the same as evidence of impact.
+- Turn 11: Coverage strength is not the same as evidence of impact.
+- Turn 12: Coverage strength is not the same as evidence of impact.
+- Turn 13: Coverage strength is not the same as evidence of impact.
+- Turn 14: Coverage strength is not the same as evidence of impact.
+- Turn 15: Coverage strength is not the same as evidence of impact.
+- Turn 16: Coverage strength is not the same as evidence of impact.
+- Turn 17: Coverage strength is not the same as evidence of impact.
+- Turn 18: Coverage strength is not the same as evidence of impact.
+- Turn 19: Coverage strength is not the same as evidence of impact.
+- Turn 20: Coverage strength is not the same as evidence of impact.
