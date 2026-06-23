@@ -1,0 +1,160 @@
+{
+  "artifact_paths": {
+    "discovery_decision_summary": "app/runs/phase-003-friends-loop-skeleton/friends-question-loop/discovery_decision_summary.md",
+    "session_json": "app/runs/phase-003-friends-loop-skeleton/friends-question-loop/friends_loop_session.json",
+    "session_markdown": "app/runs/phase-003-friends-loop-skeleton/friends-question-loop/friends_loop_session.md",
+    "telemetry_json": "app/runs/phase-003-friends-loop-skeleton/friends-question-loop/friends_loop_telemetry.json"
+  },
+  "schema_version": "phase-003.friends-loop-session.v1",
+  "session_summary": {
+    "completed_turns": 2,
+    "requested_turns": 2,
+    "stopped_early": false
+  },
+  "turns": [
+    {
+      "mapping": {
+        "turn-01-confounding-risk": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "identification_risk"
+        },
+        "turn-01-crowd-spending": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "city_week_event_spending"
+        },
+        "turn-01-market-coverage": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "msa_week_coverage"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "candidate_id": "turn-01-market-coverage",
+          "caveat": "Coverage strength is not the same as evidence of impact.",
+          "evidence_value": 4,
+          "novelty": 5,
+          "question": "Which markets have enough event exposure for a careful spending comparison?",
+          "rationale": "Coverage checks identify which markets can support later statistical comparisons.",
+          "score": 14,
+          "semantic_slot": "msa_week_coverage",
+          "testability": 5
+        },
+        {
+          "candidate_id": "turn-01-confounding-risk",
+          "caveat": "This is a review task until matched controls exist.",
+          "evidence_value": 4,
+          "novelty": 4,
+          "question": "Where should a skeptic worry that game weeks and spending are confounded?",
+          "rationale": "A skeptic needs to surface where event timing may coincide with other spending drivers.",
+          "score": 11,
+          "semantic_slot": "identification_risk",
+          "testability": 3
+        }
+      ],
+      "reviews": {
+        "turn-01-confounding-risk": {
+          "claim_boundary": "This is a review task until matched controls exist.",
+          "status": "needs-review"
+        },
+        "turn-01-crowd-spending": {
+          "claim_boundary": "Observational data cannot prove that crowds caused spending changes.",
+          "status": "pass"
+        },
+        "turn-01-market-coverage": {
+          "claim_boundary": "Coverage strength is not the same as evidence of impact.",
+          "status": "pass"
+        }
+      },
+      "selected_candidate": {
+        "candidate_id": "turn-01-crowd-spending",
+        "caveat": "Observational data cannot prove that crowds caused spending changes.",
+        "evidence_value": 5,
+        "novelty": 4,
+        "question": "Do big sports crowds actually turn into more local spending?",
+        "rationale": "High-attendance weeks are the clearest public question for the available files.",
+        "score": 14,
+        "semantic_slot": "city_week_event_spending",
+        "testability": 5
+      },
+      "turn": 1
+    },
+    {
+      "mapping": {
+        "turn-02-confounding-risk": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "identification_risk"
+        },
+        "turn-02-crowd-spending": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "city_week_event_spending"
+        },
+        "turn-02-market-coverage": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "msa_week_coverage"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "candidate_id": "turn-02-crowd-spending",
+          "caveat": "Observational data cannot prove that crowds caused spending changes.",
+          "evidence_value": 5,
+          "novelty": 3,
+          "question": "Do big sports crowds actually turn into more local spending?",
+          "rationale": "High-attendance weeks are the clearest public question for the available files.",
+          "score": 13,
+          "semantic_slot": "city_week_event_spending",
+          "testability": 5
+        },
+        {
+          "candidate_id": "turn-02-confounding-risk",
+          "caveat": "This is a review task until matched controls exist.",
+          "evidence_value": 4,
+          "novelty": 4,
+          "question": "Where should a skeptic worry that game weeks and spending are confounded?",
+          "rationale": "A skeptic needs to surface where event timing may coincide with other spending drivers.",
+          "score": 11,
+          "semantic_slot": "identification_risk",
+          "testability": 3
+        }
+      ],
+      "reviews": {
+        "turn-02-confounding-risk": {
+          "claim_boundary": "This is a review task until matched controls exist.",
+          "status": "needs-review"
+        },
+        "turn-02-crowd-spending": {
+          "claim_boundary": "Observational data cannot prove that crowds caused spending changes.",
+          "status": "pass"
+        },
+        "turn-02-market-coverage": {
+          "claim_boundary": "Coverage strength is not the same as evidence of impact.",
+          "status": "pass"
+        }
+      },
+      "selected_candidate": {
+        "candidate_id": "turn-02-market-coverage",
+        "caveat": "Coverage strength is not the same as evidence of impact.",
+        "evidence_value": 4,
+        "novelty": 5,
+        "question": "Which markets have enough event exposure for a careful spending comparison?",
+        "rationale": "Coverage checks identify which markets can support later statistical comparisons.",
+        "score": 14,
+        "semantic_slot": "msa_week_coverage",
+        "testability": 5
+      },
+      "turn": 2
+    }
+  ]
+}
