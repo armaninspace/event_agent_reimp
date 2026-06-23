@@ -28,3 +28,9 @@ Existing container tooling was used for scaffolding and validation:
 | nbclient | 0.11.0 | `python3 -m pip install nbformat nbclient nbconvert ipykernel` | Execute generated notebooks through a Jupyter kernel | runtime | Installed in user site-packages; pinned in `pyproject.toml` |
 | nbconvert | 7.17.1 | `python3 -m pip install nbformat nbclient nbconvert ipykernel` | Future notebook export support | runtime | Installed in user site-packages; pinned in `pyproject.toml` |
 | ipykernel | 7.3.0 | `python3 -m pip install nbformat nbclient nbconvert ipykernel` | Python kernel for nbclient execution | runtime | Installed in user site-packages; pinned in `pyproject.toml` |
+
+## Phase 011
+
+| Tool/package | Version | Install command | Reason installed | Classification | Reproducibility or cleanup notes |
+| --- | --- | --- | --- | --- | --- |
+| duckdb | 1.5.4 | `python3 -m pip install duckdb` | Local analytical SQL semantic layer over final CSV runtime files | runtime | Installed in user site-packages; pinned in `pyproject.toml` |

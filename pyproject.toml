@@ -10,6 +10,7 @@ readme = "docs/reimplementation-notes.md"
 requires-python = ">=3.12"
 dependencies = [
   "agent-framework>=1.9.0,<2.0.0",
+  "duckdb>=1.5.4,<2.0.0",
   "ipykernel>=7.3.0,<8.0.0",
   "nbclient>=0.11.0,<1.0.0",
   "nbconvert>=7.17.0,<8.0.0",
