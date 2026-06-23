@@ -55,6 +55,8 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
         "session_markdown": True,
         "telemetry_json": True,
         "discovery_decision_summary": True,
+        "business_evidence_report": True,
+        "playback_ui": True,
     }
     assert summary_path.exists()
     loaded = json.loads(summary_path.read_text(encoding="utf-8"))

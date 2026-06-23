@@ -8,6 +8,7 @@ from pathlib import Path
 
 from app.notebook_workspace import write_turn_notebook
 from app.reference_data import build_reference_quality_report
+from app.reporting import render_business_report, render_playback_ui
 
 
 DEFAULT_QUESTIONS = (
@@ -182,6 +183,8 @@ class DataAgent:
         session_md = output_dir / "friends_loop_session.md"
         telemetry_json = output_dir / "friends_loop_telemetry.json"
         decision_summary = output_dir / "discovery_decision_summary.md"
+        business_report = output_dir / "business_evidence_report.html"
+        playback_ui = output_dir / "ui" / "index.html"
 
         session_json.write_text(json.dumps(session, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         session_md.write_text(_render_session_markdown(session), encoding="utf-8")
@@ -190,11 +193,16 @@ class DataAgent:
             encoding="utf-8",
         )
         decision_summary.write_text(_render_decision_summary(session), encoding="utf-8")
+        business_report.write_text(render_business_report(session), encoding="utf-8")
+        playback_ui.parent.mkdir(parents=True, exist_ok=True)
+        playback_ui.write_text(render_playback_ui([event.to_dict() for event in telemetry]), encoding="utf-8")
         return {
             "session_json": str(session_json),
             "session_markdown": str(session_md),
             "telemetry_json": str(telemetry_json),
             "discovery_decision_summary": str(decision_summary),
+            "business_evidence_report": str(business_report),
+            "playback_ui": str(playback_ui),
         }
 
 

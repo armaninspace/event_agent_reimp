@@ -72,6 +72,8 @@ def test_run_friends_question_loop_writes_artifacts_and_telemetry(tmp_path: Path
     assert "Discovery Decision Summary" in Path(artifact_paths["discovery_decision_summary"]).read_text(
         encoding="utf-8"
     )
+    assert "Business Evidence Report" in Path(artifact_paths["business_evidence_report"]).read_text(encoding="utf-8")
+    assert "Friends Loop Playback" in Path(artifact_paths["playback_ui"]).read_text(encoding="utf-8")
 
 
 def test_run_friends_question_loop_writes_notebook_workspace_when_requested(tmp_path: Path) -> None:

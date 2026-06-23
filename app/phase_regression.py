@@ -16,6 +16,8 @@ CURRENT_REQUIRED_ARTIFACTS = (
     "session_markdown",
     "telemetry_json",
     "discovery_decision_summary",
+    "business_evidence_report",
+    "playback_ui",
 )
 
 
@@ -120,8 +122,7 @@ def run_phase_regression(
         telemetry_event_count=len(telemetry),
         telemetry_event_types=sorted({event["event_type"] for event in telemetry}),
         known_future_artifacts={
-            "business_html": "deferred until report phase",
-            "playback_html": "deferred until playback UI phase",
+            "statistical_results": "deferred until statistical routing phase",
         },
     )
     summary_path = phase_dir / "phase_regression_summary.json"
