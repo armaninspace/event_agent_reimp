@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from app.friends_loop import run_friends_question_loop
+from app.hypothesis_routing import count_workflow_statistical_misroutes
 from app.notebook_execution import execute_workspace_lightweight, execute_workspace_nbclient
 from app.notebook_workspace import summarize_workspace
 
@@ -111,7 +112,7 @@ def run_phase_regression(
         requested_turns=turns,
         completed_workflows=len(turns_data),
         stopped_early=False,
-        workflow_task_statistical_misroutes=0,
+        workflow_task_statistical_misroutes=count_workflow_statistical_misroutes(turns_data),
         selected_candidate_count=len(selected_candidates),
         selected_candidates_have_required_metadata=selected_candidates_have_required_metadata,
         current_required_artifacts_exist=all(artifact_checks.values()),

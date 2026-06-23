@@ -34,6 +34,11 @@ def test_run_friends_question_loop_completes_two_turns_with_selected_and_rejecte
     for turn in session["turns"]:
         assert turn["selected_candidate"]["candidate_id"]
         assert len(turn["rejected_candidates"]) == 2
+        assert turn["classification"]["classification"] in {
+            "eda_question",
+            "statistical_hypothesis",
+            "workflow_task",
+        }
 
 
 def test_run_friends_question_loop_selection_is_deterministic(tmp_path: Path) -> None:
@@ -66,6 +71,9 @@ def test_run_friends_question_loop_writes_artifacts_and_telemetry(tmp_path: Path
         "board.proposed",
         "board.ranked",
         "discussion.message",
+        "hypothesis.classified",
+        "question.submitted",
+        "workflow.stage",
         "turn.completed",
     }
     assert all("payload" in event for event in telemetry)

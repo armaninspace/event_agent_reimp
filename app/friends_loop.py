@@ -6,6 +6,7 @@ import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+from app.hypothesis_routing import classify_question
 from app.notebook_workspace import write_turn_notebook
 from app.reference_data import build_reference_quality_report
 from app.reporting import render_business_report, render_playback_ui
@@ -258,6 +259,7 @@ def run_friends_question_loop(
         mapped = mapper.map_candidates(candidates=candidates, reference_dir=reference_dir)
         ranked = moderator.rank(candidates)
         selected, rejected = moderator.select(candidates)
+        classification = classify_question(selected.question)
         prior_selected_ids.add(selected.candidate_id)
         telemetry.record(
             event_type="board.ranked",
@@ -277,10 +279,32 @@ def run_friends_question_loop(
             summary="Recorded public caveat for selected candidate.",
             payload={"selected_candidate_id": selected.candidate_id, "caveat": selected.caveat},
         )
+        telemetry.record(
+            event_type="hypothesis.classified",
+            turn=turn,
+            actor="Moderator",
+            summary=f"Classified selected candidate as {classification.classification}.",
+            payload=classification.to_dict(),
+        )
+        telemetry.record(
+            event_type="question.submitted",
+            turn=turn,
+            actor="Moderator",
+            summary="Submitted selected public question to the routed workflow.",
+            payload={"candidate_id": selected.candidate_id, "route": classification.route},
+        )
+        telemetry.record(
+            event_type="workflow.stage",
+            turn=turn,
+            actor="DataAgent",
+            summary=f"Recorded workflow route {classification.route}.",
+            payload={"route": classification.route},
+        )
         turn_record = {
             "turn": turn,
             "selected_candidate": selected.to_dict(),
             "rejected_candidates": [candidate.to_dict() for candidate in rejected],
+            "classification": classification.to_dict(),
             "reviews": reviews,
             "mapping": mapped,
         }
