@@ -1,0 +1,72 @@
+{
+  "all_required_columns_present": true,
+  "all_required_values_present": true,
+  "datasets": {
+    "city_week": {
+      "grain": "city-week",
+      "has_game_rows": 2277,
+      "missing_columns": [],
+      "missing_required_values": {
+        "cityid": 0,
+        "cityname": 0,
+        "game_count": 0,
+        "has_game": 0,
+        "merchants_all": 0,
+        "revenue_all": 0,
+        "stateabbrev": 0,
+        "week_start_monday": 0
+      },
+      "name": "city_week",
+      "path": "data/reference/joined_city_week_game_economic.csv",
+      "required_columns": [
+        "cityid",
+        "cityname",
+        "stateabbrev",
+        "week_start_monday",
+        "revenue_all",
+        "merchants_all",
+        "has_game",
+        "game_count"
+      ],
+      "row_count": 5777,
+      "total_game_count": 7308,
+      "unique_geographies": 53,
+      "unique_weeks": 109,
+      "warnings": []
+    },
+    "msa_week": {
+      "grain": "MSA-week",
+      "has_game_rows": 2542,
+      "missing_columns": [],
+      "missing_required_values": {
+        "game_count": 0,
+        "has_game": 0,
+        "merchants_all": 0,
+        "msa": 0,
+        "msa_block_id": 0,
+        "msa_code": 0,
+        "revenue_all": 0,
+        "week_start_monday": 0
+      },
+      "name": "msa_week",
+      "path": "data/reference/joined_msa_week_game_economic.csv",
+      "required_columns": [
+        "msa",
+        "msa_code",
+        "week_start_monday",
+        "revenue_all",
+        "merchants_all",
+        "has_game",
+        "game_count",
+        "msa_block_id"
+      ],
+      "row_count": 48723,
+      "total_game_count": 8378,
+      "unique_geographies": 447,
+      "unique_weeks": 109,
+      "warnings": []
+    }
+  },
+  "schema_version": "phase-002.reference-data-quality.v1",
+  "warnings": []
+}
