@@ -19,6 +19,13 @@ def _turn(candidate_id: str = "turn-01-crowd-spending") -> dict[str, object]:
             {"candidate_id": "turn-01-market-coverage"},
             {"candidate_id": "turn-01-confounding-risk"},
         ],
+        "statistical_evidence": {
+            "result_count": 2,
+            "min_adjusted_p_value": 0.01,
+            "has_adjusted_significance": True,
+            "result_ids": ["matched:city_week:revenue_all"],
+            "caveats": ["Observational only."],
+        },
     }
 
 
@@ -37,8 +44,11 @@ def test_write_turn_notebook_creates_ipynb_markdown_and_appends_wiki(tmp_path: P
     assert notebook["nbformat"] == 4
     assert notebook["metadata"]["event_agent"]["status"] == "scaffolded"
     assert any(cell["cell_type"] == "code" for cell in notebook["cells"])
-    assert "Notebook status" in artifacts.markdown_path.read_text(encoding="utf-8")
+    markdown = artifacts.markdown_path.read_text(encoding="utf-8")
+    assert "Notebook status" in markdown
+    assert "Statistical Evidence" in markdown
     assert "turn-01-crowd-spending" in (tmp_path / "decision-records.md").read_text(encoding="utf-8")
+    assert "attached 2 statistical results" in (tmp_path / "findings.md").read_text(encoding="utf-8")
 
 
 def test_summarize_workspace_counts_turn_artifacts(tmp_path: Path) -> None:

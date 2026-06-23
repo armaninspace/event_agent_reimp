@@ -165,6 +165,7 @@ def _render_turn_markdown(turn: dict[str, object]) -> str:
     rejected = turn["rejected_candidates"]
     assert isinstance(selected, dict)
     assert isinstance(rejected, list)
+    statistical_lines = _render_statistical_evidence_markdown(turn.get("statistical_evidence"))
     return "\n".join(
         [
             f"# Turn {turn['turn']}: {selected['question']}",
@@ -174,6 +175,8 @@ def _render_turn_markdown(turn: dict[str, object]) -> str:
             f"Rationale: {selected['rationale']}",
             "",
             f"Caveat: {selected['caveat']}",
+            "",
+            *statistical_lines,
             "",
             "Rejected candidates:",
             *[f"- `{candidate['candidate_id']}`" for candidate in rejected],
@@ -201,7 +204,43 @@ def _append_wiki_updates(
     _append(notebook_dir / "decision-records.md", f"- Turn {turn_number}: selected `{selected['candidate_id']}` with score {selected['score']}\n")
     _append(notebook_dir / "caveats.md", f"- Turn {turn_number}: {selected['caveat']}\n")
     _append(notebook_dir / "semantic-map.md", f"- `{selected['semantic_slot']}` -> `{selected['candidate_id']}`\n")
-    _append(notebook_dir / "findings.md", f"- Turn {turn_number}: scaffolded only; no validated finding yet.\n")
+    statistical_evidence = turn.get("statistical_evidence")
+    if isinstance(statistical_evidence, dict):
+        _append(
+            notebook_dir / "findings.md",
+            "- Turn "
+            f"{turn_number}: attached {statistical_evidence['result_count']} statistical results; "
+            f"min adjusted p-value {statistical_evidence['min_adjusted_p_value']}; "
+            "observational only.\n",
+        )
+    else:
+        _append(notebook_dir / "findings.md", f"- Turn {turn_number}: scaffolded only; no validated finding yet.\n")
+
+
+def _render_statistical_evidence_markdown(value: object) -> list[str]:
+    if not isinstance(value, dict):
+        return []
+    result_ids = value.get("result_ids", [])
+    if not isinstance(result_ids, list):
+        result_ids = []
+    caveats = value.get("caveats", [])
+    if not isinstance(caveats, list):
+        caveats = []
+    return [
+        "## Statistical Evidence",
+        "",
+        f"Result count: `{value.get('result_count')}`",
+        "",
+        f"Minimum adjusted p-value: `{value.get('min_adjusted_p_value')}`",
+        "",
+        f"Adjusted-significance flag: `{value.get('has_adjusted_significance')}`",
+        "",
+        "Result IDs:",
+        *[f"- `{result_id}`" for result_id in result_ids],
+        "",
+        "Statistical caveats:",
+        *[f"- {caveat}" for caveat in caveats],
+    ]
 
 
 def _append(path: Path, text: str) -> None:

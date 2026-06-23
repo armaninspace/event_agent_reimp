@@ -24,6 +24,35 @@ def test_render_business_report_escapes_public_text() -> None:
     assert "Not causal &lt;proof&gt;" in html
 
 
+def test_render_business_report_includes_statistical_evidence_and_escapes_ids() -> None:
+    html = render_business_report(
+        {
+            "turns": [
+                {
+                    "turn": 1,
+                    "selected_candidate": {
+                        "candidate_id": "c1",
+                        "question": "Do crowds change spending?",
+                        "rationale": "A & B",
+                        "caveat": "Not causal.",
+                    },
+                    "statistical_evidence": {
+                        "result_count": 1,
+                        "min_adjusted_p_value": 0.01,
+                        "has_adjusted_significance": True,
+                        "result_ids": ["matched:<city>"],
+                        "caveats": ["Observational <only>."],
+                    },
+                }
+            ]
+        }
+    )
+
+    assert "Statistical Evidence" in html
+    assert "matched:&lt;city&gt;" in html
+    assert "Observational &lt;only&gt;." in html
+
+
 def test_render_playback_ui_embeds_telemetry() -> None:
     html = render_playback_ui(
         [
