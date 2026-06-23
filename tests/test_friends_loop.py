@@ -38,6 +38,7 @@ def test_run_friends_question_loop_completes_two_turns_with_selected_and_rejecte
         assert turn["selected_candidate"]["tournament"]["rank"] >= 1
         assert turn["selected_candidate"]["reflection"]["status"] in {"pass", "needs-review"}
         assert turn["selected_candidate"]["evolution"]["action"] in {"split", "combine", "strengthen", "carry_forward"}
+        assert turn["selected_candidate"]["evolution"]["evolved_question"]
         assert turn["statistical_evidence"]["result_count"] >= 1
         assert turn["statistical_evidence"]["caveats"]
         assert len(turn["rejected_candidates"]) == 2

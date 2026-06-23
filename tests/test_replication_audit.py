@@ -18,6 +18,7 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.selected_tournament_metadata_count == 20
     assert audit.selected_reflection_metadata_count == 20
     assert audit.selected_evolution_metadata_count == 20
+    assert audit.selected_evolution_variant_count == 20
     assert audit.statistical_evidence_turn_count == 20
     assert audit.business_report_statistical_sections == 20
     assert audit.business_report_statistical_tables == 20

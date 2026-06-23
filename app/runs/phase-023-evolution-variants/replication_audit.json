@@ -1,0 +1,30 @@
+{
+  "business_report_statistical_sections": 20,
+  "business_report_statistical_tables": 20,
+  "completed_twenty_turns": true,
+  "correction_notebook_executed": true,
+  "correction_notebook_present": true,
+  "data_snapshot_combined_sha256": "eb78bb3a0b2f0116c3f03349f4b077781419789f22fb4e2df5de22d58df3c3c1",
+  "data_snapshot_complete": true,
+  "final_status": "replicated_with_known_limits",
+  "known_limits": [
+    "Live model-based debate is deferred; governance is deterministic.",
+    "Statistical evidence is observational and exploratory, not causal proof.",
+    "Microsoft Agent Framework adapter runs deterministically without provider/model calls."
+  ],
+  "missing_source_files": [],
+  "notebook_workspace_present": true,
+  "required_source_files_present": true,
+  "run_dir": "app/runs/phase-023-evolution-variants",
+  "schema_version": "phase-019.replication-audit.v1",
+  "selected_candidates_have_required_metadata": true,
+  "selected_evolution_metadata_count": 20,
+  "selected_evolution_variant_count": 20,
+  "selected_forum_metadata_count": 20,
+  "selected_reflection_metadata_count": 20,
+  "selected_tournament_metadata_count": 20,
+  "statistical_evidence_turn_count": 20,
+  "stopped_early": false,
+  "turns_have_statistical_evidence": true,
+  "workflow_task_statistical_misroutes": 0
+}

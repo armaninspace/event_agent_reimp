@@ -46,6 +46,7 @@ class ReplicationAudit:
     selected_tournament_metadata_count: int
     selected_reflection_metadata_count: int
     selected_evolution_metadata_count: int
+    selected_evolution_variant_count: int
     statistical_evidence_turn_count: int
     business_report_statistical_sections: int
     business_report_statistical_tables: int
@@ -61,7 +62,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-022-business-statistical-tables"),
+    run_dir: Path = Path("app/runs/phase-023-evolution-variants"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -93,6 +94,7 @@ def run_replication_audit(
         selected_tournament_metadata_count=sum(_has_key(candidate, "tournament") for candidate in selected),
         selected_reflection_metadata_count=sum(_has_key(candidate, "reflection") for candidate in selected),
         selected_evolution_metadata_count=sum(_has_key(candidate, "evolution") for candidate in selected),
+        selected_evolution_variant_count=sum(_has_evolution_variant(candidate.get("evolution")) for candidate in selected if isinstance(candidate, dict)),
         statistical_evidence_turn_count=sum(_has_key(turn, "statistical_evidence") for turn in turns),
         business_report_statistical_sections=business_report.count("Statistical Evidence"),
         business_report_statistical_tables=business_report.count('class="statistical-results"'),
@@ -143,6 +145,7 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Tournament metadata count: {audit.selected_tournament_metadata_count}",
             f"- Reflection metadata count: {audit.selected_reflection_metadata_count}",
             f"- Evolution metadata count: {audit.selected_evolution_metadata_count}",
+            f"- Evolution variant count: {audit.selected_evolution_variant_count}",
             f"- Statistical evidence turn count: {audit.statistical_evidence_turn_count}",
             f"- Business report statistical sections: {audit.business_report_statistical_sections}",
             f"- Business report statistical tables: {audit.business_report_statistical_tables}",
@@ -165,3 +168,10 @@ def _combined_sha(value: object) -> str | None:
         return None
     combined = value.get("combined_sha256")
     return str(combined) if isinstance(combined, str) else None
+
+
+def _has_evolution_variant(value: object) -> bool:
+    return isinstance(value, dict) and all(
+        isinstance(value.get(key), str) and bool(value.get(key))
+        for key in ("parent_question_id", "child_question_id", "evolved_question")
+    )

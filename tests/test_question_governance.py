@@ -43,3 +43,6 @@ def test_question_evolution_strengthens_previously_selected_questions() -> None:
     results = evolve_candidates(candidates, prior_selected_forum_ids={"crowd-spending"})
 
     assert results["crowd-spending"]["action"] == "strengthen"
+    assert results["crowd-spending"]["parent_question_id"] == "crowd-spending"
+    assert results["crowd-spending"]["child_question_id"] == "crowd-spending:strengthen"
+    assert "stronger checks" in results["crowd-spending"]["evolved_question"]

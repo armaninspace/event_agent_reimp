@@ -200,7 +200,7 @@ def _has_reflection_metadata(value: object) -> bool:
 def _has_evolution_metadata(value: object) -> bool:
     if not isinstance(value, dict):
         return False
-    required = {"action", "source_question_id", "rationale"}
+    required = {"action", "source_question_id", "parent_question_id", "child_question_id", "evolved_question", "rationale"}
     return required <= value.keys()
 
 
