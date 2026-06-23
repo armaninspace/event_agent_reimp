@@ -1,0 +1,29 @@
+# Best-effort Codex command guardrails.
+#
+# The exact Codex rules syntax is environment-dependent. Treat this file as a
+# documented local policy when native rule loading is unavailable.
+
+prompt git push
+prompt gh pr merge
+prompt rm -rf
+prompt delete docs/**
+prompt modify .env*
+prompt modify **/secrets/**
+prompt npm publish
+prompt pnpm publish
+prompt yarn npm publish
+
+allow pwd
+allow ls
+allow find
+allow rg
+allow sed
+allow cat
+allow git status
+allow git diff
+allow git log
+allow bash scripts/validate.sh
+allow bash scripts/e2e.sh
+allow test
+allow build
+allow lint

@@ -1,0 +1,11 @@
+name = "tester"
+description = "Testing role for unit, integration, and e2e validation."
+
+[focus]
+primary = [
+  "test planning",
+  "unit tests",
+  "integration tests",
+  "e2e checks",
+  "evidence capture"
+]

@@ -1,0 +1,1482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From Public Questions To Auditable Event Evidence</title>
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --paper: #ffffff;
+    --ink: #1f2933;
+    --muted: #5d6978;
+    --rule: #d8dee8;
+    --accent: #245c73;
+    --accent-2: #7b4d2a;
+    --code-bg: #f1f4f8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.62 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .layout { display: grid; grid-template-columns: minmax(240px, 310px) minmax(0, 1fr); gap: 0; }
+  aside { position: sticky; top: 0; height: 100vh; overflow: auto; padding: 24px 20px; border-right: 1px solid var(--rule); background: #eef3f6; }
+  aside h2 { margin: 0 0 8px; font-size: 15px; color: var(--accent); }
+  aside p { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+  nav a { display: block; color: #25384a; text-decoration: none; padding: 3px 0; font-size: 13px; line-height: 1.35; }
+  nav a:hover { color: var(--accent-2); text-decoration: underline; }
+  .toc-level-1 { font-weight: 700; margin-top: 10px; }
+  .toc-level-2 { padding-left: 10px; }
+  .toc-level-3 { padding-left: 22px; color: var(--muted); }
+  main { max-width: 1040px; width: 100%; margin: 0 auto; padding: 48px 44px 80px; background: var(--paper); min-height: 100vh; }
+  h1, h2, h3, h4, h5, h6 { line-height: 1.22; color: #172331; margin: 1.8em 0 0.6em; letter-spacing: 0; }
+  h1:first-child { margin-top: 0; font-size: 38px; }
+  h2 { border-top: 1px solid var(--rule); padding-top: 24px; font-size: 26px; }
+  h3 { font-size: 20px; }
+  p { margin: 0 0 1em; }
+  a { color: var(--accent); }
+  ul, ol { padding-left: 1.5rem; margin: 0 0 1em; }
+  li { margin: 0.18em 0; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.92em; background: var(--code-bg); padding: 0.08rem 0.25rem; border-radius: 4px; }
+  pre { overflow: auto; background: #111827; color: #e5edf5; padding: 16px; border-radius: 8px; border: 1px solid #0f172a; }
+  pre code { background: transparent; color: inherit; padding: 0; border-radius: 0; font-size: 13px; line-height: 1.5; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.4rem; font-size: 14px; }
+  th, td { border: 1px solid var(--rule); padding: 8px 10px; vertical-align: top; }
+  th { background: #edf4f7; text-align: left; }
+  .mermaid { margin: 1.2rem 0; padding: 16px; background: #fbfcfe; border: 1px solid var(--rule); border-radius: 8px; overflow: auto; }
+  .source-note { margin-top: 22px; padding: 12px; border: 1px solid var(--rule); background: #f9fbfc; color: var(--muted); font-size: 13px; }
+  @media (max-width: 900px) {
+    .layout { display: block; }
+    aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); }
+    main { padding: 30px 20px 60px; }
+    h1:first-child { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <h2>Thesis Contents</h2>
+  <p>Full HTML rendering of <code>event-agent-thesis.md</code>. Markdown word count: 15239.</p>
+  <nav>
+    <a class="toc-level-1" href="#from-public-questions-to-auditable-event-evidence">From Public Questions To Auditable Event Evidence</a>
+    <a class="toc-level-2" href="#a-thesis-style-technical-report-on-the-event-agent-research-system">A Thesis-Style Technical Report On The Event Agent Research System</a>
+    <a class="toc-level-2" href="#abstract">Abstract</a>
+    <a class="toc-level-2" href="#0-contributions-and-evaluation-summary">0. Contributions And Evaluation Summary</a>
+    <a class="toc-level-2" href="#1-motivation">1. Motivation</a>
+    <a class="toc-level-2" href="#2-inspiration-from-co-scientist">2. Inspiration From Co-Scientist</a>
+    <a class="toc-level-3" href="#2-1-comparison-with-co-scientist">2.1 Comparison With Co-Scientist</a>
+    <a class="toc-level-2" href="#3-research-questions">3. Research Questions</a>
+    <a class="toc-level-3" href="#3-1-methodology-and-evaluation-protocol">3.1 Methodology And Evaluation Protocol</a>
+    <a class="toc-level-2" href="#4-system-overview">4. System Overview</a>
+    <a class="toc-level-2" href="#5-questionforum-store">5. QuestionForum Store</a>
+    <a class="toc-level-2" href="#6-candidate-tournament">6. Candidate Tournament</a>
+    <a class="toc-level-2" href="#7-reflection-and-review">7. Reflection And Review</a>
+    <a class="toc-level-2" href="#8-hypothesis-evolution">8. Hypothesis Evolution</a>
+    <a class="toc-level-2" href="#9-target-architecture">9. Target Architecture</a>
+    <a class="toc-level-2" href="#10-hypothesis-testing-workflow">10. Hypothesis Testing Workflow</a>
+    <a class="toc-level-3" href="#10-1-public-question-to-formal-hypothesis">10.1 Public Question To Formal Hypothesis</a>
+    <a class="toc-level-3" href="#10-2-city-week-matched-tests">10.2 City-Week Matched Tests</a>
+    <a class="toc-level-3" href="#10-3-msa-week-matched-tests">10.3 MSA-Week Matched Tests</a>
+    <a class="toc-level-3" href="#10-4-multiple-testing-and-evidence-promotion">10.4 Multiple Testing And Evidence Promotion</a>
+    <a class="toc-level-3" href="#10-5-interpretation-discipline">10.5 Interpretation Discipline</a>
+    <a class="toc-level-2" href="#11-artifacts-and-reports">11. Artifacts And Reports</a>
+    <a class="toc-level-2" href="#12-what-was-accomplished">12. What Was Accomplished</a>
+    <a class="toc-level-3" href="#12-1-early-evidence-pipeline">12.1 Early Evidence Pipeline</a>
+    <a class="toc-level-3" href="#12-2-reference-event-data">12.2 Reference Event Data</a>
+    <a class="toc-level-3" href="#12-3-friends-loop">12.3 Friends Loop</a>
+    <a class="toc-level-3" href="#12-4-autonomous-discovery-discipline">12.4 Autonomous Discovery Discipline</a>
+    <a class="toc-level-3" href="#12-5-business-reporting">12.5 Business Reporting</a>
+    <a class="toc-level-3" href="#12-6-co-scientist-inspired-governance">12.6 Co-Scientist Inspired Governance</a>
+    <a class="toc-level-2" href="#13-implementation-anatomy">13. Implementation Anatomy</a>
+    <a class="toc-level-3" href="#13-1-turn-lifecycle">13.1 Turn Lifecycle</a>
+    <a class="toc-level-3" href="#13-2-friend-roles-as-prompted-interfaces">13.2 Friend Roles As Prompted Interfaces</a>
+    <a class="toc-level-3" href="#13-3-candidate-policy-and-question-governance">13.3 Candidate Policy And Question Governance</a>
+    <a class="toc-level-3" href="#13-4-statistical-routing-and-claim-boundaries">13.4 Statistical Routing And Claim Boundaries</a>
+    <a class="toc-level-2" href="#14-challenges-faced">14. Challenges Faced</a>
+    <a class="toc-level-3" href="#14-1-public-questions-became-too-technical">14.1 Public Questions Became Too Technical</a>
+    <a class="toc-level-3" href="#14-2-statistical-workflows-were-easy-to-overclaim">14.2 Statistical Workflows Were Easy To Overclaim</a>
+    <a class="toc-level-3" href="#14-3-notebook-execution-was-initially-too-weak">14.3 Notebook Execution Was Initially Too Weak</a>
+    <a class="toc-level-3" href="#14-4-memory-could-become-either-too-sparse-or-too-noisy">14.4 Memory Could Become Either Too Sparse Or Too Noisy</a>
+    <a class="toc-level-3" href="#14-5-observability-had-to-serve-humans-and-tests">14.5 Observability Had To Serve Humans And Tests</a>
+    <a class="toc-level-3" href="#14-6-multi-agent-inspiration-needed-deterministic-grounding">14.6 Multi-Agent Inspiration Needed Deterministic Grounding</a>
+    <a class="toc-level-2" href="#15-llm-wiki-and-memory-mechanisms">15. LLM Wiki And Memory Mechanisms</a>
+    <a class="toc-level-3" href="#15-1-notebook-knowledge-base">15.1 Notebook Knowledge Base</a>
+    <a class="toc-level-3" href="#15-2-shared-wiki-entries">15.2 Shared Wiki Entries</a>
+    <a class="toc-level-3" href="#15-3-wiki-as-a-coordination-protocol">15.3 Wiki As A Coordination Protocol</a>
+    <a class="toc-level-3" href="#15-4-limitations-of-the-wiki-mechanism">15.4 Limitations Of The Wiki Mechanism</a>
+    <a class="toc-level-2" href="#16-notebook-execution-and-evidence-objects">16. Notebook Execution And Evidence Objects</a>
+    <a class="toc-level-3" href="#16-1-lightweight-execution">16.1 Lightweight Execution</a>
+    <a class="toc-level-3" href="#16-2-nbclient-execution">16.2 Nbclient Execution</a>
+    <a class="toc-level-3" href="#16-3-sample-notebook-question-bank">16.3 Sample Notebook: Question Bank</a>
+    <a class="toc-level-1" href="#upfront-question-bank">Upfront Question Bank</a>
+    <a class="toc-level-2" href="#panel-exposition">Panel Exposition</a>
+    <a class="toc-level-3" href="#16-4-sample-notebook-turn-analysis">16.4 Sample Notebook: Turn Analysis</a>
+    <a class="toc-level-1" href="#turn-04-analysis">Turn 04 Analysis</a>
+    <a class="toc-level-2" href="#selected-candidate">Selected Candidate</a>
+    <a class="toc-level-2" href="#result-summary">Result Summary</a>
+    <a class="toc-level-2" href="#agent-exposition">Agent Exposition</a>
+    <a class="toc-level-2" href="#formal-statistical-methodology-card">Formal Statistical Methodology Card</a>
+    <a class="toc-level-2" href="#auditable-reasoning-trace">Auditable Reasoning Trace</a>
+    <a class="toc-level-2" href="#experimental-design-plan">Experimental Design Plan</a>
+    <a class="toc-level-2" href="#formal-statistical-hypothesis">Formal Statistical Hypothesis</a>
+    <a class="toc-level-2" href="#executed-statistical-test">Executed Statistical Test</a>
+    <a class="toc-level-2" href="#notebook-validation-contract">Notebook Validation Contract</a>
+    <a class="toc-level-2" href="#diagnostics-or-eda-artifacts">Diagnostics Or EDA Artifacts</a>
+    <a class="toc-level-3" href="#16-5-sample-notebook-multiple-testing-correction">16.5 Sample Notebook: Multiple-Testing Correction</a>
+    <a class="toc-level-3" href="#16-6-notebook-status-and-maturity">16.6 Notebook Status And Maturity</a>
+    <a class="toc-level-2" href="#17-observability-telemetry-and-reports">17. Observability, Telemetry, And Reports</a>
+    <a class="toc-level-3" href="#17-1-telemetry-event-stream">17.1 Telemetry Event Stream</a>
+    <a class="toc-level-3" href="#17-2-prompt-hashes">17.2 Prompt Hashes</a>
+    <a class="toc-level-3" href="#17-3-session-json">17.3 Session JSON</a>
+    <a class="toc-level-3" href="#17-4-session-markdown">17.4 Session Markdown</a>
+    <a class="toc-level-3" href="#17-5-discovery-decision-summary">17.5 Discovery Decision Summary</a>
+    <a class="toc-level-3" href="#17-6-business-evidence-report">17.6 Business Evidence Report</a>
+    <a class="toc-level-3" href="#17-7-playback-ui">17.7 Playback UI</a>
+    <a class="toc-level-3" href="#17-8-phase-regression-summary">17.8 Phase Regression Summary</a>
+    <a class="toc-level-3" href="#17-9-observability-architecture">17.9 Observability Architecture</a>
+    <a class="toc-level-2" href="#18-sample-end-to-end-run-narrative">18. Sample End-To-End Run Narrative</a>
+    <a class="toc-level-2" href="#19-detailed-lessons-learned">19. Detailed Lessons Learned</a>
+    <a class="toc-level-3" href="#13-1-question-wording-is-a-system-design-problem">13.1 Question Wording Is A System Design Problem</a>
+    <a class="toc-level-3" href="#13-2-analysis-handles-must-not-become-headlines">13.2 Analysis Handles Must Not Become Headlines</a>
+    <a class="toc-level-3" href="#13-3-determinism-is-a-strength">13.3 Determinism Is A Strength</a>
+    <a class="toc-level-3" href="#13-4-statistical-claims-need-guardrails">13.4 Statistical Claims Need Guardrails</a>
+    <a class="toc-level-3" href="#13-5-notebooks-are-evidence-objects">13.5 Notebooks Are Evidence Objects</a>
+    <a class="toc-level-3" href="#13-6-regression-runs-are-product-tests">13.6 Regression Runs Are Product Tests</a>
+    <a class="toc-level-2" href="#20-threats-to-validity">20. Threats To Validity</a>
+    <a class="toc-level-2" href="#21-limitations">21. Limitations</a>
+    <a class="toc-level-2" href="#22-future-work">22. Future Work</a>
+    <a class="toc-level-2" href="#23-conclusion">23. Conclusion</a>
+    <a class="toc-level-2" href="#appendix-a-implementation-reference">Appendix A. Implementation Reference</a>
+    <a class="toc-level-3" href="#a-1-command-line-entry">A.1 Command-Line Entry</a>
+    <a class="toc-level-3" href="#a-2-expected-run-directory">A.2 Expected Run Directory</a>
+    <a class="toc-level-3" href="#a-3-candidate-record-shape">A.3 Candidate Record Shape</a>
+    <a class="toc-level-3" href="#a-4-forum-record-shape">A.4 Forum Record Shape</a>
+    <a class="toc-level-3" href="#a-5-tournament-output-shape">A.5 Tournament Output Shape</a>
+    <a class="toc-level-3" href="#a-6-reflection-output-shape">A.6 Reflection Output Shape</a>
+    <a class="toc-level-3" href="#a-7-evolution-output-shape">A.7 Evolution Output Shape</a>
+    <a class="toc-level-3" href="#a-8-turn-payload-shape">A.8 Turn Payload Shape</a>
+    <a class="toc-level-3" href="#a-9-session-summary-shape">A.9 Session Summary Shape</a>
+    <a class="toc-level-2" href="#appendix-b-sample-notebook-details">Appendix B. Sample Notebook Details</a>
+    <a class="toc-level-3" href="#b-1-notebook-header">B.1 Notebook Header</a>
+    <a class="toc-level-1" href="#turn-07-analysis">Turn 07 Analysis</a>
+    <a class="toc-level-3" href="#b-2-embedded-payload-cell">B.2 Embedded Payload Cell</a>
+    <a class="toc-level-3" href="#b-3-methodology-card-cell">B.3 Methodology Card Cell</a>
+    <a class="toc-level-3" href="#b-4-formal-hypothesis-cell">B.4 Formal Hypothesis Cell</a>
+    <a class="toc-level-3" href="#b-5-statistical-test-cell">B.5 Statistical Test Cell</a>
+    <a class="toc-level-3" href="#b-6-validation-contract-cell">B.6 Validation Contract Cell</a>
+    <a class="toc-level-3" href="#b-7-markdown-export">B.7 Markdown Export</a>
+    <a class="toc-level-3" href="#b-8-why-sample-notebooks-are-in-the-thesis">B.8 Why Sample Notebooks Are In The Thesis</a>
+    <a class="toc-level-2" href="#appendix-c-observability-record-examples">Appendix C. Observability Record Examples</a>
+    <a class="toc-level-3" href="#c-1-knowledge-read-event">C.1 Knowledge Read Event</a>
+    <a class="toc-level-3" href="#c-2-board-proposed-event">C.2 Board Proposed Event</a>
+    <a class="toc-level-3" href="#c-3-hypothesis-classified-event">C.3 Hypothesis Classified Event</a>
+    <a class="toc-level-3" href="#c-4-workflow-stage-event">C.4 Workflow Stage Event</a>
+    <a class="toc-level-3" href="#c-5-notebook-created-event">C.5 Notebook Created Event</a>
+    <a class="toc-level-3" href="#c-6-observability-failure-modes">C.6 Observability Failure Modes</a>
+    <a class="toc-level-2" href="#appendix-d-phase-narrative">Appendix D. Phase Narrative</a>
+    <a class="toc-level-3" href="#d-1-schema-only-evidence-pipeline">D.1 Schema-Only Evidence Pipeline</a>
+    <a class="toc-level-3" href="#d-2-reference-event-data-and-local-economic-measures">D.2 Reference Event Data And Local Economic Measures</a>
+    <a class="toc-level-3" href="#d-3-friends-loop">D.3 Friends Loop</a>
+    <a class="toc-level-3" href="#d-4-shared-wiki">D.4 Shared Wiki</a>
+    <a class="toc-level-3" href="#d-5-semantic-layer">D.5 Semantic Layer</a>
+    <a class="toc-level-3" href="#d-6-formal-hypothesis-validation">D.6 Formal Hypothesis Validation</a>
+    <a class="toc-level-3" href="#d-7-matched-tests-and-multiple-testing">D.7 Matched Tests And Multiple Testing</a>
+    <a class="toc-level-3" href="#d-8-business-and-playback-reports">D.8 Business And Playback Reports</a>
+    <a class="toc-level-3" href="#d-9-questionforum-tournament-reflection-and-evolution">D.9 QuestionForum, Tournament, Reflection, And Evolution</a>
+    <a class="toc-level-3" href="#d-10-what-remains-unfinished">D.10 What Remains Unfinished</a>
+    <a class="toc-level-2" href="#appendix-e-expanded-advisor-and-student-review-loop">Appendix E. Expanded Advisor And Student Review Loop</a>
+    <a class="toc-level-3" href="#e-1-advisor-critique-the-thesis-was-too-short-for-its-claimed-form">E.1 Advisor Critique: The Thesis Was Too Short For Its Claimed Form</a>
+    <a class="toc-level-3" href="#e-2-advisor-critique-the-llm-wiki-was-underexplained">E.2 Advisor Critique: The LLM Wiki Was Underexplained</a>
+    <a class="toc-level-3" href="#e-3-advisor-critique-notebook-execution-needed-more-specifics">E.3 Advisor Critique: Notebook Execution Needed More Specifics</a>
+    <a class="toc-level-3" href="#e-4-advisor-critique-observability-needed-to-be-a-first-class-chapter">E.4 Advisor Critique: Observability Needed To Be A First-Class Chapter</a>
+    <a class="toc-level-3" href="#e-5-advisor-critique-challenges-faced-were-too-polished">E.5 Advisor Critique: Challenges Faced Were Too Polished</a>
+    <a class="toc-level-3" href="#e-6-advisor-critique-the-thesis-needed-more-concrete-examples">E.6 Advisor Critique: The Thesis Needed More Concrete Examples</a>
+    <a class="toc-level-3" href="#e-7-advisor-critique-the-work-should-be-evaluated-as-a-system-not-a-feature-list">E.7 Advisor Critique: The Work Should Be Evaluated As A System, Not A Feature List</a>
+    <a class="toc-level-2" href="#appendix-f-rejected-alternatives-maintenance-and-assessment-criteria">Appendix F. Rejected Alternatives, Maintenance, And Assessment Criteria</a>
+    <a class="toc-level-3" href="#f-1-alternative-put-all-agent-logic-in-markdown-role-files">F.1 Alternative: Put All Agent Logic In Markdown Role Files</a>
+    <a class="toc-level-3" href="#f-2-alternative-use-live-llm-debate-immediately">F.2 Alternative: Use Live LLM Debate Immediately</a>
+    <a class="toc-level-3" href="#f-3-alternative-treat-reports-as-post-processing">F.3 Alternative: Treat Reports As Post-Processing</a>
+    <a class="toc-level-3" href="#f-4-alternative-store-memory-only-in-json">F.4 Alternative: Store Memory Only In JSON</a>
+    <a class="toc-level-3" href="#f-5-alternative-store-notebooks-only-without-markdown-exports">F.5 Alternative: Store Notebooks Only, Without Markdown Exports</a>
+    <a class="toc-level-3" href="#f-6-alternative-use-a-database-for-the-forum-immediately">F.6 Alternative: Use A Database For The Forum Immediately</a>
+    <a class="toc-level-3" href="#f-7-alternative-promote-significant-results-automatically">F.7 Alternative: Promote Significant Results Automatically</a>
+    <a class="toc-level-3" href="#f-8-maintenance-procedure-for-future-phases">F.8 Maintenance Procedure For Future Phases</a>
+    <a class="toc-level-3" href="#f-9-assessment-criteria-for-the-thesis-system">F.9 Assessment Criteria For The Thesis System</a>
+    <a class="toc-level-3" href="#f-10-ethical-and-civic-considerations">F.10 Ethical And Civic Considerations</a>
+    <a class="toc-level-3" href="#f-11-future-research-questions">F.11 Future Research Questions</a>
+    <a class="toc-level-3" href="#f-12-how-the-thesis-should-be-read">F.12 How The Thesis Should Be Read</a>
+    <a class="toc-level-2" href="#appendix-g-advisor-and-student-review-loop">Appendix G. Advisor And Student Review Loop</a>
+    <a class="toc-level-2" href="#references">References</a>
+  </nav>
+</aside>
+<main>
+<h1 id="from-public-questions-to-auditable-event-evidence">From Public Questions To Auditable Event Evidence</h1>
+<h2 id="a-thesis-style-technical-report-on-the-event-agent-research-system">A Thesis-Style Technical Report On The Event Agent Research System</h2>
+<p>Author: Codex engineering session Repository context: <code>/code</code> Primary implementation period: Phases 006-048 Latest validated evidence run: <code>phase-048-hypothesis-evolution</code></p>
+<h2 id="abstract">Abstract</h2>
+<p>This report documents the design, implementation, and evaluation of an event-focused multi-agent research system that converts public, stakeholder-facing questions about sports events and local economic activity into structured hypotheses, statistical tests, notebooks, evidence reports, and replayable run artifacts. The system began as a schema-only synthetic evidence pipeline and evolved into a governed friends-loop architecture with question generation, semantic-layer exploration, hypothesis validation, matched statistical testing, notebook execution, report rendering, and phase-level regression gates.</p>
+<p>The most recent work added an explicit QuestionForum layer, a deterministic tournament of candidate questions, a reflection/reviewer pass, and hypothesis-evolution metadata. These changes were inspired by Google DeepMind's Co-Scientist concept, especially its emphasis on multi-agent hypothesis generation, debate/ranking, reflection, and evolution. The local system is not a biomedical discovery engine and does not claim the breadth, scale, literature grounding, or novelty guarantees of Co-Scientist. It is instead a narrower civic/business evidence workflow: public questions enter from stakeholder personas, analytical machinery maps them into testable hypotheses, and deterministic evidence artifacts report what the current data can and cannot support.</p>
+<p>The resulting target architecture separates question demand from analysis execution. Public-facing questions are stored as forum records with persona, source, popularity, priority, rationale, and status. Candidate questions are scored by answerability, novelty, public interest, testability, evidence value, policy relevance, peer-review style reflection, and evolution from prior findings. The system then executes a deterministic friends loop, records all intermediate state, generates a business-readable evidence report and an animated playback report, and validates end-to-end behavior through repeatable 20-turn regression runs.</p>
+<h2 id="0-contributions-and-evaluation-summary">0. Contributions And Evaluation Summary</h2>
+<p>This project makes four concrete engineering contributions:</p>
+<ol>
+<li>A public-question layer that separates stakeholder demand from statistical execution.</li>
+<li>A deterministic governance stack for ranking, reviewing, and evolving candidate questions.</li>
+<li>A hypothesis-testing workflow that maps readable questions into explicit H0/H1 contracts, matched tests, diagnostics, notebooks, reports, and telemetry.</li>
+<li>A phase-gated validation discipline in which each major governance layer was accepted only after a 20-turn regression run.</li>
+</ol>
+<p>The claim is deliberately bounded. The system demonstrates a reproducible event-evidence workflow, not a general scientific discovery engine. It can select, test, report, and replay questions against the repository's event/economic data. It cannot yet provide live literature review, causal identification guarantees, human forum moderation, or model-generated adversarial debate.</p>
+<table>
+<thead><tr><th>Phase</th><th>Added Capability</th><th>Regression Gate</th><th>Acceptance Signal</th></tr></thead>
+<tbody>
+<tr><td>045</td><td>JSON-backed QuestionForum store</td><td>20-turn run</td><td>selected candidates carried forum metadata</td></tr>
+<tr><td>046</td><td>Pairwise question tournament</td><td>20-turn run</td><td>selected candidates carried tournament ranks, scores, and transcripts</td></tr>
+<tr><td>047</td><td>Reflection/reviewer pass</td><td>20-turn run</td><td>selected candidates carried misleading-risk, weakening-evidence, and answerability review</td></tr>
+<tr><td>048</td><td>Hypothesis evolution metadata</td><td>20-turn run</td><td>selected candidates carried split/combine/strengthen/carry-forward metadata</td></tr>
+</tbody></table>
+<p>The latest validated run completed 20 of 20 requested workflows, stopped early was false, workflow-task statistical misroutes were zero, and all selected candidates carried forum, tournament, reflection, and evolution metadata.</p>
+<h2 id="1-motivation">1. Motivation</h2>
+<p>The original project addressed a practical research problem: how can a user ask a fuzzy question about events and local economic impact, and receive a structured, auditable answer rather than a free-form narrative? Early versions focused on synthetic workflows that could validate architecture without requiring real-world truth claims. Later phases moved toward reference data, sports event exposure, local economic measures, semantic query layers, and autonomous discovery loops.</p>
+<p>Two tensions drove the architecture:</p>
+<ol>
+<li>Public questions must remain readable. Business owners, journalists, policymakers, and citizen journalists ask questions such as "Do big sports crowds actually turn into more local spending?" They do not ask for "block-matched MSA-week revenue_all lift under semantic-layer batch correction."</li>
+<li>Statistical evidence must remain explicit. The system still needs formal hypotheses, data contracts, matching rules, diagnostics, multiple-testing handling, and caveats that prevent casual overclaiming.</li>
+</ol>
+<p>The project therefore moved toward a layered architecture where public demand drives question framing, while statistical design and execution stay below the surface.</p>
+<h2 id="2-inspiration-from-co-scientist">2. Inspiration From Co-Scientist</h2>
+<p>Google DeepMind describes Co-Scientist as a multi-agent research partner that can generate, debate, refine, and rank hypotheses for complex scientific problems. The public writeup emphasizes a "tournament of ideas" in which agents debate and rank hypotheses, and broader materials describe generation, reflection, ranking, evolution, and meta-review agents coordinated around research goals. Source: <a href="https://deepmind.google/blog/co-scientist-a-multi-agent-ai-partner-to-accelerate-research/">https://deepmind.google/blog/co-scientist-a-multi-agent-ai-partner-to-accelerate-research/</a>.</p>
+<p>This project borrowed four architectural ideas from that pattern:</p>
+<ul>
+<li>Generate: produce many candidate questions and hypotheses.</li>
+<li>Debate/rank: compare candidates rather than only scoring them independently.</li>
+<li>Reflect: critique whether a question is misleading, weakened by prior evidence, or answerable.</li>
+<li>Evolve: split, combine, strengthen, or carry forward hypotheses based on memory.</li>
+</ul>
+<p>The local implementation intentionally differs from Co-Scientist in important ways:</p>
+<ul>
+<li>It is deterministic and repository-local, not a large-scale model-orchestrated biomedical discovery system.</li>
+<li>It is grounded primarily in event/economic reference data, semantic SQL outputs, notebooks, and statistical test runners, not a broad scientific literature corpus.</li>
+<li>It optimizes for auditable evidence production and reproducible phase gates, not open-ended discovery at thousands-of-hypotheses scale.</li>
+<li>It exposes public questions and reports for civic/business audiences, not lab proposals for wet-lab validation.</li>
+</ul>
+<p>The Co-Scientist lesson was not "copy the product." The lesson was that hypothesis work improves when candidate ideas are generated, debated, reviewed, evolved, and then validated against evidence rather than accepted from a single-pass prompt.</p>
+<h3 id="2-1-comparison-with-co-scientist">2.1 Comparison With Co-Scientist</h3>
+<table>
+<thead><tr><th>Dimension</th><th>Co-Scientist Pattern</th><th>Event Agent Implementation</th><th>Current Gap</th></tr></thead>
+<tbody>
+<tr><td>Domain</td><td>General scientific and biomedical hypothesis support</td><td>Sports-event and local-economic evidence questions</td><td>Narrower scope by design</td></tr>
+<tr><td>Question source</td><td>Research goals and scientific prompts</td><td>Forum-style records from stakeholder personas</td><td>Forum is JSON-backed, not a live product</td></tr>
+<tr><td>Generation</td><td>Multi-agent hypothesis generation</td><td>Candidate policy plus forum seed questions and memory</td><td>No live model generation during governance pass</td></tr>
+<tr><td>Debate/ranking</td><td>Agent debate and tournament-style ranking</td><td>Deterministic pairwise tournament with stored transcripts</td><td>Transcripts are heuristic explanations</td></tr>
+<tr><td>Reflection</td><td>Review and critique agents</td><td>Deterministic misleading-risk, weakening-evidence, and answerability review</td><td>No external literature grounding</td></tr>
+<tr><td>Evolution</td><td>Hypothesis refinement over time</td><td>Split/combine/strengthen/carry-forward metadata</td><td>Does not yet write rich revised questions</td></tr>
+<tr><td>Validation</td><td>Scientific follow-up and domain evaluation</td><td>Matched statistical tests, notebooks, reports, and 20-turn regression</td><td>Observational evidence only</td></tr>
+</tbody></table>
+<p>This comparison matters because the local architecture should be judged against its intended job. It borrows the reasoning topology of Co-Scientist, but it measures success through auditable civic/business evidence artifacts rather than scientific novelty.</p>
+<h2 id="3-research-questions">3. Research Questions</h2>
+<p>This engineering thesis asks:</p>
+<ol>
+<li>Can a stakeholder-facing question layer improve the readability and usefulness of autonomous data-science questions?</li>
+<li>Can deterministic tournament, reflection, and evolution passes approximate useful multi-agent reasoning without live model calls?</li>
+<li>Can the system keep public question framing separate from formal hypothesis testing?</li>
+<li>Can the full workflow remain regression-testable through repeated 20-turn runs?</li>
+</ol>
+<p>The implemented answer is yes, with caveats. The current architecture successfully carries public question metadata through 20-turn runs, produces reports, and records tournament/reflection/evolution metadata. The caveat is that the tournament, reflection, and evolution layers are deterministic heuristics rather than deep model-based scientific reasoning.</p>
+<h3 id="3-1-methodology-and-evaluation-protocol">3.1 Methodology And Evaluation Protocol</h3>
+<p>The project uses engineering evaluation rather than a human-subject or wet-lab methodology. Each phase introduces one major capability, then runs the friends loop for 20 turns to test whether the capability survives realistic system orchestration.</p>
+<p>The evaluation unit is a completed workflow turn. A turn is successful when the system can select a candidate, route it correctly, produce the expected evidence artifacts, and persist the governance metadata introduced by the phase. Phase summaries therefore check:</p>
+<ul>
+<li>completed workflow count</li>
+<li>early-stop status</li>
+<li>workflow-task misroutes into statistical testing</li>
+<li>selected-candidate metadata coverage</li>
+<li>report and telemetry generation</li>
+<li>notebook and evidence artifact presence when applicable</li>
+</ul>
+<p>This protocol is stricter than a unit test alone because it exercises the candidate policy, routing, statistical runner, reporting code, and persistence layer together. It is still not a substitute for external validity testing against new domains or human evaluation of question quality.</p>
+<h2 id="4-system-overview">4. System Overview</h2>
+<p>The core system is a friends loop. Five friend roles participate through markdown-backed role specs:</p>
+<ul>
+<li>Spark: exploratory data scientist.</li>
+<li>Skeptic: identification-minded reviewer.</li>
+<li>Mapper: semantic/data lineage connector.</li>
+<li>Moderator: ranking and selection lead.</li>
+<li>DataAgent: notebook and artifact producer.</li>
+</ul>
+<p>The loop runs turn by turn. Each turn proposes candidates, enriches them with metadata, scores and filters them, selects one, maps it to a workflow, generates evidence artifacts, appends notebook knowledge, writes wiki-style records, and persists telemetry.</p>
+<div class="mermaid">flowchart TD
+    A[Stakeholder Question Forum] --&gt; B[Candidate Generation]
+    B --&gt; C[Business Readability Gate]
+    C --&gt; D[Question Tournament]
+    D --&gt; E[Reflection Review]
+    E --&gt; F[Hypothesis Evolution]
+    F --&gt; G[Candidate Selection]
+    G --&gt; H[Formal Hypothesis]
+    H --&gt; I[Design Router]
+    I --&gt; J[Statistical Test Runner]
+    J --&gt; K[Notebook And Knowledge Artifacts]
+    K --&gt; L[Session JSON And Telemetry]
+    L --&gt; M[Business HTML Report]
+    L --&gt; N[Playback HTML Report]
+    L --&gt; O[20 Turn Regression Summary]</div>
+<p>The latest architecture adds four explicit candidate-governance modules:</p>
+<ul>
+<li><code>app/question_forum.py</code></li>
+<li><code>app/question_tournament.py</code></li>
+<li><code>app/question_reflection.py</code></li>
+<li><code>app/hypothesis_evolution.py</code></li>
+</ul>
+<p>These are integrated into <code>app/friends_candidate_policy.py</code>, which owns candidate enrichment, filtering, and scoring.</p>
+<h2 id="5-questionforum-store">5. QuestionForum Store</h2>
+<p>The QuestionForum store is the layer above the friends. It represents the forum of questions that business owners, economists, journalists, citizen journalists, politicians, and policymakers might ask. The current store is JSON-backed at <code>data/question_forum/questions.json</code> and loaded by <code>app/question_forum.py</code>.</p>
+<p>Each record includes:</p>
+<ul>
+<li><code>question_id</code></li>
+<li><code>kind</code></li>
+<li><code>persona</code></li>
+<li><code>question</code></li>
+<li><code>rationale</code></li>
+<li><code>priority</code></li>
+<li><code>popularity</code></li>
+<li><code>source_url</code></li>
+<li><code>status</code></li>
+<li><code>tags</code></li>
+</ul>
+<p>Allowed statuses are:</p>
+<ul>
+<li><code>proposed</code></li>
+<li><code>selected</code></li>
+<li><code>tested</code></li>
+<li><code>answered</code></li>
+<li><code>needs-review</code></li>
+</ul>
+<p>The key design decision is that public questions are first-class data, not string constants hidden in candidate policy. A forum record can ask:</p>
+<pre><code class="language-text">Do big sports crowds actually turn into more local spending?</code></pre>
+<p>The analysis layer may internally map that to:</p>
+<pre><code class="language-text">H0: event-exposed MSA-weeks have no higher mean revenue_all than matched no-game MSA-week controls.
+H1: event-exposed MSA-weeks have higher mean revenue_all than matched no-game MSA-week controls.
+Design: matched MSA-week controls.</code></pre>
+<p>The public question remains the headline, while the formal hypothesis remains the test contract.</p>
+<h2 id="6-candidate-tournament">6. Candidate Tournament</h2>
+<p>Before the tournament layer, candidate scoring was a weighted scalar based on answerability, interestingness, novelty, continuity, business readability, provenance, family coverage, and freshness. That was useful but opaque. It did not resemble debate.</p>
+<p>The tournament layer in <code>app/question_tournament.py</code> adds deterministic pairwise comparison. It computes five component scores:</p>
+<ul>
+<li>public interest</li>
+<li>novelty</li>
+<li>testability</li>
+<li>evidence value</li>
+<li>policy/business relevance</li>
+</ul>
+<p>Candidates then participate in pairwise comparisons. Each candidate receives:</p>
+<ul>
+<li><code>tournament_rank</code></li>
+<li><code>tournament_score</code></li>
+<li><code>tournament_wins</code></li>
+<li><code>tournament_losses</code></li>
+<li><code>tournament_component_scores</code></li>
+<li><code>tournament_transcript</code></li>
+</ul>
+<div class="mermaid">flowchart LR
+    A[Candidate A] --&gt; C{Pairwise Debate}
+    B[Candidate B] --&gt; C
+    C --&gt; D[Component Scores]
+    D --&gt; E[Winner]
+    D --&gt; F[Transcript]
+    E --&gt; G[Tournament Rank]
+    F --&gt; H[Candidate Audit Trail]</div>
+<p>The transcript is not a live LLM argument. It is a compact deterministic explanation of why one candidate won the comparison. That is an intentional intermediate step. It gives auditability now and leaves a clean seam for future live debate agents.</p>
+<h2 id="7-reflection-and-review">7. Reflection And Review</h2>
+<p>The reflection pass in <code>app/question_reflection.py</code> asks three questions for every candidate:</p>
+<ol>
+<li>What would make this question misleading?</li>
+<li>What prior evidence would weaken this?</li>
+<li>Is this actually answerable with current data?</li>
+</ol>
+<p>The reflection output includes a status:</p>
+<ul>
+<li><code>pass</code></li>
+<li><code>needs-review</code></li>
+<li><code>not-answerable</code></li>
+</ul>
+<p>Reflection has two jobs. First, it adds review metadata to the candidate. Second, it adjusts scores so misleading or weakly answerable questions become less likely to be selected. Workflow-like items can be marked not answerable and filtered.</p>
+<div class="mermaid">flowchart TD
+    A[Candidate Question] --&gt; B[Misleading Risk Check]
+    A --&gt; C[Weakening Evidence Check]
+    A --&gt; D[Data Answerability Check]
+    B --&gt; E[Reflection Payload]
+    C --&gt; E
+    D --&gt; E
+    E --&gt; F{Status}
+    F --&gt;|pass| G[Small Score Bonus]
+    F --&gt;|needs-review| H[Score Penalty]
+    F --&gt;|not-answerable| I[Filter From Selection]</div>
+<p>This layer was added after the system began to produce questions that were technically useful but too convoluted. The reflection pass is a guard against two failure modes:</p>
+<ul>
+<li>overclaiming exploratory observational evidence</li>
+<li>asking questions that current data cannot answer cleanly</li>
+</ul>
+<h2 id="8-hypothesis-evolution">8. Hypothesis Evolution</h2>
+<p>The evolution layer in <code>app/hypothesis_evolution.py</code> records how a candidate relates to prior memory. It can assign four action types:</p>
+<ul>
+<li>split</li>
+<li>combine</li>
+<li>strengthen</li>
+<li>carry_forward</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>Split: a broad question combines spending and merchant activity.</li>
+<li>Combine: prior questions in the same family should be compared rather than interpreted separately.</li>
+<li>Strengthen: weak, null, or not-testable evidence should be reframed into a cleaner variant.</li>
+<li>Carry forward: failed or null tests should influence the next candidate instead of being forgotten.</li>
+</ul>
+<div class="mermaid">stateDiagram-v2
+    [*] --&gt; Proposed
+    Proposed --&gt; Split: broad or multi-outcome
+    Proposed --&gt; Combine: same-family memory exists
+    Proposed --&gt; Strengthen: weak or null evidence
+    Proposed --&gt; CarryForward: failed or null prior test
+    Split --&gt; CandidatePayload
+    Combine --&gt; CandidatePayload
+    Strengthen --&gt; CandidatePayload
+    CarryForward --&gt; CandidatePayload
+    CandidatePayload --&gt; Selection</div>
+<p>The current implementation records evolution metadata and applies small score nudges. It does not yet generate full new natural-language variants from a model. That is a reasonable next step, but the metadata foundation is now present.</p>
+<h2 id="9-target-architecture">9. Target Architecture</h2>
+<p>The target architecture separates public demand, agent reasoning, statistical execution, and reporting.</p>
+<div class="mermaid">flowchart TB
+    subgraph PublicLayer[Public Demand Layer]
+        F[QuestionForum JSON Store]
+        U[Future Forum UI]
+        P[Personas: owners, journalists, policymakers]
+    end
+
+    subgraph ReasoningLayer[Question Governance Layer]
+        C[Candidate Policy]
+        T[Tournament]
+        R[Reflection]
+        E[Evolution]
+    end
+
+    subgraph DiscoveryLayer[Discovery And Execution Layer]
+        FH[Formal Hypothesis]
+        DR[Design Router]
+        ST[Statistical Test Runner]
+        SL[Semantic Layer]
+        NB[Notebook Execution]
+    end
+
+    subgraph EvidenceLayer[Evidence And Reporting Layer]
+        SJ[Session JSON]
+        TM[Telemetry]
+        BR[Business Report HTML]
+        PR[Playback HTML]
+        RG[Regression Summary]
+    end
+
+    F --&gt; C
+    U -.future.-&gt; F
+    P --&gt; F
+    C --&gt; T --&gt; R --&gt; E --&gt; FH
+    FH --&gt; DR --&gt; ST
+    SL --&gt; FH
+    ST --&gt; NB --&gt; SJ
+    SJ --&gt; TM
+    SJ --&gt; BR
+    SJ --&gt; PR
+    SJ --&gt; RG</div>
+<p>This structure is designed around a hard boundary:</p>
+<ul>
+<li>Above the boundary: human-readable question demand.</li>
+<li>Below the boundary: formal statistical machinery.</li>
+</ul>
+<p>The boundary prevents internal terms such as <code>semantic_msa_batch_supported_positive</code>, <code>matched_msa_week_controls</code>, and <code>revenue_all</code> from becoming report headlines.</p>
+<h2 id="10-hypothesis-testing-workflow">10. Hypothesis Testing Workflow</h2>
+<p>The hypothesis-testing workflow has several routes, depending on the question kind and available data.</p>
+<h3 id="10-1-public-question-to-formal-hypothesis">10.1 Public Question To Formal Hypothesis</h3>
+<p>Candidate questions are classified as statistical hypotheses, EDA questions, or workflow tasks. Valid statistical hypotheses carry:</p>
+<ul>
+<li>H0</li>
+<li>H1</li>
+<li>population</li>
+<li>unit of analysis</li>
+<li>exposure</li>
+<li>comparison group</li>
+<li>outcome</li>
+<li>expected direction</li>
+<li>test family</li>
+<li>alpha</li>
+<li>decision rule</li>
+</ul>
+<p>EDA questions can be graduated into formal hypotheses when there is enough structure. Workflow tasks are kept out of the statistical queue.</p>
+<p>The conversion step is intentionally lossy in one direction only. A public question may be broad, but a formal hypothesis must name the population, exposure, comparison group, outcome, and unit of analysis. If the system cannot name those fields, it should route the item to EDA or workflow handling rather than pretending it has a statistical design.</p>
+<table>
+<thead><tr><th>Public Question Element</th><th>Formal Contract Field</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>"big sports crowds"</td><td>exposure</td><td>event-exposed city-week or MSA-week</td></tr>
+<tr><td>"local spending"</td><td>outcome</td><td><code>revenue_all</code></td></tr>
+<tr><td>"actually turn into more"</td><td>expected direction</td><td>positive lift</td></tr>
+<tr><td>"compared with what?"</td><td>comparison group</td><td>matched no-game locality-weeks</td></tr>
+<tr><td>"where and when?"</td><td>unit of analysis</td><td>city-week or MSA-week</td></tr>
+</tbody></table>
+<h3 id="10-2-city-week-matched-tests">10.2 City-Week Matched Tests</h3>
+<p>For city-week questions, the system uses matched city-week controls. A treated city-week is compared with non-game or comparable weeks, with diagnostics such as:</p>
+<ul>
+<li>matched pair count</li>
+<li>eligible treated rows</li>
+<li>eligible control rows</li>
+<li>same-month share</li>
+<li>same-block share</li>
+<li>median population distance</li>
+<li>match quality</li>
+</ul>
+<p>The statistical runner returns decisions such as:</p>
+<ul>
+<li><code>reject_h0</code></li>
+<li><code>fail_to_reject_h0</code></li>
+<li><code>not_testable</code></li>
+<li><code>inconclusive</code></li>
+</ul>
+<h3 id="10-3-msa-week-matched-tests">10.3 MSA-Week Matched Tests</h3>
+<p>Semantic SQL can produce MSA-week leads. These are mapped to MSA-week hypotheses and tested with matched MSA-week controls. The design prefers same compact MSA blocks and same-month matching, with county population-weight sum as a size proxy.</p>
+<div class="mermaid">sequenceDiagram
+    participant Q as Public Question
+    participant S as Semantic SQL
+    participant H as Hypothesis Mapper
+    participant D as Design Plan
+    participant T as MSA Test Runner
+    participant R as Report
+
+    Q-&gt;&gt;S: Find MSA-week lead
+    S-&gt;&gt;H: Top MSA, outcome, exposure
+    H-&gt;&gt;D: H0/H1 and unit of analysis
+    D-&gt;&gt;T: MatchedMsaWeekInput
+    T-&gt;&gt;R: effect, p-value, diagnostics, decision</div>
+<h3 id="10-4-multiple-testing-and-evidence-promotion">10.4 Multiple Testing And Evidence Promotion</h3>
+<p>After turns complete, statistical results receive multiple-testing correction. Evidence promotion assesses robustness based on:</p>
+<ul>
+<li>adjusted decision</li>
+<li>replication status</li>
+<li>diagnostics</li>
+<li>notebook validation state</li>
+<li>caveats</li>
+<li>design limitations</li>
+</ul>
+<p>Reports intentionally frame findings as exploratory observational evidence. Rejecting H0 means the observed result is unlikely under the null model and assumptions. It does not prove that sports events caused economic changes.</p>
+<h3 id="10-5-interpretation-discipline">10.5 Interpretation Discipline</h3>
+<p>The system uses statistical decisions as evidence-routing signals, not as final truth labels. A result can be promoted only with its diagnostics, caveats, and design limits attached. The report layer should preserve at least four distinctions:</p>
+<ul>
+<li>statistically detectable association versus causal effect</li>
+<li>public-interest question versus formally testable hypothesis</li>
+<li>exploratory screening versus confirmatory analysis</li>
+<li>null or weak evidence versus an unimportant question</li>
+</ul>
+<p>These distinctions are product requirements. Without them, the same automation that makes the system useful would also make it easy to overstate observational findings.</p>
+<h2 id="11-artifacts-and-reports">11. Artifacts And Reports</h2>
+<p>Every run writes a self-contained artifact tree under <code>app/runs/&lt;run-id&gt;/friends-question-loop/</code>.</p>
+<p>Important files include:</p>
+<ul>
+<li><code>friends_loop_session.json</code></li>
+<li><code>friends_loop_session.md</code></li>
+<li><code>friends_loop_telemetry.json</code></li>
+<li><code>discovery_decision_summary.md</code></li>
+<li><code>business_evidence_report.html</code></li>
+<li><code>ui/index.html</code></li>
+<li><code>phase_regression_summary.json</code></li>
+</ul>
+<p>Two HTML formats are generated per run:</p>
+<ol>
+<li>Business report: a single-page stakeholder evidence report.</li>
+<li>Playback UI: a replayable animated view of the friends-loop telemetry.</li>
+</ol>
+<div class="mermaid">flowchart LR
+    A[Run Session] --&gt; B[friends_loop_session.json]
+    A --&gt; C[friends_loop_session.md]
+    A --&gt; D[friends_loop_telemetry.json]
+    A --&gt; E[discovery_decision_summary.md]
+    D --&gt; F[Playback UI HTML]
+    B --&gt; G[Business Evidence HTML]
+    B --&gt; H[Regression Summary JSON]</div>
+<p>The final validated run for the current architecture is:</p>
+<pre><code class="language-text">app/runs/phase-048-hypothesis-evolution_20turn_regression/friends-question-loop/</code></pre>
+<p>The phase summary showed:</p>
+<ul>
+<li>20 requested turns</li>
+<li>20 completed workflows</li>
+<li>stopped early: false</li>
+<li>workflow-task statistical misroutes: 0</li>
+<li>forum metadata: 20/20 selected candidates</li>
+<li>tournament metadata: 20/20 selected candidates</li>
+<li>reflection metadata: 20/20 selected candidates</li>
+<li>evolution metadata: 20/20 selected candidates</li>
+</ul>
+<h2 id="12-what-was-accomplished">12. What Was Accomplished</h2>
+<h3 id="12-1-early-evidence-pipeline">12.1 Early Evidence Pipeline</h3>
+<p>The project started by converting user questions and schema information into structured evidence packets. Early modes supported synthetic data, hypothesis cards, skeptical review, design plans, and deterministic statistical execution.</p>
+<h3 id="12-2-reference-event-data">12.2 Reference Event Data</h3>
+<p>The system then moved from synthetic demonstration toward reference sports/event data and local economic measures. It added joined city-week datasets, MSA-week semantic views, and reference artifacts.</p>
+<h3 id="12-3-friends-loop">12.3 Friends Loop</h3>
+<p>The friends loop introduced multiple roles, shared memory, candidate boards, notebooks, and telemetry. It made discovery iterative rather than single-shot.</p>
+<h3 id="12-4-autonomous-discovery-discipline">12.4 Autonomous Discovery Discipline</h3>
+<p>Later phases added:</p>
+<ul>
+<li>formal hypothesis validation</li>
+<li>EDA graduation into H0/H1</li>
+<li>workflow-task separation</li>
+<li>semantic slot suppression</li>
+<li>hypothesis lineage</li>
+<li>batch MSA testing</li>
+<li>multiple-testing correction</li>
+<li>evidence promotion</li>
+</ul>
+<h3 id="12-5-business-reporting">12.5 Business Reporting</h3>
+<p>The project added a business-readable HTML report and a playback HTML report for every run. This shifted the output from developer artifacts to stakeholder-inspectable evidence.</p>
+<h3 id="12-6-co-scientist-inspired-governance">12.6 Co-Scientist Inspired Governance</h3>
+<p>The latest phases added:</p>
+<ul>
+<li>JSON-backed QuestionForum store</li>
+<li>deterministic question tournament</li>
+<li>reflection/reviewer pass</li>
+<li>hypothesis evolution metadata</li>
+</ul>
+<p>These make the system resemble a small, applied co-scientist for event evidence, while retaining deterministic reproducibility.</p>
+<h2 id="13-implementation-anatomy">13. Implementation Anatomy</h2>
+<p>The implemented system is not a single agent prompt. It is a deterministic software workflow with agent-shaped roles around it. That distinction is central to the engineering result. The friend roles supply perspective, tone, and division of labor, but the durable behavior lives in typed records, candidate policy, statistical runners, notebooks, telemetry events, and report generators.</p>
+<p>At a high level, a run enters through <code>app/main.py</code>, which exposes the friends-loop command-line surface. The caller supplies the turn count, output run id, notebook directory, data-pull mode, agent mode, and notebook execution backend. The default notebook directory is <code>common-analysis/notebooks</code>; the default execution backend is lightweight. A full run then calls the friends loop, which prepares the notebook workspace, reads prior wiki state, reads notebook knowledge, proposes candidates, ranks them, selects a candidate, executes the appropriate workflow, writes evidence artifacts, creates notebooks, appends wiki entries, records telemetry, applies post-run multiple-testing correction, and writes the final session package.</p>
+<p>The core implementation boundary is:</p>
+<ul>
+<li><code>app/friends_loop.py</code>: turn orchestration, friend conversation, candidate selection, workflow execution, telemetry events, and session construction.</li>
+<li><code>app/friends_candidate_policy.py</code>: candidate templates, score features, readability rewrites, forum integration, tournament/reflection/evolution integration, and suppression of workflow tasks from statistical routing.</li>
+<li><code>app/question_forum.py</code>: JSON-backed public question records and status validation.</li>
+<li><code>app/question_tournament.py</code>: deterministic pairwise comparison and component scoring.</li>
+<li><code>app/question_reflection.py</code>: misleading-risk, weakening-evidence, and answerability checks.</li>
+<li><code>app/hypothesis_evolution.py</code>: split, combine, strengthen, and carry-forward metadata.</li>
+<li><code>app/statistical_hypothesis.py</code>: validation and classification of candidate text into statistical hypotheses, EDA questions, and workflow tasks.</li>
+<li><code>app/experimental_design.py</code> and statistical runner modules: selection and execution of matched designs.</li>
+<li><code>app/data_exploration_agent.py</code>: notebook workspace, notebooks, Markdown exports, and wiki writes.</li>
+<li><code>app/notebook_execution.py</code>: notebook execution and validation.</li>
+<li><code>app/notebook_knowledge_base.py</code>: durable memory extracted from notebooks.</li>
+<li><code>app/friends_session.py</code>: final session JSON, Markdown, playback telemetry, business report, and discovery decision report.</li>
+</ul>
+<p>This structure emerged because early versions put too much responsibility into the candidate prompt and too little into testable code. As soon as the system had to run 20-turn regressions, hidden prompt behavior became a liability. The implementation moved toward small deterministic modules with JSON-compatible payloads, so a phase could prove that a new layer was present on every selected candidate and did not break routing, reporting, or notebook production.</p>
+<div class="mermaid">flowchart TB
+    CLI[app/main.py CLI] --&gt; Loop[app/friends_loop.py]
+    Loop --&gt; Policy[friends_candidate_policy.py]
+    Policy --&gt; Forum[question_forum.py]
+    Policy --&gt; Tournament[question_tournament.py]
+    Policy --&gt; Reflection[question_reflection.py]
+    Policy --&gt; Evolution[hypothesis_evolution.py]
+    Loop --&gt; Hypothesis[statistical_hypothesis.py]
+    Loop --&gt; Design[experimental_design.py]
+    Design --&gt; Runner[statistical test runners]
+    Loop --&gt; Notebook[data_exploration_agent.py]
+    Notebook --&gt; Executor[notebook_execution.py]
+    Notebook --&gt; Wiki[notebook markdown wiki]
+    Wiki --&gt; Knowledge[notebook_knowledge_base.py]
+    Loop --&gt; Session[friends_session.py]
+    Session --&gt; JSON[friends_loop_session.json]
+    Session --&gt; Telemetry[friends_loop_telemetry.json]
+    Session --&gt; Business[business_evidence_report.html]
+    Session --&gt; Playback[ui/index.html]</div>
+<h3 id="13-1-turn-lifecycle">13.1 Turn Lifecycle</h3>
+<p>Each turn is a small research cycle. The loop begins by reading the current wiki and notebook knowledge base. That prior memory matters because the system is not meant to ask isolated questions forever. It should know what it has already tested, what generated weak evidence, which notebooks exist, and which semantic slots are becoming repetitive.</p>
+<p>The turn then proposes a board of candidates. These candidates may come from static templates, forum questions, semantic-layer outputs, EDA seeds, notebook knowledge seeds, or lineage/evolution pressure from prior turns. Each candidate is a structured object with fields such as <code>kind</code>, <code>family</code>, <code>metric_focus</code>, <code>population_scope</code>, <code>comparison_lens</code>, <code>question</code>, <code>rationale</code>, <code>freshness_claim</code>, <code>source_notebook</code>, <code>source_cell</code>, and score metadata. This gives the loop a way to reason about duplicate questions and question families without parsing prose every time.</p>
+<p>Candidate scoring then applies several layers. The older scoring layer ranks answerability, interestingness, novelty, continuity, business readability, provenance, family coverage, and freshness. The newer governance stack enriches that with forum metadata, tournament rank, reflection status, and evolution action. The Moderator selects one candidate. Rejected candidates remain visible in the session so a reviewer can see what the system chose not to pursue.</p>
+<p>After selection, the system classifies the candidate. A candidate may be a statistical hypothesis, an EDA question, or a workflow task. This step was introduced because the system had a recurring failure mode: artifact-management questions, notebook-reuse questions, and lineage questions could look important but should not be sent to the statistical test runner. Workflow tasks now remain workflow tasks. EDA questions can produce descriptive artifacts and later graduate into hypotheses. Statistical hypotheses must carry enough formal structure to support H0/H1 execution.</p>
+<p>The selected workflow then produces a result summary. Depending on the kind, the workflow may use reference city-week data, MSA-week semantic results, matched controls, batch screens, descriptive EDA artifacts, or fallback summaries. The result summary is not just a sentence. It includes metric, value, top city or MSA when applicable, caveat, claim strength, methodology card, reasoning trace, formal hypothesis, experimental design, statistical test result, diagnostics, and notebook validation contract when available.</p>
+<p>DataAgent then writes the notebook. The notebook embeds the selected candidate, the result payload, methodology cards, experimental design, statistical test output, diagnostics, EDA artifacts, and a validation contract. The notebook is executed, exported to Markdown, indexed, and promoted into the notebook knowledge base. Finally, the friend panel writes wiki entries and the loop records telemetry for everything that happened.</p>
+<p>The turn lifecycle can be summarized as:</p>
+<ol>
+<li>Read wiki and notebook knowledge.</li>
+<li>Propose candidate questions.</li>
+<li>Enrich candidates with forum, tournament, reflection, and evolution metadata.</li>
+<li>Score and rank the board.</li>
+<li>Select one candidate.</li>
+<li>Classify the candidate as hypothesis, EDA, or workflow.</li>
+<li>Execute the chosen workflow.</li>
+<li>Write notebook and Markdown export.</li>
+<li>Append wiki entries and notebook knowledge.</li>
+<li>Emit telemetry events.</li>
+<li>Persist turn payload into the final session.</li>
+</ol>
+<p>The important implementation decision is that each stage leaves evidence behind. There is no invisible "agent thought" that the system must trust. The thesis treats the visible artifacts as the research object.</p>
+<h3 id="13-2-friend-roles-as-prompted-interfaces">13.2 Friend Roles As Prompted Interfaces</h3>
+<p>The friends are Spark, Skeptic, Mapper, Moderator, and DataAgent. Their names make the workflow easier to understand, but the implementation uses them as interfaces rather than autonomous personalities. Spark is responsible for idea generation and curiosity. Skeptic protects methodology and claim boundaries. Mapper links the question to data, semantic slots, and prior notebooks. Moderator owns selection and board discipline. DataAgent owns durable artifacts.</p>
+<p>This division gives the system a human-readable model of collaboration. It also gives telemetry a vocabulary. A playback event from Mapper means something different from a playback event from Moderator. A thesis reader can inspect a run and see which role read knowledge, which role ranked the board, and which role wrote the notebook.</p>
+<p>The implementation intentionally avoids relying on private chain-of-thought. Notebook and wiki exposition is public-facing reasoning: a concise explanation of rationale, assumptions, checks, and caveats. For example, <code>app/data_exploration_agent.py</code> writes an "Agent Exposition" section that says why Spark found the question interesting, what Skeptic's main caveat was, which semantic slot Mapper linked, why Moderator selected the candidate, and what reusable result DataAgent produced. That is not hidden model deliberation. It is an auditable record designed for future agents and human reviewers.</p>
+<p>This is one of the central lessons of the project. Multi-agent architecture should not mean "five opaque agents talk and we hope for the best." In this system, the agent roles are useful because they organize responsibilities and artifacts. The durable behavior still comes from explicit records and deterministic checks.</p>
+<h3 id="13-3-candidate-policy-and-question-governance">13.3 Candidate Policy And Question Governance</h3>
+<p>The candidate policy is the heart of the question layer. It started as a board of hardcoded candidates and became a governance pipeline. The policy now has to solve four problems:</p>
+<ol>
+<li>Generate or retrieve plausible questions.</li>
+<li>Keep the questions readable for stakeholders.</li>
+<li>Prevent duplicate or low-value turns.</li>
+<li>Route only valid statistical hypotheses into statistical tests.</li>
+</ol>
+<p>The QuestionForum layer addressed the first two problems. Instead of burying public-facing questions inside code, records live in <code>data/question_forum/questions.json</code>. Each record has question text, persona, rationale, priority, popularity, source URL, tags, and status. This makes the public demand layer visible and editable. It also gives the system a way to represent the user idea that business people, economists, journalists, citizen journalists, politicians, and policymakers might post popular questions to a forum that guides the friends.</p>
+<p>The tournament layer addressed the third problem. Simple scalar scoring was useful but did not resemble debate. The tournament compares candidates pairwise and scores public interest, novelty, testability, evidence value, and policy/business relevance. The output includes wins, losses, component scores, rank, and a transcript. The transcript is deterministic, but it gives maintainers something to inspect when a candidate wins.</p>
+<p>The reflection layer addressed the fourth problem. It asks what would make the question misleading, what prior evidence would weaken it, and whether the current data can answer it. The output can pass, require review, or mark the candidate not answerable. This is especially important because the system often finds statistically significant associations in observational data. A popular question can be important and still be misleading if the report implies causality.</p>
+<p>The evolution layer gives the system a memory-aware question posture. Broad questions can be split. Related questions can be combined. Weak questions can be strengthened. Failed or null tests can be carried forward as constraints on future claims. The current implementation records metadata and adjusts scores; it does not yet rewrite rich variants using a live model. That limitation is acceptable for the present phase because it gives the rest of the system a stable contract for future evolution.</p>
+<h3 id="13-4-statistical-routing-and-claim-boundaries">13.4 Statistical Routing And Claim Boundaries</h3>
+<p>One of the hardest implementation challenges was keeping different kinds of work separate. The system frequently wants to ask questions such as:</p>
+<ul>
+<li>Which city should we inspect next?</li>
+<li>Which notebook should reuse the current result?</li>
+<li>Which result needs a robustness check?</li>
+<li>Which major-market spending lift should we test?</li>
+</ul>
+<p>Only the last question is clearly a statistical hypothesis. The others may be important but they are workflow or EDA questions. Earlier versions risked sending workflow tasks into statistical runners, which created malformed claims and noisy reports. The fix was not merely a better prompt. The fix was a classification and validation layer.</p>
+<p>The statistical-hypothesis validator requires a formal structure: H0, H1, population, unit of analysis, exposure, comparison group, outcome, expected direction, test family, alpha, and decision rule. If those fields are missing, the candidate should not be treated as a statistical claim. This pushed the architecture toward an important discipline: public questions can be broad, but formal tests must be narrow.</p>
+<p>The report language then reinforces the boundary. A <code>reject_h0</code> decision is not written as "the event caused spending." It is written as an exploratory observational result under a recorded design. That design includes matching criteria, diagnostics, p-values, adjusted decisions, and caveats. This prevents the public layer from exaggerating the statistical layer.</p>
+<p>The system therefore has two kinds of readability. Public readability makes the question understandable. Methodological readability makes the evidence auditable. A good thesis must emphasize both.</p>
+<h2 id="14-challenges-faced">14. Challenges Faced</h2>
+<p>The project faced several recurring engineering and research challenges. They are worth documenting because they shaped the final architecture more than any initial plan did.</p>
+<h3 id="14-1-public-questions-became-too-technical">14.1 Public Questions Became Too Technical</h3>
+<p>The most visible challenge was that the questions became hard to follow. The system had internal handles such as <code>semantic_msa_batch_supported_positive</code>, <code>matched_msa_week_controls</code>, and <code>revenue_all</code>. Those handles are useful inside code. They are terrible as public questions. When such handles leaked into reports, the output looked like an internal data-science notebook rather than a tool for business owners or civic stakeholders.</p>
+<p>The first attempted fix was wording cleanup. That helped some cases, but it was not enough. The deeper issue was architectural. If the only source of questions is candidate policy code, then the system naturally speaks in implementation terms. The QuestionForum layer fixed this by creating a layer above the friends. It made stakeholder questions first-class data with personas, rationale, popularity, source, and status.</p>
+<p>The lesson is that "make the wording better" is too small a fix when the wrong layer owns the wording. Public-question framing needs its own data model.</p>
+<h3 id="14-2-statistical-workflows-were-easy-to-overclaim">14.2 Statistical Workflows Were Easy To Overclaim</h3>
+<p>The system repeatedly found significant p-values in exploratory observational data. That is exciting, but dangerous. Sports events are not randomly assigned. Local spending can vary with seasonality, city size, tourism, weather, concurrent events, team performance, macroeconomic factors, and data coverage. A matched city-week design can reduce some confounding, but it cannot make causal claims by itself.</p>
+<p>This forced the system to add claim boundaries at multiple layers. The methodology cards state the design. The statistical result records diagnostics. The evidence promotion layer keeps results from becoming publishable findings merely because a p-value is small. The report evaluator downgrades claim strength when notebooks are only scaffolded or lightweight-executed. The business report uses cautious language.</p>
+<p>The challenge was not only statistical. It was product-level. A user reading an HTML report may not distinguish "reject H0 under an exploratory matched design" from "the event caused revenue." The system has to make the safer interpretation the default.</p>
+<h3 id="14-3-notebook-execution-was-initially-too-weak">14.3 Notebook Execution Was Initially Too Weak</h3>
+<p>Early notebooks were useful as scaffolds, but scaffolded notebooks are not evidence. A notebook that is written but never executed can contain stale code, missing imports, inconsistent values, or an untested interpretation. The project therefore added notebook execution and Markdown export.</p>
+<p>The first execution path is a lightweight executor. It walks code cells, executes Python in a constrained namespace, captures output, and saves execution metadata back into the notebook. This is enough for deterministic generated notebooks that use simple Python and pandas-style summaries. It is not a full Jupyter kernel. The code also supports an <code>nbclient</code> backend when full Jupyter execution is needed.</p>
+<p>The system then added validation contracts. A turn notebook can embed a contract derived from the statistical runner. The notebook recomputes the observed contract from the embedded result payload and asserts that it matches. This is a practical bridge between "notebook as presentation" and "notebook as evidence object." It does not make the analysis perfect, but it prevents the notebook from silently drifting away from the runner output.</p>
+<h3 id="14-4-memory-could-become-either-too-sparse-or-too-noisy">14.4 Memory Could Become Either Too Sparse Or Too Noisy</h3>
+<p>The friends loop needs memory. Without memory, it repeats questions, forgets null results, and fails to build a research trajectory. With too much unstructured memory, it drowns in logs. The project solved this by creating two memory surfaces: a Markdown wiki and a structured notebook knowledge base.</p>
+<p>The wiki is human and agent readable. It includes <code>index.md</code>, <code>log.md</code>, <code>question-board.md</code>, <code>decision-records.md</code>, <code>caveats.md</code>, <code>semantic-map.md</code>, and <code>findings.md</code>. These files are append-oriented and readable. The knowledge base is structured JSON plus Markdown. It extracts notebook cells, status, validation metadata, hypothesis seeds, semantic slots, and latest entries. Candidate policy can then use this memory to seed follow-up candidates.</p>
+<p>The challenge is balance. If the system only writes prose, it becomes hard to query. If it only writes JSON, it becomes hard for humans and LLMs to use. The dual wiki/JSON pattern is a pragmatic compromise.</p>
+<h3 id="14-5-observability-had-to-serve-humans-and-tests">14.5 Observability Had To Serve Humans And Tests</h3>
+<p>The first kind of observability was developer observability: can tests tell whether a phase regressed? The second kind was product observability: can a human replay what the agents did? The third kind was research observability: can a future analyst inspect how a claim was produced?</p>
+<p>The final system writes all three. <code>phase_regression_summary.json</code> supports phase gates. <code>friends_loop_telemetry.json</code> and <code>ui/index.html</code> support playback. <code>friends_loop_session.json</code>, notebooks, Markdown exports, and discovery decision reports support research inspection. This became a major thesis point: observability is not an add-on. In an autonomous research system, observability is part of the research method.</p>
+<h3 id="14-6-multi-agent-inspiration-needed-deterministic-grounding">14.6 Multi-Agent Inspiration Needed Deterministic Grounding</h3>
+<p>Co-Scientist inspired the architecture, but copying a high-scale multi-agent scientific system was neither possible nor appropriate. The repository needed something testable in local runs. Deterministic governance layers were therefore a deliberate compromise. They are less expressive than live debate agents, but they are inspectable, repeatable, and regression-testable.</p>
+<p>This created a productive tension. The advisor-style critique is that deterministic transcripts are not true debate. The student response is that true debate without reproducibility would not have solved the current engineering problem. The present architecture creates stable interfaces where live agents can be added later. It also creates a baseline that future live agents must beat.</p>
+<h2 id="15-llm-wiki-and-memory-mechanisms">15. LLM Wiki And Memory Mechanisms</h2>
+<p>The project uses an LLM wiki pattern: generated notebooks and their Markdown exports become durable, readable memory for future agent turns. The phrase "wiki" is important because the system is not simply logging events. It is building an analysis workspace that future agents can read, cite, and extend.</p>
+<p>The workspace is created by <code>ensure_notebook_workspace</code> in <code>app/data_exploration_agent.py</code>. It creates:</p>
+<ul>
+<li><code>SCHEMA.md</code></li>
+<li><code>index.md</code></li>
+<li><code>log.md</code></li>
+<li><code>question-board.md</code></li>
+<li><code>decision-records.md</code></li>
+<li><code>caveats.md</code></li>
+<li><code>semantic-map.md</code></li>
+<li><code>findings.md</code></li>
+</ul>
+<p><code>SCHEMA.md</code> documents the operating conventions. Raw data remains immutable. Generated notebooks compile reusable analysis. Markdown exports serve as agent-readable wiki pages. <code>index.md</code> catalogs artifacts. <code>log.md</code> records append-only activity. Agents should prefer the Markdown export for reading and the <code>.ipynb</code> file when execution metadata is needed. Semantic SQL is governed through whitelisted views and SELECT-only constraints.</p>
+<p>This design supports three readers:</p>
+<ol>
+<li>Humans who need to inspect the project.</li>
+<li>LLM agents that need compact textual memory.</li>
+<li>Deterministic code that needs structured metadata.</li>
+</ol>
+<p>The wiki files are intentionally simple. They avoid a database dependency and keep the knowledge surface visible in versioned files. The tradeoff is that append-only Markdown can become long. That is why the system also maintains <code>notebook-knowledge.json</code>.</p>
+<h3 id="15-1-notebook-knowledge-base">15.1 Notebook Knowledge Base</h3>
+<p>The notebook knowledge base is maintained by <code>app/notebook_knowledge_base.py</code>. It reads notebooks, extracts cells, detects execution status, reads validation metadata, records semantic slots, and writes two artifacts:</p>
+<ul>
+<li><code>notebook-knowledge.json</code></li>
+<li><code>notebook-knowledge.md</code></li>
+</ul>
+<p>The JSON artifact is for code. The Markdown artifact is for agents and humans. A knowledge entry includes notebook path, Markdown path, selected candidate, result summary, cells, notebook status, notebook validation, validation contract, semantic slot, and hypothesis seeds. The system also records a summary with entry count, latest notebook, latest seed question, and latest source cell.</p>
+<p>This gives the next turn a memory query. Before ranking candidates, the loop reads the knowledge base and can say how many entries exist, which notebook is latest, and which seed is available. Candidate policy can then create follow-up questions such as:</p>
+<pre><code class="language-text">Which broader business question should reuse the current result as a starting point?</code></pre>
+<p>or:</p>
+<pre><code class="language-text">Which external replication or stronger causal-design notebook should we create before treating the lift as durable?</code></pre>
+<p>Those questions are not random. They are generated because prior notebooks created seeds, and the system can cite the source notebook and source cell.</p>
+<h3 id="15-2-shared-wiki-entries">15.2 Shared Wiki Entries</h3>
+<p>After each turn, <code>append_friend_wiki_entries</code> writes role-specific and artifact-specific summaries to the wiki. The entries include the selected question, candidate slot, notebook path, Markdown path, caveats, decision records, and findings. The writing pattern is append-oriented. Old entries are not rewritten because the project wants an audit trail, not a mutable narrative.</p>
+<p>The wiki also records caveats separately from findings. That separation matters. In research systems, caveats are often lost when a result is summarized. Here, caveats are first-class memory. If a later turn asks a related question, the caveat can come forward through the knowledge base and candidate policy.</p>
+<h3 id="15-3-wiki-as-a-coordination-protocol">15.3 Wiki As A Coordination Protocol</h3>
+<p>The wiki is not only documentation. It is a coordination protocol between runs. A future agent session can inspect <code>common-analysis/notebooks/index.md</code> and <code>notebook-knowledge.md</code> to understand what the system already did. This matters in a Codex workflow where sessions can be compacted, interrupted, or resumed. Durable files are more reliable than chat memory.</p>
+<p>The wiki also supports governance. If a candidate claims novelty, the system can compare it against prior semantic slots and notebook seeds. If a candidate claims a finding is reusable, the system can check whether the notebook exists and whether it executed. If a candidate should be weakened by prior evidence, reflection can cite that prior evidence.</p>
+<h3 id="15-4-limitations-of-the-wiki-mechanism">15.4 Limitations Of The Wiki Mechanism</h3>
+<p>The wiki is useful but incomplete. It does not yet provide semantic search over all notebook exports. It does not summarize long histories into hierarchical review articles. It does not enforce a formal ontology of findings. It can accumulate stale entries if later runs supersede earlier evidence. It is also possible for generated prose to be too verbose for efficient LLM use.</p>
+<p>The next version should add an indexed memory layer. That layer could compute embeddings over Markdown exports, track supersession relationships, and generate periodic review notes. However, the current wiki is the correct foundation: it is simple, transparent, and already tied to executable notebooks.</p>
+<h2 id="16-notebook-execution-and-evidence-objects">16. Notebook Execution And Evidence Objects</h2>
+<p>Notebook execution is one of the most important implementation details because it changes notebooks from display files into evidence objects. A notebook in this system is not only a chart or narrative. It is a structured artifact that embeds the selected candidate, result payload, methodology, formal hypothesis, test result, diagnostics, caveats, and validation contract.</p>
+<p>The notebook writer lives in <code>app/data_exploration_agent.py</code>. For every selected turn, <code>write_turn_notebook</code> creates a file named:</p>
+<pre><code class="language-text">turn-&lt;number&gt;-&lt;candidate-kind&gt;.ipynb</code></pre>
+<p>It also writes a Markdown export beside it. The notebook starts with human-readable sections and includes code cells that render structured payloads as tables. If the result has a methodology card, the notebook includes it. If the result has a reasoning trace, the notebook includes it. If the result has an experimental design, it includes a design table. If the result has a formal hypothesis, it includes H0/H1 and related fields. If it has a statistical test result, it includes the executed test output and the validation contract.</p>
+<p>The validation contract is particularly important. A simplified version of the generated notebook cell is:</p>
+<pre><code class="language-python">validation_contract = result_summary.get(&quot;notebook_validation_contract&quot;, {})
+observed_contract = {
+    &quot;schema_version&quot;: validation_contract.get(&quot;schema_version&quot;),
+    &quot;kind&quot;: selected_candidate.get(&quot;kind&quot;),
+    &quot;semantic_slot&quot;: &quot;|&quot;.join(
+        str(selected_candidate.get(key, &quot;&quot;))
+        for key in [&quot;family&quot;, &quot;metric_focus&quot;, &quot;population_scope&quot;, &quot;comparison_lens&quot;]
+    ),
+    &quot;metric&quot;: result_summary.get(&quot;metric&quot;),
+    &quot;value&quot;: result_summary.get(&quot;value&quot;),
+    &quot;claim_strength&quot;: result_summary.get(&quot;claim_strength&quot;),
+    &quot;statistical_test_result&quot;: {
+        key: result_summary.get(&quot;statistical_test_result&quot;, {}).get(key)
+        for key in validation_contract.get(&quot;statistical_test_result&quot;, {})
+    },
+    &quot;data_snapshot_hashes&quot;: validation_contract.get(&quot;data_snapshot_hashes&quot;, {}),
+}
+validation_passed = observed_contract == validation_contract
+assert validation_passed</code></pre>
+<p>This cell does not prove the statistical design is correct, but it proves that the notebook-visible result matches the runner-visible result for the checked fields. That is a meaningful guardrail. It prevents a report from displaying one value while the notebook silently contains another.</p>
+<h3 id="16-1-lightweight-execution">16.1 Lightweight Execution</h3>
+<p>The lightweight execution backend in <code>app/notebook_execution.py</code> executes generated Python code cells without launching a full Jupyter kernel. It maintains a namespace, executes statements, evaluates final expressions where possible, and records display output. This is enough for current generated notebooks because their cells are simple and deterministic.</p>
+<p>The benefit is speed and low dependency cost. A 20-turn run can execute many notebooks without requiring a heavy Jupyter environment. The cost is fidelity. Lightweight execution is not identical to full notebook execution. It may not support every Jupyter behavior, magic command, display hook, or kernel state nuance. The report evaluator therefore caps notebook maturity for lightweight-executed notebooks. Lightweight execution is better than scaffolding, but it is not full validation.</p>
+<h3 id="16-2-nbclient-execution">16.2 Nbclient Execution</h3>
+<p>The code also supports an <code>nbclient</code> backend. When selected, the payload is converted to a notebook object and executed with nbclient. This is closer to real Jupyter execution and should be used when the notebook becomes a serious validation artifact. The system already has the command-line option:</p>
+<pre><code class="language-text">--notebook-execution-backend nbclient</code></pre>
+<p>The thesis should be clear that current default runs generally use lightweight execution unless explicitly configured otherwise. This is a maturity distinction, not a defect. The architecture supports the stronger backend, but the phase gates were primarily about end-to-end governance metadata and report generation.</p>
+<h3 id="16-3-sample-notebook-question-bank">16.3 Sample Notebook: Question Bank</h3>
+<p>The first notebook in a run is the question bank:</p>
+<pre><code class="language-text">000-question-bank.ipynb</code></pre>
+<p>It records the initial ranked board available to the friend panel. A representative structure is:</p>
+<pre><code class="language-text"># Upfront Question Bank
+
+This notebook records the initial ranked board available to the data-scientist friend panel.
+
+## Panel Exposition
+
+Spark proposes exploratory candidates.
+Skeptic protects causal and statistical boundaries.
+Mapper links candidates to semantic slots and prior artifacts.
+Moderator ranks the board.
+DataAgent turns selected questions into executed notebooks and Markdown wiki pages.</code></pre>
+<p>The question bank notebook is useful because it records the space of alternatives at the beginning of a run. Without it, only selected questions would be durable. A thesis-level system should preserve rejected options because selection is part of the research process.</p>
+<h3 id="16-4-sample-notebook-turn-analysis">16.4 Sample Notebook: Turn Analysis</h3>
+<p>A turn notebook has a richer structure. A representative Markdown outline is:</p>
+<pre><code class="language-text"># Turn 04 Analysis
+
+## Selected Candidate
+- Question
+- Kind
+- Family
+- Metric focus
+- Population scope
+- Comparison lens
+- Score
+
+## Result Summary
+- Answer
+- Metric
+- Value
+- Top city or MSA
+- Caveat
+- Claim strength
+
+## Agent Exposition
+- Spark rationale
+- Skeptic caveat
+- Mapper semantic slot
+- Moderator selection reason
+- DataAgent reusable result
+
+## Formal Statistical Methodology Card
+## Auditable Reasoning Trace
+## Experimental Design Plan
+## Formal Statistical Hypothesis
+## Executed Statistical Test
+## Notebook Validation Contract
+## Diagnostics Or EDA Artifacts</code></pre>
+<p>The exact sections depend on the result. A workflow task may not have a statistical test. A matched MSA-week hypothesis should have formal hypothesis and test sections. A descriptive EDA question may emphasize artifacts and seeds.</p>
+<h3 id="16-5-sample-notebook-multiple-testing-correction">16.5 Sample Notebook: Multiple-Testing Correction</h3>
+<p>After all turns complete, the system writes:</p>
+<pre><code class="language-text">999-multiple-testing-corrections.ipynb</code></pre>
+<p>This notebook records family-level correction fields after all turns complete. It is important because per-turn notebooks are written before the system knows the full multiple-testing family. The correction notebook gives the run a post-hoc family view without mutating the original turn notebooks.</p>
+<p>The distinction is subtle but important. A per-turn notebook is an immutable record of what happened during the turn. The correction notebook is a run-level synthesis. Mutating earlier notebooks with later correction data would make the audit trail harder to reason about.</p>
+<h3 id="16-6-notebook-status-and-maturity">16.6 Notebook Status And Maturity</h3>
+<p>The report evaluator recognizes notebook status. A notebook can be absent, scaffolded, lightweight-executed, nbclient-executed, validated, or published. The system uses this status when judging actionability. A scaffolded notebook cannot support a validated finding. A lightweight-executed notebook improves evidence but is capped. A validated notebook can support stronger claims if methodology and evidence are also mature.</p>
+<p>This is a practical mechanism for preventing overclaiming. It forces report maturity to depend on artifact maturity. The thesis should preserve this point: notebook execution is not a side feature. It is part of claim governance.</p>
+<h2 id="17-observability-telemetry-and-reports">17. Observability, Telemetry, And Reports</h2>
+<p>Observability is the difference between an impressive demo and a research system that can be inspected. The project records observability at several levels: turn events, workflow stage audit logs, notebook paths, wiki paths, knowledge summaries, prompt hashes, decision summaries, business reports, playback reports, and phase regression summaries.</p>
+<h3 id="17-1-telemetry-event-stream">17.1 Telemetry Event Stream</h3>
+<p>The event stream is constructed in <code>_append_turn_telemetry</code> in <code>app/friends_loop.py</code>. For each turn, the system emits events such as:</p>
+<ul>
+<li><code>turn.started</code></li>
+<li><code>knowledge.read</code></li>
+<li><code>board.proposed</code></li>
+<li><code>board.ranked</code></li>
+<li><code>semantic.query</code></li>
+<li><code>hypothesis.classified</code></li>
+<li><code>question.submitted</code></li>
+<li><code>workflow.stage</code></li>
+<li><code>result.studied</code></li>
+<li><code>notebook.created</code></li>
+<li><code>wiki.updated</code></li>
+<li><code>knowledge.updated</code></li>
+<li><code>discussion.message</code></li>
+<li><code>memory.seeded</code></li>
+</ul>
+<p>These events provide a timeline. They also provide structured data. For example, a <code>semantic.query</code> event records query id, purpose, SQL, referenced views, row count, row limit, columns, and row preview. A <code>workflow.stage</code> event records stage name, function or agent, input references, output reference, warnings, and timestamp. A <code>notebook.created</code> event records notebook paths. This makes the playback UI more than an animation; it is a structured observability surface.</p>
+<h3 id="17-2-prompt-hashes">17.2 Prompt Hashes</h3>
+<p>The playback telemetry includes friend prompt hashes and evidence prompt hashes. This matters because agent behavior depends on role definitions and prompts. If the prompt changes, a run should not be treated as identical. Hashes let a reviewer compare runs and see whether prompt versions changed. This is the prompt analogue of a code version.</p>
+<p>The system does not yet treat prompt hashes as a full reproducibility lock. It does, however, surface them in telemetry and reports, which is the right first step. Future work should pin prompt versions more aggressively and include prompt diff summaries in regression evidence.</p>
+<h3 id="17-3-session-json">17.3 Session JSON</h3>
+<p><code>friends_loop_session.json</code> is the canonical run artifact. It includes schema version, run configuration, friends, prompt hashes, turns, notebook workspace, decision summaries, session summary, and telemetry events. Each turn includes selected candidate, rejected candidates, candidate classification, workflow status, packet paths, notebook paths, wiki paths, wiki summary before selection, result summary, and candidate governance metadata.</p>
+<p>This file is the best source for programmatic analysis. HTML reports are easier to read, but JSON is easier to test. The 20-turn regression gates rely on the JSON structure because they can count completed workflows, inspect selected candidates, and verify that metadata exists.</p>
+<h3 id="17-4-session-markdown">17.4 Session Markdown</h3>
+<p><code>friends_loop_session.md</code> is a human-readable session summary. It includes the autonomous discovery synthesis, completed turns, selected questions, scores, results, metrics, decisions, packet paths, and rejected candidates. It is not as rich as the JSON, but it is valuable for quick review. A maintainer can open one file and understand what the run did.</p>
+<h3 id="17-5-discovery-decision-summary">17.5 Discovery Decision Summary</h3>
+<p><code>discovery_decision_summary.md</code> is a run-level table of decisions. It records requested turns, completed turns, raw decision counts, adjusted decision counts, candidate classifications, EDA turns, statistical-hypothesis turns, workflow turns, lineage turns, and unique adjusted rejected-null hypotheses. It then lists each turn with kind, class, question, H0, H1, adjusted decision, p-value, adjusted p-value, data note, and design note.</p>
+<p>This report exists because the project needed a concise way to audit statistical routing. It answers questions such as:</p>
+<ul>
+<li>Did workflow tasks enter statistical testing?</li>
+<li>How many hypotheses rejected H0?</li>
+<li>Were adjusted decisions recorded?</li>
+<li>Which designs were used?</li>
+<li>Which questions were only EDA?</li>
+</ul>
+<p>That report was essential when the system began generating more complex question types. Without it, routing regressions were hard to see.</p>
+<h3 id="17-6-business-evidence-report">17.6 Business Evidence Report</h3>
+<p><code>business_evidence_report.html</code> is the stakeholder-facing report. It is meant for users who care about the answer but not about every JSON field. It summarizes questions, findings, caveats, and evidence in a readable single-page format. The business report is not allowed to become a hype layer. It must preserve caveats and avoid causal overclaiming.</p>
+<p>The business report is important because the project is not only a backend experiment. The user wanted HTML reports after runs and wanted both business and playback formats produced per run. The implementation now writes both formats automatically. That requirement changed the architecture: report generation became a first-class run artifact rather than an optional post-processing step.</p>
+<h3 id="17-7-playback-ui">17.7 Playback UI</h3>
+<p>The playback UI lives under <code>ui/index.html</code> inside each run directory. It renders <code>friends_loop_telemetry.json</code> into a replayable view of the friends loop. The point is not entertainment. The point is traceability. A reviewer can see when the board was proposed, when knowledge was read, when the question was submitted, when the workflow stages fired, when the notebook was created, and when wiki memory was updated.</p>
+<p>This is especially useful for multi-agent systems because the failure modes are temporal. A final answer may look wrong because the wrong candidate was selected, because the semantic query returned no rows, because a workflow task was misclassified, because the notebook failed, or because the report overpromoted a weak result. Playback gives the reviewer a time-ordered path to diagnose those failures.</p>
+<h3 id="17-8-phase-regression-summary">17.8 Phase Regression Summary</h3>
+<p>The phase regression summary is the delivery gate. For the latest phase, it showed 20 requested turns, 20 completed workflows, no early stop, zero workflow-task statistical misroutes, and full metadata coverage across forum, tournament, reflection, and evolution layers. This is the strongest evidence that the new governance layers were not merely present in code but active in the end-to-end run.</p>
+<p>The limitation is that 20 turns is not a statistical proof of correctness. It is an integration and regression standard. It tests orchestration pressure. It can reveal broken paths, missing metadata, misroutes, report failures, and notebook failures. It cannot prove that every future question will be good.</p>
+<h3 id="17-9-observability-architecture">17.9 Observability Architecture</h3>
+<div class="mermaid">flowchart TD
+    Turn[Friends Loop Turn] --&gt; EventStream[Telemetry Events]
+    Turn --&gt; Packet[Experiment Packet]
+    Turn --&gt; Notebook[Executed Notebook]
+    Turn --&gt; Wiki[Wiki Entries]
+    EventStream --&gt; Playback[Playback UI]
+    Turn --&gt; SessionJSON[Session JSON]
+    SessionJSON --&gt; SessionMD[Session Markdown]
+    SessionJSON --&gt; BusinessHTML[Business Evidence Report]
+    SessionJSON --&gt; DecisionReport[Discovery Decision Summary]
+    SessionJSON --&gt; Regression[Phase Regression Summary]
+    Notebook --&gt; Knowledge[Notebook Knowledge Base]
+    Wiki --&gt; Knowledge
+    Knowledge --&gt; NextTurn[Next Turn Candidate Seeds]</div>
+<p>This diagram captures the central observability loop. A turn creates artifacts. Those artifacts create reports. Some artifacts also feed memory. Memory influences the next turn. The system is therefore observable and iterative at the same time.</p>
+<h2 id="18-sample-end-to-end-run-narrative">18. Sample End-To-End Run Narrative</h2>
+<p>To understand the system, imagine a public forum question:</p>
+<pre><code class="language-text">Do big sports crowds actually turn into more local spending?</code></pre>
+<p>The forum record attaches a persona, such as a small-business owner or policymaker. It includes rationale and popularity. Candidate policy reads the record and creates a candidate with a public question and internal semantic slot. Tournament scoring gives it public-interest, novelty, testability, evidence-value, and policy/business relevance scores. Reflection checks whether the question could mislead users into believing the system can prove causality. Evolution checks whether prior spending questions should be combined, split, strengthened, or carried forward.</p>
+<p>The selected candidate is then mapped into a formal hypothesis:</p>
+<pre><code class="language-text">H0: Event-exposed locality-weeks have no higher mean revenue_all than matched no-game locality-week controls.
+H1: Event-exposed locality-weeks have higher mean revenue_all than matched no-game locality-week controls.</code></pre>
+<p>The design router chooses a matched city-week or MSA-week test, depending on available data and question kind. The runner constructs treated and control groups, computes match diagnostics, estimates the difference, records p-values, applies decision rules, and stores caveats. If the run is part of a family, multiple-testing correction is applied after all turns.</p>
+<p>DataAgent then writes the notebook. The notebook records the public question, formal hypothesis, design, test result, diagnostics, validation contract, and caveats. The Markdown export makes the result readable to future agents. The wiki is updated. The notebook knowledge base is updated with seeds for later questions.</p>
+<p>Telemetry records the turn. The business report summarizes the result cautiously. The playback report shows how the result was produced. The phase regression summary counts whether this turn completed and whether the required metadata was present.</p>
+<p>This is the actual contribution of the system. It is not simply that an LLM asks a question. It is that a public question travels through a governed, observable, testable path into evidence artifacts and back into memory.</p>
+<h2 id="19-detailed-lessons-learned">19. Detailed Lessons Learned</h2>
+<h3 id="13-1-question-wording-is-a-system-design-problem">13.1 Question Wording Is A System Design Problem</h3>
+<p>The project initially tried to improve question wording with string rewrites. That helped but was brittle. The better fix was architectural: make public questions first-class records from a forum layer.</p>
+<h3 id="13-2-analysis-handles-must-not-become-headlines">13.2 Analysis Handles Must Not Become Headlines</h3>
+<p>Internal handles are useful for execution. They should not leak into stakeholder-facing questions. A kind such as <code>semantic_msa_batch_supported_positive</code> is appropriate for code, but the report should say "Which major-market spending lift should we check next?"</p>
+<h3 id="13-3-determinism-is-a-strength">13.3 Determinism Is A Strength</h3>
+<p>Live agent debate would be more expressive, but deterministic tournament, reflection, and evolution are testable. They can be run in CI-like workflows and validated through 20-turn regression gates.</p>
+<h3 id="13-4-statistical-claims-need-guardrails">13.4 Statistical Claims Need Guardrails</h3>
+<p>The system repeatedly returns significant p-values in exploratory observational contexts. Without careful reporting, users may read "reject H0" as causal proof. The architecture now emphasizes caveats, methodology cards, and claim boundaries.</p>
+<h3 id="13-5-notebooks-are-evidence-objects">13.5 Notebooks Are Evidence Objects</h3>
+<p>Notebooks are not just user-facing conveniences. In this system they are durable knowledge artifacts that seed future candidates, record validation contracts, and make analysis reproducible.</p>
+<h3 id="13-6-regression-runs-are-product-tests">13.6 Regression Runs Are Product Tests</h3>
+<p>The 20-turn run is more than a smoke test. It verifies that candidate selection, hypothesis routing, testing, reports, and telemetry continue to work together.</p>
+<h2 id="20-threats-to-validity">20. Threats To Validity</h2>
+<p>The main validity threats are known and should be treated as part of the system's operating envelope.</p>
+<table>
+<thead><tr><th>Threat Type</th><th>Risk</th><th>Current Mitigation</th><th>Remaining Gap</th></tr></thead>
+<tbody>
+<tr><td>Construct validity</td><td>Public questions may not map cleanly to available outcomes</td><td>formal hypothesis contracts require exposure, outcome, unit, comparison, and direction</td><td>richer user-facing clarification is not implemented</td></tr>
+<tr><td>Internal validity</td><td>Matched observational tests can confuse event exposure with correlated local conditions</td><td>match diagnostics, comparison metadata, and cautious report language</td><td>stronger causal designs, placebo tests, and pre-trend checks remain incomplete</td></tr>
+<tr><td>External validity</td><td>Sports/event findings may not transfer to other domains</td><td>architecture isolates domain-specific data and test runners</td><td>no evidence yet for non-sports domains</td></tr>
+<tr><td>Statistical conclusion validity</td><td>Repeated screening can inflate false positives</td><td>multiple-testing correction and evidence promotion gates</td><td>clustered uncertainty and bootstrap robustness need expansion</td></tr>
+<tr><td>Product validity</td><td>A technically correct question may still be hard for humans to understand</td><td>QuestionForum records, personas, readability gates, reflection pass</td><td>no live forum usability study yet</td></tr>
+<tr><td>Reproducibility</td><td>Multi-agent behavior can drift if model calls are unconstrained</td><td>deterministic governance modules and 20-turn regression gates</td><td>future live debate agents will need transcript pinning and replay controls</td></tr>
+</tbody></table>
+<p>These threats do not invalidate the engineering result. They define the boundary of the result: a reproducible, auditable event-evidence workflow with explicit caveats, not a causal oracle or fully autonomous research institution.</p>
+<h2 id="21-limitations">21. Limitations</h2>
+<p>The current system has important limitations:</p>
+<ul>
+<li>The forum is JSON-backed, not a live user-facing product.</li>
+<li>Tournament debate is deterministic, not true adversarial agent debate.</li>
+<li>Reflection is heuristic, not literature-grounded peer review.</li>
+<li>Evolution records actions but does not yet generate rich new hypothesis variants.</li>
+<li>External literature search is not integrated into the main loop.</li>
+<li>Matching designs are observational and cannot establish causality.</li>
+<li>Same-year, COVID-period, placebo, pre-trend, clustered-SE, and block-bootstrap robustness remain incomplete.</li>
+<li>The system is narrow: sports events and local economic reference data, not general science.</li>
+</ul>
+<h2 id="22-future-work">22. Future Work</h2>
+<p>The next major improvements should be:</p>
+<ol>
+<li>Forum UI and submission workflow.</li>
+<li>Human voting and moderation.</li>
+<li>True model-based tournament debate with deterministic transcript storage.</li>
+<li>Literature and web grounding before hypothesis promotion.</li>
+<li>Stronger causal designs where data supports them.</li>
+<li>Bootstrap or clustered uncertainty for repeated locality-week observations.</li>
+<li>Evolution that produces concrete rewritten candidates, not only metadata.</li>
+<li>Cross-run dashboard for forum question lifecycle: proposed to selected to tested to answered.</li>
+</ol>
+<h2 id="23-conclusion">23. Conclusion</h2>
+<p>This project built a working event-agent research system that turns public questions into auditable evidence artifacts. Its main contribution is not any single statistical test or report. The contribution is the layered architecture: public question demand, multi-agent candidate governance, formal hypothesis testing, notebook-backed evidence, and repeatable 20-turn regression.</p>
+<p>The Co-Scientist inspiration clarified the shape of the missing reasoning layers: debate, reflection, ranking, and evolution. The local implementation translated those ideas into deterministic modules that fit the repository's evidence workflow. The result is a pragmatic research assistant for civic and business event questions: not a replacement for scientists, economists, journalists, or policymakers, but a disciplined machine for generating, testing, critiquing, and reporting questions they actually care about.</p>
+<h2 id="appendix-a-implementation-reference">Appendix A. Implementation Reference</h2>
+<p>This appendix gives a more concrete implementation reference for future maintainers. It is written as a bridge between thesis prose and source code. The purpose is not to duplicate every line of code, but to make the architecture navigable.</p>
+<h3 id="a-1-command-line-entry">A.1 Command-Line Entry</h3>
+<p>The run starts at the command-line layer. The important parameters are turn count, run id, notebook directory, agent mode, data-pull mode, and notebook execution backend. In practice, a phase run resembles:</p>
+<pre><code class="language-bash">python -m app.main \
+  --mode friends-question-loop \
+  --turns 20 \
+  --run-id phase-048-hypothesis-evolution_20turn_regression \
+  --notebook-dir common-analysis/notebooks \
+  --notebook-execution-backend lightweight</code></pre>
+<p>The exact command can vary by phase helper, but the conceptual contract is stable. A run should produce a run directory under <code>app/runs/&lt;run-id&gt;/friends-question-loop/</code>. If the run does not produce that directory, it has not produced evidence. If it produces the directory but not the expected reports, the phase is incomplete.</p>
+<h3 id="a-2-expected-run-directory">A.2 Expected Run Directory</h3>
+<p>A successful run should produce a directory with artifacts like:</p>
+<pre><code class="language-text">app/runs/&lt;run-id&gt;/friends-question-loop/
+  friends_loop_session.json
+  friends_loop_session.md
+  friends_loop_telemetry.json
+  discovery_decision_summary.md
+  business_evidence_report.html
+  phase_regression_summary.json
+  ui/
+    index.html
+  turn-*/
+    reference-city-week/
+      experiment_packet.json</code></pre>
+<p>The notebooks live in the configured notebook directory rather than inside the run directory. This separation is deliberate. The run directory is the session package. The notebook workspace is a cross-run knowledge surface. That means a run can create notebooks that future runs can read.</p>
+<h3 id="a-3-candidate-record-shape">A.3 Candidate Record Shape</h3>
+<p>A candidate record is not only a question string. A representative candidate contains:</p>
+<pre><code class="language-json">{
+  &quot;kind&quot;: &quot;semantic_msa_batch_supported_positive&quot;,
+  &quot;family&quot;: &quot;positive_revenue&quot;,
+  &quot;metric_focus&quot;: &quot;revenue_all_difference&quot;,
+  &quot;population_scope&quot;: &quot;major_market_msa_weeks&quot;,
+  &quot;comparison_lens&quot;: &quot;matched_msa_week_controls&quot;,
+  &quot;question&quot;: &quot;Which major-market spending lift should we check next?&quot;,
+  &quot;rationale&quot;: &quot;Prior semantic exploration found a candidate MSA-week lift.&quot;,
+  &quot;freshness_claim&quot;: &quot;Adds a major-market statistical check rather than repeating city-week screens.&quot;,
+  &quot;source_notebook&quot;: &quot;common-analysis/notebooks/turn-03-example.ipynb&quot;,
+  &quot;source_cell&quot;: &quot;semantic_msa_batch_results&quot;
+}</code></pre>
+<p>The fields let the system compare candidates structurally. A string-only question board could only detect duplicate prose. The semantic slot lets the policy detect that two different phrasings may still cover the same family, metric, population, and comparison lens.</p>
+<h3 id="a-4-forum-record-shape">A.4 Forum Record Shape</h3>
+<p>A forum record is stakeholder-facing. A representative record contains:</p>
+<pre><code class="language-json">{
+  &quot;question_id&quot;: &quot;public-spending-crowds-001&quot;,
+  &quot;kind&quot;: &quot;public_interest_spending&quot;,
+  &quot;persona&quot;: &quot;small_business_owner&quot;,
+  &quot;question&quot;: &quot;Do big sports crowds actually turn into more local spending?&quot;,
+  &quot;rationale&quot;: &quot;Businesses want to know whether staffing and inventory decisions should change around event weeks.&quot;,
+  &quot;priority&quot;: 0.91,
+  &quot;popularity&quot;: 0.87,
+  &quot;source_url&quot;: &quot;https://example.local/forum/questions/sports-crowds-spending&quot;,
+  &quot;status&quot;: &quot;proposed&quot;,
+  &quot;tags&quot;: [&quot;sports&quot;, &quot;local-economy&quot;, &quot;spending&quot;]
+}</code></pre>
+<p>The important point is that this record does not need to name <code>revenue_all</code>, matched controls, or MSA-week blocks. That language belongs below the public boundary. The forum owns demand. The analysis layer owns translation.</p>
+<h3 id="a-5-tournament-output-shape">A.5 Tournament Output Shape</h3>
+<p>A tournament output attaches governance metadata to candidates. A representative payload contains:</p>
+<pre><code class="language-json">{
+  &quot;tournament_rank&quot;: 1,
+  &quot;tournament_score&quot;: 4.42,
+  &quot;tournament_wins&quot;: 5,
+  &quot;tournament_losses&quot;: 0,
+  &quot;tournament_component_scores&quot;: {
+    &quot;public_interest&quot;: 0.93,
+    &quot;novelty&quot;: 0.81,
+    &quot;testability&quot;: 0.88,
+    &quot;evidence_value&quot;: 0.90,
+    &quot;policy_business_relevance&quot;: 0.91
+  },
+  &quot;tournament_transcript&quot;: [
+    &quot;Candidate A wins because it is more testable and has clearer policy relevance.&quot;
+  ]
+}</code></pre>
+<p>The transcript is not meant to impersonate a human debate. It is an audit explanation. A future live-debate layer can replace or enrich it, but the deterministic transcript already gives tests something concrete to inspect.</p>
+<h3 id="a-6-reflection-output-shape">A.6 Reflection Output Shape</h3>
+<p>The reflection pass adds review metadata:</p>
+<pre><code class="language-json">{
+  &quot;reflection_status&quot;: &quot;pass&quot;,
+  &quot;misleading_risk&quot;: &quot;Users may confuse matched observational association with causal impact.&quot;,
+  &quot;weakening_prior_evidence&quot;: &quot;Prior null results in comparable cities would weaken promotion.&quot;,
+  &quot;answerability&quot;: &quot;Answerable as an exploratory matched locality-week comparison.&quot;,
+  &quot;score_adjustment&quot;: 0.03
+}</code></pre>
+<p>This record makes critique portable. Instead of only saying "be careful" in prose, the system stores the reason a question might mislead, what prior evidence would weaken it, and whether the data can answer it.</p>
+<h3 id="a-7-evolution-output-shape">A.7 Evolution Output Shape</h3>
+<p>The evolution pass records how the question relates to memory:</p>
+<pre><code class="language-json">{
+  &quot;evolution_action&quot;: &quot;strengthen&quot;,
+  &quot;evolution_reason&quot;: &quot;Prior weak evidence suggests requiring stronger diagnostics before promotion.&quot;,
+  &quot;related_prior_slots&quot;: [
+    &quot;positive_revenue|revenue_all_difference|major_market_msa_weeks|matched_msa_week_controls&quot;
+  ],
+  &quot;score_adjustment&quot;: 0.02
+}</code></pre>
+<p>The current system uses this metadata mostly for scoring and audit. Future work should make evolution generative: it should produce concrete rewritten variants and carry a formal parent-child hypothesis graph.</p>
+<h3 id="a-8-turn-payload-shape">A.8 Turn Payload Shape</h3>
+<p>The turn payload combines selection, execution, artifacts, and memory:</p>
+<pre><code class="language-json">{
+  &quot;turn&quot;: 4,
+  &quot;selected_candidate&quot;: {},
+  &quot;rejected_candidates&quot;: [],
+  &quot;selected_candidate_discovery_classification&quot;: {
+    &quot;classification&quot;: &quot;statistical_hypothesis&quot;
+  },
+  &quot;workflow_status&quot;: &quot;completed&quot;,
+  &quot;packet_run_id&quot;: &quot;turn-04-semantic-msa&quot;,
+  &quot;packet_paths&quot;: {},
+  &quot;notebook_paths&quot;: {},
+  &quot;wiki_paths&quot;: {},
+  &quot;wiki_summary_before_selection&quot;: {},
+  &quot;result_summary&quot;: {}
+}</code></pre>
+<p>This payload is intentionally verbose. A compact result would be easier to read but harder to debug. The turn is the unit of evidence, so it needs to carry the context that made the evidence possible.</p>
+<h3 id="a-9-session-summary-shape">A.9 Session Summary Shape</h3>
+<p>The session summary includes aggregate decisions and synthesis:</p>
+<pre><code class="language-json">{
+  &quot;turn_count&quot;: 20,
+  &quot;completed_turns&quot;: 20,
+  &quot;discovery_decision_summary&quot;: {
+    &quot;raw_decision_counts&quot;: {},
+    &quot;adjusted_decision_counts&quot;: {},
+    &quot;candidate_classification_counts&quot;: {},
+    &quot;workflow_turn_count&quot;: 0,
+    &quot;unique_adjusted_reject_h0_count&quot;: 10
+  },
+  &quot;autonomous_discovery_synthesis&quot;: {
+    &quot;answer&quot;: &quot;Summary of what the run learned.&quot;,
+    &quot;claim_boundary&quot;: &quot;Exploratory observational evidence only.&quot;
+  }
+}</code></pre>
+<p>The summary is where regression and reporting meet. Tests can inspect counts, while humans can read the synthesis. Both views are necessary.</p>
+<h2 id="appendix-b-sample-notebook-details">Appendix B. Sample Notebook Details</h2>
+<p>This appendix expands the notebook discussion with representative cells and explains why each section exists.</p>
+<h3 id="b-1-notebook-header">B.1 Notebook Header</h3>
+<p>A generated turn notebook begins with identity. It should make the selected question visible before any code appears:</p>
+<pre><code class="language-markdown"># Turn 07 Analysis
+
+Question: Which major-market spending lift should we check next?
+
+Kind: semantic_msa_batch_supported_positive
+Family: positive_revenue
+Metric focus: revenue_all_difference
+Population scope: major_market_msa_weeks
+Comparison lens: matched_msa_week_controls</code></pre>
+<p>This header prevents a common notebook failure: the code may be correct, but the reader cannot tell which research question it answers. The candidate slot also helps future agents decide whether the notebook is relevant.</p>
+<h3 id="b-2-embedded-payload-cell">B.2 Embedded Payload Cell</h3>
+<p>A notebook needs the selected candidate and result summary as executable data:</p>
+<pre><code class="language-python">selected_candidate = {
+    &quot;kind&quot;: &quot;semantic_msa_batch_supported_positive&quot;,
+    &quot;question&quot;: &quot;Which major-market spending lift should we check next?&quot;,
+    &quot;family&quot;: &quot;positive_revenue&quot;,
+    &quot;metric_focus&quot;: &quot;revenue_all_difference&quot;,
+    &quot;population_scope&quot;: &quot;major_market_msa_weeks&quot;,
+    &quot;comparison_lens&quot;: &quot;matched_msa_week_controls&quot;,
+}
+
+result_summary = {
+    &quot;metric&quot;: &quot;revenue_all&quot;,
+    &quot;value&quot;: 12345.67,
+    &quot;claim_strength&quot;: &quot;exploratory_observational&quot;,
+    &quot;caveat&quot;: &quot;Matched observational design; not causal proof.&quot;,
+}</code></pre>
+<p>The actual generated payload is larger. The simplified example shows the principle: the notebook is self-contained enough to render the result without querying hidden runtime state.</p>
+<h3 id="b-3-methodology-card-cell">B.3 Methodology Card Cell</h3>
+<p>The methodology card is rendered as data rather than prose alone:</p>
+<pre><code class="language-python">methodology_card = result_summary.get(&quot;methodology_card&quot;, {})
+pd.DataFrame([methodology_card]).T.rename(columns={0: &quot;value&quot;})</code></pre>
+<p>This helps reviewers compare methods across notebooks. If one notebook used matched city-week controls and another used MSA-week controls, the method table exposes that difference.</p>
+<h3 id="b-4-formal-hypothesis-cell">B.4 Formal Hypothesis Cell</h3>
+<p>The formal hypothesis is also rendered as structured data:</p>
+<pre><code class="language-python">formal_hypothesis = result_summary.get(&quot;formal_hypothesis&quot;, {})
+pd.DataFrame([formal_hypothesis]).T.rename(columns={0: &quot;value&quot;})</code></pre>
+<p>Typical fields include H0, H1, population, unit of analysis, exposure, comparison group, outcome, expected direction, test family, alpha, and decision rule. A notebook without these fields may still be useful for EDA, but it should not be treated as a formal hypothesis test.</p>
+<h3 id="b-5-statistical-test-cell">B.5 Statistical Test Cell</h3>
+<p>The statistical test result is displayed with the same pattern:</p>
+<pre><code class="language-python">statistical_test_result = result_summary.get(&quot;statistical_test_result&quot;, {})
+pd.DataFrame([statistical_test_result]).T.rename(columns={0: &quot;value&quot;})</code></pre>
+<p>This table may include decision, p-value, adjusted p-value, effect estimate, sample counts, matched-pair counts, same-month share, same-block share, and primary design. The purpose is to make the report's claim inspectable.</p>
+<h3 id="b-6-validation-contract-cell">B.6 Validation Contract Cell</h3>
+<p>The validation contract is the strongest notebook-specific guardrail:</p>
+<pre><code class="language-python">validation_contract = result_summary.get(&quot;notebook_validation_contract&quot;, {})
+observed_contract = {
+    &quot;schema_version&quot;: validation_contract.get(&quot;schema_version&quot;),
+    &quot;kind&quot;: selected_candidate.get(&quot;kind&quot;),
+    &quot;metric&quot;: result_summary.get(&quot;metric&quot;),
+    &quot;value&quot;: result_summary.get(&quot;value&quot;),
+    &quot;claim_strength&quot;: result_summary.get(&quot;claim_strength&quot;),
+}
+validation_passed = all(
+    observed_contract.get(key) == validation_contract.get(key)
+    for key in observed_contract
+)
+assert validation_passed</code></pre>
+<p>The real generated cell also checks selected statistical fields and data snapshot hashes. The simplified version shows the logic. The notebook asserts that its visible payload matches the contract.</p>
+<h3 id="b-7-markdown-export">B.7 Markdown Export</h3>
+<p>After execution, the notebook is exported to Markdown. That export is crucial for the LLM wiki because Markdown is cheaper and easier for agents to read than raw <code>.ipynb</code> JSON. The Markdown export preserves headings, prose, code, and outputs. It becomes an agent-readable explanation of the turn.</p>
+<p>The Markdown export also improves code review. A reviewer can inspect a notebook result without opening a notebook UI. In a command-line repository workflow, that matters.</p>
+<h3 id="b-8-why-sample-notebooks-are-in-the-thesis">B.8 Why Sample Notebooks Are In The Thesis</h3>
+<p>Including notebook examples in the thesis is not decoration. It documents a core mechanism. The system's claim is not only that it can choose questions, but that it can produce durable evidence artifacts. The notebook is where candidate governance, statistical design, execution, validation, and wiki memory meet.</p>
+<h2 id="appendix-c-observability-record-examples">Appendix C. Observability Record Examples</h2>
+<p>This appendix expands the observability mechanism with representative telemetry records.</p>
+<h3 id="c-1-knowledge-read-event">C.1 Knowledge Read Event</h3>
+<p>A knowledge-read event records memory state before ranking:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;knowledge.read&quot;,
+  &quot;turn&quot;: 7,
+  &quot;speaker&quot;: &quot;Mapper&quot;,
+  &quot;message&quot;: &quot;Read 6 notebook knowledge entries before ranking.&quot;,
+  &quot;payload&quot;: {
+    &quot;knowledge_summary&quot;: {
+      &quot;entry_count&quot;: 6,
+      &quot;latest_notebook&quot;: &quot;common-analysis/notebooks/turn-06-example.ipynb&quot;,
+      &quot;latest_seed_question&quot;: &quot;Which result needs a robustness check?&quot;
+    }
+  }
+}</code></pre>
+<p>This event matters because it proves the turn did not start from nothing. It also helps debug repetition. If the knowledge count is zero when notebooks exist, memory reading is broken.</p>
+<h3 id="c-2-board-proposed-event">C.2 Board Proposed Event</h3>
+<p>A board-proposed event records the candidate set:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;board.proposed&quot;,
+  &quot;turn&quot;: 7,
+  &quot;speaker&quot;: &quot;FriendPanel&quot;,
+  &quot;message&quot;: &quot;8 candidate questions proposed.&quot;,
+  &quot;payload&quot;: {
+    &quot;candidates&quot;: [
+      {
+        &quot;kind&quot;: &quot;sample_depth&quot;,
+        &quot;question&quot;: &quot;Which cities have enough sports weeks to trust the comparison?&quot;,
+        &quot;total_score&quot;: 0.81
+      }
+    ]
+  }
+}</code></pre>
+<p>This event is important for audit because selected questions do not tell the whole story. A reviewer needs to know what alternatives were available.</p>
+<h3 id="c-3-hypothesis-classified-event">C.3 Hypothesis Classified Event</h3>
+<p>A hypothesis-classified event records routing:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;hypothesis.classified&quot;,
+  &quot;turn&quot;: 7,
+  &quot;speaker&quot;: &quot;Skeptic&quot;,
+  &quot;message&quot;: &quot;Classified 5 statistical drafts, 2 EDA questions, and 1 workflow task.&quot;,
+  &quot;payload&quot;: {
+    &quot;discovery_inventories&quot;: {
+      &quot;statistical_hypothesis_drafts&quot;: [],
+      &quot;eda_questions&quot;: [],
+      &quot;workflow_tasks&quot;: []
+    }
+  }
+}</code></pre>
+<p>This is one of the key regression surfaces. If workflow tasks begin appearing in the statistical queue, the system is likely to produce bad claims.</p>
+<h3 id="c-4-workflow-stage-event">C.4 Workflow Stage Event</h3>
+<p>A workflow-stage event records the deterministic pipeline:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;workflow.stage&quot;,
+  &quot;turn&quot;: 7,
+  &quot;speaker&quot;: &quot;statistical_test_runner&quot;,
+  &quot;message&quot;: &quot;Statistical test produced matched_msa_week_result.json.&quot;,
+  &quot;payload&quot;: {
+    &quot;stage&quot;: &quot;statistical_test&quot;,
+    &quot;agent_or_function&quot;: &quot;run_matched_msa_week_test&quot;,
+    &quot;input_refs&quot;: [&quot;design_plan.json&quot;],
+    &quot;output_ref&quot;: &quot;matched_msa_week_result.json&quot;,
+    &quot;warnings&quot;: []
+  }
+}</code></pre>
+<p>This event is useful because it ties the agent-facing turn to concrete files. Without workflow-stage telemetry, the playback UI would show conversation but not execution.</p>
+<h3 id="c-5-notebook-created-event">C.5 Notebook Created Event</h3>
+<p>A notebook-created event records evidence artifacts:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;notebook.created&quot;,
+  &quot;turn&quot;: 7,
+  &quot;speaker&quot;: &quot;DataAgent&quot;,
+  &quot;message&quot;: &quot;Wrote shared notebook for turn 7.&quot;,
+  &quot;payload&quot;: {
+    &quot;notebook_paths&quot;: {
+      &quot;turn_notebook&quot;: &quot;common-analysis/notebooks/turn-07-semantic-msa.ipynb&quot;,
+      &quot;turn_markdown&quot;: &quot;common-analysis/notebooks/turn-07-semantic-msa.md&quot;,
+      &quot;execution_backend&quot;: &quot;lightweight&quot;
+    }
+  }
+}</code></pre>
+<p>This event links the run to the wiki. It also tells the report evaluator how mature the notebook evidence is.</p>
+<h3 id="c-6-observability-failure-modes">C.6 Observability Failure Modes</h3>
+<p>The observability system was designed around actual failure modes:</p>
+<ul>
+<li>A run may complete but omit a report.</li>
+<li>A selected candidate may lack governance metadata.</li>
+<li>A workflow task may be misrouted into statistical testing.</li>
+<li>A notebook may be scaffolded but not executed.</li>
+<li>A playback UI may exist but omit events.</li>
+<li>A business report may overclaim a weak result.</li>
+<li>A memory seed may not be recorded, causing repeated questions.</li>
+</ul>
+<p>Each failure mode maps to an artifact check. This is why the phase process requires a 20-turn run after each phase. The run is long enough to exercise repeated orchestration, but short enough to use as a practical regression gate.</p>
+<h2 id="appendix-d-phase-narrative">Appendix D. Phase Narrative</h2>
+<p>This appendix gives a narrative of what was accomplished across the project. It is intentionally higher level than the commit history and lower level than the abstract.</p>
+<h3 id="d-1-schema-only-evidence-pipeline">D.1 Schema-Only Evidence Pipeline</h3>
+<p>The earliest work built a schema-only evidence pipeline. The goal was not to prove a real-world sports-economics claim. The goal was to prove that a vague question could be turned into structured artifacts: hypothesis cards, evidence packets, design sketches, and skeptical review. This phase established the idea that an answer should not be a single paragraph. It should be a bundle of claims, assumptions, data references, and review notes.</p>
+<p>The main limitation was realism. Synthetic evidence can validate plumbing, but it cannot validate data joins, sample quality, matching, or report interpretation. The project therefore moved toward reference event data.</p>
+<h3 id="d-2-reference-event-data-and-local-economic-measures">D.2 Reference Event Data And Local Economic Measures</h3>
+<p>The next work added reference sports/event data and local economic measures. This gave the system a domain: sports events and local economic activity. The data model made it possible to ask city-week and MSA-week questions. It also introduced new risks. Real data is messier than synthetic examples. Localities differ in population, economic base, event frequency, and data coverage. That pushed the system toward diagnostics and matched comparisons.</p>
+<h3 id="d-3-friends-loop">D.3 Friends Loop</h3>
+<p>The friends loop changed the project from a one-shot pipeline into an iterative research system. Spark, Skeptic, Mapper, Moderator, and DataAgent gave the system a collaborative structure. The loop could ask one question, study the result, write memory, and ask another question. This was the point where notebooks and wiki entries became essential. Without memory, the loop would not be research; it would be repeated isolated analysis.</p>
+<h3 id="d-4-shared-wiki">D.4 Shared Wiki</h3>
+<p>The shared wiki made memory durable. It created a common analysis notebook workspace with schema, index, log, question board, decision records, caveats, semantic map, and findings. This was an important shift from "the agent remembers" to "the repository remembers." The latter is much more reliable in a coding-agent workflow.</p>
+<h3 id="d-5-semantic-layer">D.5 Semantic Layer</h3>
+<p>The semantic layer gave agents governed SQL access. It constrained queries to whitelisted views, read-only SELECT behavior, and row limits. This let the system explore MSA-week and city-week patterns without letting arbitrary generated SQL mutate data or wander through the repository. The semantic layer also created reusable metric definitions, which reduced the chance that different notebooks would compute inconsistent versions of the same concept.</p>
+<h3 id="d-6-formal-hypothesis-validation">D.6 Formal Hypothesis Validation</h3>
+<p>As the loop became more autonomous, it needed stronger routing. Formal hypothesis validation forced candidate questions to declare H0, H1, population, unit, exposure, comparison, outcome, direction, test family, alpha, and decision rule. This reduced ambiguity and made it possible to distinguish statistical hypotheses from EDA and workflow tasks.</p>
+<h3 id="d-7-matched-tests-and-multiple-testing">D.7 Matched Tests And Multiple Testing</h3>
+<p>Matched city-week and MSA-week tests gave the system a real statistical execution path. Multiple-testing correction gave the system a family-level guardrail. Together, they turned the project from "descriptive notebook generator" into "exploratory statistical evidence workflow." The claim remained bounded because matching is observational, but the workflow became much more rigorous.</p>
+<h3 id="d-8-business-and-playback-reports">D.8 Business And Playback Reports</h3>
+<p>The report work made runs inspectable by different audiences. Business reports serve stakeholders. Playback reports serve reviewers and maintainers. Decision summaries serve analysts. Regression summaries serve phase delivery. This multi-report strategy is appropriate because no single artifact can serve every reader.</p>
+<h3 id="d-9-questionforum-tournament-reflection-and-evolution">D.9 QuestionForum, Tournament, Reflection, And Evolution</h3>
+<p>The latest phases implemented the Co-Scientist-inspired governance stack. QuestionForum moved public demand above the friends. Tournament made selection comparative. Reflection added critique before selection. Evolution made memory part of candidate scoring. The final 20-turn phase showed that all four layers could be active together without breaking workflow execution.</p>
+<h3 id="d-10-what-remains-unfinished">D.10 What Remains Unfinished</h3>
+<p>The system is still not a finished product. The forum has no user interface. Tournament debate is deterministic. Reflection is heuristic. Evolution records metadata but does not yet generate rich variants. External literature grounding is not integrated. Stronger causal methods remain future work. Notebook execution defaults to lightweight mode. These limitations do not negate the accomplishment. They define the next research agenda.</p>
+<h2 id="appendix-e-expanded-advisor-and-student-review-loop">Appendix E. Expanded Advisor And Student Review Loop</h2>
+<p>The short review table in Appendix G records the final accepted edits. This expanded version records the deeper critique that led to the master’s-thesis expansion.</p>
+<h3 id="e-1-advisor-critique-the-thesis-was-too-short-for-its-claimed-form">E.1 Advisor Critique: The Thesis Was Too Short For Its Claimed Form</h3>
+<p>The original thesis-style document was useful but closer to an extended technical report than a master’s thesis. It summarized architecture, but it did not spend enough time on implementation details, failure modes, artifact mechanics, or design tradeoffs. A master’s thesis should not only say what was built; it should explain why the design changed, how the system works, what evidence supports the claims, and what limitations remain.</p>
+<p>Student response: the thesis was expanded with implementation anatomy, turn lifecycle, candidate policy, statistical routing, challenges faced, LLM wiki mechanisms, notebook execution, observability, sample run narrative, implementation reference, sample notebook details, telemetry examples, and phase narrative.</p>
+<h3 id="e-2-advisor-critique-the-llm-wiki-was-underexplained">E.2 Advisor Critique: The LLM Wiki Was Underexplained</h3>
+<p>The system’s memory layer is one of its most interesting contributions, but the earlier thesis mentioned notebooks and wiki records without enough detail. A reader needs to understand why Markdown exports exist, how notebook knowledge becomes future candidate seeds, why caveats are stored separately, and why repository memory is better than relying on chat context.</p>
+<p>Student response: the thesis now explains the wiki workspace, notebook knowledge base, shared wiki entries, coordination protocol, and limitations. It frames the wiki as both memory and governance.</p>
+<h3 id="e-3-advisor-critique-notebook-execution-needed-more-specifics">E.3 Advisor Critique: Notebook Execution Needed More Specifics</h3>
+<p>The earlier thesis said notebooks were executed but did not show enough of the mechanism. A reviewer could reasonably ask whether notebooks are merely generated, whether they are executed, what backend is used, and how notebook maturity affects claims.</p>
+<p>Student response: the thesis now describes lightweight execution, nbclient execution, validation contracts, sample question-bank notebooks, sample turn notebooks, multiple-testing correction notebooks, and notebook maturity status.</p>
+<h3 id="e-4-advisor-critique-observability-needed-to-be-a-first-class-chapter">E.4 Advisor Critique: Observability Needed To Be A First-Class Chapter</h3>
+<p>The earlier thesis listed telemetry and reports, but autonomous systems need stronger observability discussion. A reviewer should be able to trace a result from candidate board to workflow stage to notebook to report to regression summary.</p>
+<p>Student response: the thesis now includes a full observability chapter and telemetry examples for knowledge reads, board proposals, hypothesis classification, workflow stages, and notebook creation.</p>
+<h3 id="e-5-advisor-critique-challenges-faced-were-too-polished">E.5 Advisor Critique: Challenges Faced Were Too Polished</h3>
+<p>A thesis should include the hard parts. The project had real design challenges: technical question wording, overclaim risk, notebook scaffolding, memory noise, observability, and deterministic grounding of multi-agent inspiration.</p>
+<p>Student response: the thesis now has a challenges chapter documenting these problems and how the implementation responded.</p>
+<h3 id="e-6-advisor-critique-the-thesis-needed-more-concrete-examples">E.6 Advisor Critique: The Thesis Needed More Concrete Examples</h3>
+<p>Architecture diagrams are not enough. A reader needs sample schemas, sample records, sample notebook cells, and sample events.</p>
+<p>Student response: the thesis now includes representative JSON and Python examples. They are simplified where necessary but map directly to the implemented mechanisms.</p>
+<h3 id="e-7-advisor-critique-the-work-should-be-evaluated-as-a-system-not-a-feature-list">E.7 Advisor Critique: The Work Should Be Evaluated As A System, Not A Feature List</h3>
+<p>The system is valuable because the pieces work together. QuestionForum without testing is just a list. Testing without reports is not stakeholder evidence. Notebooks without execution are scaffolds. Telemetry without regression gates is merely logging.</p>
+<p>Student response: the thesis now repeatedly frames the contribution as a full event-evidence workflow: public demand, governance, hypothesis translation, statistical execution, notebooks, wiki memory, observability, reports, and 20-turn regression.</p>
+<h2 id="appendix-f-rejected-alternatives-maintenance-and-assessment-criteria">Appendix F. Rejected Alternatives, Maintenance, And Assessment Criteria</h2>
+<p>This appendix records design alternatives that were considered implicitly during the project and explains why the implemented path was chosen. This matters because the final architecture can look obvious after the fact. It was not obvious during development.</p>
+<h3 id="f-1-alternative-put-all-agent-logic-in-markdown-role-files">F.1 Alternative: Put All Agent Logic In Markdown Role Files</h3>
+<p>One tempting design was to move most agent behavior into Markdown prompts. The repository already uses Markdown role definitions, and the user asked whether most agent logic lives in Markdown files or code. Markdown is valuable because it is inspectable, easy to edit, and understandable to non-programmers. It is the right place for role voice, responsibilities, claim-boundary reminders, and interaction expectations.</p>
+<p>The project did not put the main logic there. Candidate scoring, workflow routing, statistical validation, notebook execution, telemetry, and report writing live in code. That decision was necessary because those behaviors need tests. If a workflow task is incorrectly routed into a statistical test, a prompt instruction may reduce the probability of the error, but a code-level classifier and regression check can prevent or detect it deterministically. If every selected candidate must carry tournament metadata, a prompt cannot guarantee that structure; a code path can.</p>
+<p>The final division is therefore hybrid. Markdown defines the roles. Code defines the contracts. This is the right architecture for a governed Codex project because it lets non-code artifacts shape behavior without making the system untestable.</p>
+<h3 id="f-2-alternative-use-live-llm-debate-immediately">F.2 Alternative: Use Live LLM Debate Immediately</h3>
+<p>Another tempting design was to implement a live multi-agent debate layer immediately. That would have looked more like Co-Scientist. Agents could argue about novelty, public interest, answerability, and evidence value. The output might be more expressive and more surprising than deterministic transcripts.</p>
+<p>The project deferred that approach because the system first needed a stable baseline. Live debate introduces nondeterminism, cost, latency, prompt drift, and replay complexity. A regression gate that passes today may fail tomorrow because a model response changes. That does not mean live debate is wrong; it means the deterministic foundation should come first.</p>
+<p>The deterministic tournament is therefore an architectural scaffold. It gives the system component scores, pairwise comparisons, ranks, wins, losses, and transcripts. Future live debate can be plugged into the same output contract. When that happens, the deterministic layer can remain as a fallback, benchmark, or prefilter.</p>
+<h3 id="f-3-alternative-treat-reports-as-post-processing">F.3 Alternative: Treat Reports As Post-Processing</h3>
+<p>A simpler implementation would run analyses first and generate reports later only when requested. The project rejected that model. Reports are not optional decoration. In this system, the report is part of the evidence package. If every run is supposed to support stakeholder review and debugging, then every run should write both business and playback HTML.</p>
+<p>Making reports part of the run also improved testing. A 20-turn regression can verify that report generation still works after candidate policy changes. If reports were separate, a phase might pass the analytical code but break the user-facing artifact.</p>
+<h3 id="f-4-alternative-store-memory-only-in-json">F.4 Alternative: Store Memory Only In JSON</h3>
+<p>The system could have stored all memory in JSON. That would be convenient for code, but poor for human and LLM review. Raw JSON notebooks and event logs are verbose. They are difficult to skim. They also do not naturally support explanatory prose.</p>
+<p>The system could also have stored all memory in Markdown. That would be readable, but harder for candidate policy to query. The final design uses both. Markdown is the wiki surface. JSON is the structured memory surface. This is a common pattern in practical agent systems: one representation for machines, one for humans and language models.</p>
+<h3 id="f-5-alternative-store-notebooks-only-without-markdown-exports">F.5 Alternative: Store Notebooks Only, Without Markdown Exports</h3>
+<p>Keeping only <code>.ipynb</code> files would preserve execution metadata, but it would make agent reading harder. Notebook JSON is noisy and expensive for language models. Markdown exports are compact and readable. They also work well in code review. The project therefore writes both notebook and Markdown versions.</p>
+<p>This dual format is especially important because the notebook is both executable evidence and wiki content. The <code>.ipynb</code> file proves execution state. The <code>.md</code> file communicates the result.</p>
+<h3 id="f-6-alternative-use-a-database-for-the-forum-immediately">F.6 Alternative: Use A Database For The Forum Immediately</h3>
+<p>A real product forum should eventually use a database. It should support users, moderation, voting, search, provenance, status transitions, and audit logs. The current phase deliberately used a JSON-backed store. That choice was pragmatic. The project needed a real data model for public questions before it needed a deployed forum product.</p>
+<p>The JSON store is not a dead end. It defines the record shape: question text, persona, popularity, rationale, source, link, and status. A database-backed implementation can preserve that shape. The thesis should treat the JSON store as a minimum viable persistence layer, not as the final forum architecture.</p>
+<h3 id="f-7-alternative-promote-significant-results-automatically">F.7 Alternative: Promote Significant Results Automatically</h3>
+<p>The project could have promoted every <code>reject_h0</code> result as a finding. That would be wrong. Exploratory observational tests, repeated screening, and lightweight notebook execution are not enough for strong claims. The evidence promotion layer and report evaluator prevent that shortcut.</p>
+<p>A result must carry method, diagnostics, caveats, notebook status, and multiple-testing context. Even then, the default claim is exploratory. This restraint is central to the system's credibility. The system should be useful because it is disciplined, not because it makes dramatic claims.</p>
+<h3 id="f-8-maintenance-procedure-for-future-phases">F.8 Maintenance Procedure For Future Phases</h3>
+<p>Future maintainers should treat the thesis architecture as a maintenance contract. A typical change should follow this procedure:</p>
+<ol>
+<li>Identify which layer the change affects: forum, candidate governance, hypothesis routing, statistical execution, notebooks, wiki, telemetry, reports, or regression gates.</li>
+<li>Add or update focused unit tests for the changed layer.</li>
+<li>Run a short targeted workflow if the change affects orchestration.</li>
+<li>Run a 20-turn regression if the change affects selected candidates, routing, notebooks, telemetry, or reports.</li>
+<li>Inspect <code>phase_regression_summary.json</code> for completed workflows, early-stop status, misroutes, and metadata coverage.</li>
+<li>Open <code>business_evidence_report.html</code> and <code>ui/index.html</code> for representative visual inspection.</li>
+<li>Check <code>discovery_decision_summary.md</code> for routing regressions.</li>
+<li>Check notebook status counts in the evaluation report if notebook behavior changed.</li>
+<li>Update docs and backlog status with evidence paths.</li>
+</ol>
+<p>The important habit is to inspect artifacts, not only test output. This project is artifact-driven. If the artifacts are wrong, the system is wrong even if a unit test passes.</p>
+<h3 id="f-9-assessment-criteria-for-the-thesis-system">F.9 Assessment Criteria For The Thesis System</h3>
+<p>The system should be assessed against criteria that match its claim. It should not be graded as a general scientific discovery engine, because it does not claim that. It should be assessed as a reproducible event-evidence workflow.</p>
+<p>Strong evidence for the claim includes:</p>
+<ul>
+<li>public questions are represented as first-class records</li>
+<li>selected candidates carry forum metadata</li>
+<li>selected candidates carry tournament metadata</li>
+<li>selected candidates carry reflection metadata</li>
+<li>selected candidates carry evolution metadata</li>
+<li>workflow tasks are not misrouted into statistical testing</li>
+<li>formal hypotheses contain required H0/H1 fields</li>
+<li>matched tests write diagnostics and caveats</li>
+<li>notebooks are generated and executed</li>
+<li>Markdown exports are written</li>
+<li>wiki entries and notebook knowledge are updated</li>
+<li>business HTML and playback HTML are produced per run</li>
+<li>telemetry events provide a replayable timeline</li>
+<li>20-turn regression completes without early stop</li>
+</ul>
+<p>Weak evidence or failure includes:</p>
+<ul>
+<li>public-facing questions contain internal handles</li>
+<li>candidate selection cannot be explained</li>
+<li>notebooks are scaffolded but described as validated</li>
+<li>significant p-values are reported as causal proof</li>
+<li>memory is not read before ranking</li>
+<li>reports omit caveats</li>
+<li>playback telemetry lacks workflow stages</li>
+<li>selected candidates lack governance metadata</li>
+<li>phase evidence cannot be reproduced from the run directory</li>
+</ul>
+<p>These criteria are deliberately practical. They reflect the actual engineering goal: build a system that turns stakeholder questions into auditable evidence artifacts.</p>
+<h3 id="f-10-ethical-and-civic-considerations">F.10 Ethical And Civic Considerations</h3>
+<p>The system sits near public decision-making. Even though the current domain is sports events and local spending, the audience could include business owners, journalists, policymakers, and citizens. That creates ethical obligations. A misleading report could influence staffing, policing, public funding, venue policy, or local economic narratives. A poorly framed result could overstate benefits of events or ignore distributional harms.</p>
+<p>The system responds to this risk through caveats, reflection, claim boundaries, and observational language. That is necessary but not sufficient. A production version should add human moderation, source transparency, data provenance notes, and explicit uncertainty communication. It should also allow affected communities to contest or contextualize findings. Popular forum questions should guide analysis, but popularity alone should not determine truth or policy priority.</p>
+<p>This is another reason the QuestionForum should include persona, rationale, source, and status. A question is not neutral just because it is popular. A policymaker question, business-owner question, and citizen-journalist question may reflect different interests. The system should preserve that context rather than flattening it into a generic prompt.</p>
+<h3 id="f-11-future-research-questions">F.11 Future Research Questions</h3>
+<p>The next research questions are now clearer:</p>
+<ol>
+<li>Does a live forum improve question quality compared with curated JSON seeds?</li>
+<li>Do human voters prefer questions selected by deterministic tournament, live agent debate, or hybrid selection?</li>
+<li>Can reflection reduce misleading report interpretations in user studies?</li>
+<li>Can hypothesis evolution generate better follow-up questions than static templates?</li>
+<li>Does nbclient execution materially improve notebook reliability in this workload?</li>
+<li>Which robustness checks most reduce false confidence in event-economics findings?</li>
+<li>Can semantic memory reduce duplicate questions without suppressing legitimate replication?</li>
+<li>What report language best communicates exploratory evidence to non-technical users?</li>
+</ol>
+<p>These questions would move the project from engineering validation toward empirical evaluation of the system as a research assistant.</p>
+<h3 id="f-12-how-the-thesis-should-be-read">F.12 How The Thesis Should Be Read</h3>
+<p>The safest reading of this thesis is as an engineering thesis about building a governed research workflow, not as a domain thesis proving a sports-economics result. The domain matters because it forces real statistical and communication problems, but the primary artifact is the system. The system's quality should be judged by whether it can receive public questions, govern candidate selection, map suitable questions into explicit hypotheses, run appropriate exploratory tests, write notebooks and reports, expose its reasoning trail, and repeat that process without hidden state.</p>
+<p>That reading also clarifies the role of the examples. The sample JSON records, notebook cells, and telemetry events are not decorative appendices. They are the practical contract by which the architecture can be reimplemented or audited. If a future version claims to improve the tournament layer, it should still be able to show candidate comparison metadata. If a future version claims to improve notebook maturity, it should still distinguish scaffolded, lightweight-executed, nbclient-executed, and validated notebooks. If a future version claims to improve question quality, it should still preserve the public question separately from the formal hypothesis.</p>
+<p>The thesis should also be read as a record of iterative correction. Several important features were added because earlier behavior was unsatisfactory: questions were too convoluted, workflow tasks risked statistical misrouting, notebooks needed execution, reports needed HTML outputs, and observability needed to be visible per run. Those corrections are part of the contribution. They show how an autonomous analysis system can be made more reliable by turning failure modes into explicit contracts.</p>
+<h2 id="appendix-g-advisor-and-student-review-loop">Appendix G. Advisor And Student Review Loop</h2>
+<p>This report was revised through an internal high-expectation advisor/student loop. The advisor pressed for stronger thesis discipline; the student either changed the report or bounded the claim.</p>
+<table>
+<thead><tr><th>Round</th><th>Advisor Critique</th><th>Student Response</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>The document claims accomplishment before stating the contribution and proof standard.</td><td>Added a front-loaded contribution and evaluation summary.</td></tr>
+<tr><td>2</td><td>Co-Scientist inspiration is described, but comparison criteria are implicit.</td><td>Added a direct comparison table across domain, source, generation, debate, reflection, evolution, and validation.</td></tr>
+<tr><td>3</td><td>The evaluation method is not rigorous enough for a thesis reader.</td><td>Added a methodology and evaluation protocol based on 20-turn workflow units and metadata coverage.</td></tr>
+<tr><td>4</td><td>The hypothesis-testing section explains mechanics but not interpretation limits.</td><td>Added data-contract mapping and interpretation discipline.</td></tr>
+<tr><td>5</td><td>Limitations mix validity threats with future product work.</td><td>Added a separate threats-to-validity section.</td></tr>
+<tr><td>6</td><td>The thesis should not overclaim Co-Scientist parity.</td><td>Repeated the bounded claim: this is a deterministic applied event-evidence system, not a general biomedical discovery engine.</td></tr>
+<tr><td>7</td><td>The final document should be useful to future maintainers, not only evaluators.</td><td>Kept module names, run paths, phase gates, and report artifacts in the main text and references.</td></tr>
+</tbody></table>
+<h2 id="references">References</h2>
+<ul>
+<li>Google DeepMind, "Co-Scientist: A multi-agent AI partner to accelerate research", <a href="https://deepmind.google/blog/co-scientist-a-multi-agent-ai-partner-to-accelerate-research/">https://deepmind.google/blog/co-scientist-a-multi-agent-ai-partner-to-accelerate-research/</a></li>
+<li>Project run evidence: <code>app/runs/phase-048-hypothesis-evolution_20turn_regression/friends-question-loop/phase_regression_summary.json</code></li>
+<li>Question forum store: <code>data/question_forum/questions.json</code></li>
+<li>Candidate governance modules: <code>app/question_forum.py</code>, <code>app/question_tournament.py</code>, <code>app/question_reflection.py</code>, <code>app/hypothesis_evolution.py</code></li>
+</ul>
+<div class="source-note">Generated from <code>event-agent-thesis.md</code>; this HTML is intended to mirror the Markdown thesis content for browser reading.</div>
+</main>
+</div>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'default' });
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+name = "planner"
+description = "Engineering planning role for requirements, ADRs, and backlog decomposition."
+
+[focus]
+primary = [
+  "engineering requirements",
+  "architecture decisions",
+  "phase planning",
+  "backlog decomposition",
+  "risk and acceptance criteria"
+]

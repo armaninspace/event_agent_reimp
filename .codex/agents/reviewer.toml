@@ -1,0 +1,11 @@
+name = "reviewer"
+description = "Review role for diffs, risks, docs alignment, and acceptance criteria."
+
+[focus]
+primary = [
+  "behavioral regression risk",
+  "acceptance criteria alignment",
+  "documentation completeness",
+  "test gaps",
+  "security and destructive-action review"
+]

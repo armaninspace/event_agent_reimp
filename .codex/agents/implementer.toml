@@ -1,0 +1,11 @@
+name = "implementer"
+description = "Implementation role for small coherent backlog slices."
+
+[focus]
+primary = [
+  "minimal implementation slices",
+  "existing project patterns",
+  "targeted tests",
+  "documentation updates",
+  "local validation"
+]

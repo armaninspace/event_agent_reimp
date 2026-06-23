@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "hooks": {
+    "session_start": [
+      {
+        "name": "load-project-context",
+        "command": "python3 .codex/hooks/session_start_context.py"
+      }
+    ],
+    "pre_tool_use": [
+      {
+        "name": "pre-tool-policy",
+        "command": "python3 .codex/hooks/pre_tool_use_policy.py"
+      }
+    ],
+    "stop": [
+      {
+        "name": "stop-validation",
+        "command": "python3 .codex/hooks/stop_validation.py"
+      }
+    ]
+  }
+}
