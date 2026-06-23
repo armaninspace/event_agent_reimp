@@ -41,6 +41,17 @@ def test_render_business_report_includes_statistical_evidence_and_escapes_ids() 
                         "min_adjusted_p_value": 0.01,
                         "has_adjusted_significance": True,
                         "result_ids": ["matched:<city>"],
+                        "results": [
+                            {
+                                "result_id": "matched:<city>",
+                                "family": "matched",
+                                "dataset": "city_week",
+                                "outcome": "revenue_all",
+                                "p_value": 0.01,
+                                "adjusted_p_value": 0.02,
+                                "status": "ok",
+                            }
+                        ],
                         "caveats": ["Observational <only>."],
                     },
                 }
@@ -50,6 +61,8 @@ def test_render_business_report_includes_statistical_evidence_and_escapes_ids() 
 
     assert "Statistical Evidence" in html
     assert "matched:&lt;city&gt;" in html
+    assert 'class="statistical-results"' in html
+    assert "Adjusted p-value" in html
     assert "Observational &lt;only&gt;." in html
 
 

@@ -48,6 +48,9 @@ def _render_statistical_evidence(value: object) -> str:
     caveats = value.get("caveats", [])
     if not isinstance(caveats, list):
         caveats = []
+    results = value.get("results", [])
+    if not isinstance(results, list):
+        results = []
     return (
         "<div><h3>Statistical Evidence</h3>"
         f"<p><strong>Result count:</strong> {html.escape(str(value.get('result_count')))}</p>"
@@ -55,9 +58,38 @@ def _render_statistical_evidence(value: object) -> str:
         f"<p><strong>Adjusted-significance flag:</strong> {html.escape(str(value.get('has_adjusted_significance')))}</p>"
         "<p><strong>Result IDs:</strong></p>"
         f"<ul>{''.join(f'<li><code>{html.escape(str(result_id))}</code></li>' for result_id in result_ids)}</ul>"
+        f"{_render_statistical_results_table(results)}"
         "<p><strong>Statistical caveats:</strong></p>"
         f"<ul>{''.join(f'<li>{html.escape(str(caveat))}</li>' for caveat in caveats)}</ul>"
         "</div>"
+    )
+
+
+def _render_statistical_results_table(results: list[object]) -> str:
+    if not results:
+        return ""
+    rows = []
+    for result in results:
+        if not isinstance(result, dict):
+            continue
+        rows.append(
+            "<tr>"
+            f"<td><code>{html.escape(str(result.get('result_id')))}</code></td>"
+            f"<td>{html.escape(str(result.get('family')))}</td>"
+            f"<td>{html.escape(str(result.get('dataset')))}</td>"
+            f"<td>{html.escape(str(result.get('outcome')))}</td>"
+            f"<td>{html.escape(str(result.get('p_value')))}</td>"
+            f"<td>{html.escape(str(result.get('adjusted_p_value')))}</td>"
+            f"<td>{html.escape(str(result.get('status')))}</td>"
+            "</tr>"
+        )
+    if not rows:
+        return ""
+    return (
+        '<table class="statistical-results">'
+        "<thead><tr><th>Result</th><th>Family</th><th>Dataset</th><th>Outcome</th>"
+        "<th>P-value</th><th>Adjusted p-value</th><th>Status</th></tr></thead>"
+        f"<tbody>{''.join(rows)}</tbody></table>"
     )
 
 

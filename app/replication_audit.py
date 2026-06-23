@@ -48,6 +48,7 @@ class ReplicationAudit:
     selected_evolution_metadata_count: int
     statistical_evidence_turn_count: int
     business_report_statistical_sections: int
+    business_report_statistical_tables: int
     notebook_workspace_present: bool
     final_status: str
     known_limits: list[str]
@@ -60,7 +61,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-021-final-corrections-notebook"),
+    run_dir: Path = Path("app/runs/phase-022-business-statistical-tables"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -94,6 +95,7 @@ def run_replication_audit(
         selected_evolution_metadata_count=sum(_has_key(candidate, "evolution") for candidate in selected),
         statistical_evidence_turn_count=sum(_has_key(turn, "statistical_evidence") for turn in turns),
         business_report_statistical_sections=business_report.count("Statistical Evidence"),
+        business_report_statistical_tables=business_report.count('class="statistical-results"'),
         notebook_workspace_present=bool(summary["notebook_workspace_present"]),
         final_status="replicated_with_known_limits",
         known_limits=[
@@ -143,6 +145,7 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Evolution metadata count: {audit.selected_evolution_metadata_count}",
             f"- Statistical evidence turn count: {audit.statistical_evidence_turn_count}",
             f"- Business report statistical sections: {audit.business_report_statistical_sections}",
+            f"- Business report statistical tables: {audit.business_report_statistical_tables}",
             f"- Notebook workspace present: {audit.notebook_workspace_present}",
             "",
             "## Known Limits",
