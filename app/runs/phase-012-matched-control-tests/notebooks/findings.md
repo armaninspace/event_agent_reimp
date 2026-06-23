@@ -1,0 +1,22 @@
+# Findings
+
+- Turn 1: scaffolded only; no validated finding yet.
+- Turn 2: scaffolded only; no validated finding yet.
+- Turn 3: scaffolded only; no validated finding yet.
+- Turn 4: scaffolded only; no validated finding yet.
+- Turn 5: scaffolded only; no validated finding yet.
+- Turn 6: scaffolded only; no validated finding yet.
+- Turn 7: scaffolded only; no validated finding yet.
+- Turn 8: scaffolded only; no validated finding yet.
+- Turn 9: scaffolded only; no validated finding yet.
+- Turn 10: scaffolded only; no validated finding yet.
+- Turn 11: scaffolded only; no validated finding yet.
+- Turn 12: scaffolded only; no validated finding yet.
+- Turn 13: scaffolded only; no validated finding yet.
+- Turn 14: scaffolded only; no validated finding yet.
+- Turn 15: scaffolded only; no validated finding yet.
+- Turn 16: scaffolded only; no validated finding yet.
+- Turn 17: scaffolded only; no validated finding yet.
+- Turn 18: scaffolded only; no validated finding yet.
+- Turn 19: scaffolded only; no validated finding yet.
+- Turn 20: scaffolded only; no validated finding yet.

@@ -1,0 +1,87 @@
+{
+  "all_results_have_caveats": true,
+  "not_testable_count": 0,
+  "results": [
+    {
+      "block_column": "event_msa_block_id",
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain."
+      ],
+      "control_rows_used": 9705,
+      "dataset": "city_week",
+      "diagnostics": {
+        "control_groups": 565,
+        "missing_block_rows": 1224
+      },
+      "exposed_rows": 2252,
+      "grain": "city-week",
+      "matched_exposed_rows": 1996,
+      "mean_matched_difference": -0.03175996843993237,
+      "outcome": "revenue_all",
+      "status": "ok",
+      "unmatched_exposed_rows": 256
+    },
+    {
+      "block_column": "event_msa_block_id",
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain."
+      ],
+      "control_rows_used": 9705,
+      "dataset": "city_week",
+      "diagnostics": {
+        "control_groups": 565,
+        "missing_block_rows": 1224
+      },
+      "exposed_rows": 2252,
+      "grain": "city-week",
+      "matched_exposed_rows": 1996,
+      "mean_matched_difference": -0.012455992684044412,
+      "outcome": "merchants_all",
+      "status": "ok",
+      "unmatched_exposed_rows": 256
+    },
+    {
+      "block_column": "msa_block_id",
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain."
+      ],
+      "control_rows_used": 17018,
+      "dataset": "msa_week",
+      "diagnostics": {
+        "control_groups": 3706,
+        "missing_block_rows": 0
+      },
+      "exposed_rows": 2542,
+      "grain": "MSA-week",
+      "matched_exposed_rows": 2542,
+      "mean_matched_difference": 0.012500577246086825,
+      "outcome": "revenue_all",
+      "status": "ok",
+      "unmatched_exposed_rows": 0
+    },
+    {
+      "block_column": "msa_block_id",
+      "caveats": [
+        "Exploratory observational matched comparison only; not causal proof.",
+        "Matching uses same week and same block only; residual confounding may remain."
+      ],
+      "control_rows_used": 17018,
+      "dataset": "msa_week",
+      "diagnostics": {
+        "control_groups": 3706,
+        "missing_block_rows": 0
+      },
+      "exposed_rows": 2542,
+      "grain": "MSA-week",
+      "matched_exposed_rows": 2542,
+      "mean_matched_difference": 0.0026108761347287345,
+      "outcome": "merchants_all",
+      "status": "ok",
+      "unmatched_exposed_rows": 0
+    }
+  ],
+  "schema_version": "phase-012.matched-control-tests.v1"
+}
