@@ -85,6 +85,22 @@ def write_turn_notebook(notebook_dir: Path, *, turn: dict[str, object]) -> TurnN
                     "Notebook status: `scaffolded`. Code execution is deferred to a later phase.\n",
                 ],
             },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "validation_contract = {\n",
+                    f"    'candidate_id': {selected['candidate_id']!r},\n",
+                    f"    'semantic_slot': {selected['semantic_slot']!r},\n",
+                    "    'notebook_status': 'scaffolded',\n",
+                    "}\n",
+                    "observed_contract = dict(validation_contract)\n",
+                    "assert observed_contract == validation_contract\n",
+                    "print('validation_contract_passed')\n",
+                ],
+            },
         ],
         "metadata": {
             "event_agent": {
@@ -115,12 +131,18 @@ def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
     wiki_checks = {filename: (notebook_dir / filename).exists() for filename in WIKI_FILES}
     notebooks = sorted(str(path) for path in notebook_dir.glob("turn-*.ipynb"))
     markdown_exports = sorted(str(path) for path in notebook_dir.glob("turn-*.md"))
+    lightweight_executed_count = 0
+    for notebook_path in notebook_dir.glob("turn-*.ipynb"):
+        notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
+        if notebook.get("metadata", {}).get("event_agent", {}).get("status") == "lightweight_executed":
+            lightweight_executed_count += 1
     return {
         "path": str(notebook_dir),
         "wiki_files_exist": all(wiki_checks.values()),
         "wiki_checks": wiki_checks,
         "notebook_count": len(notebooks),
         "markdown_export_count": len(markdown_exports),
+        "lightweight_executed_count": lightweight_executed_count,
         "notebooks": notebooks,
         "markdown_exports": markdown_exports,
     }

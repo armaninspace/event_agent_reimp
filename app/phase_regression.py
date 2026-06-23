@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from app.friends_loop import run_friends_question_loop
+from app.notebook_execution import execute_workspace_lightweight
 from app.notebook_workspace import summarize_workspace
 
 
@@ -34,6 +35,7 @@ class PhaseRegressionResult:
     artifact_checks: dict[str, bool]
     notebook_workspace_present: bool
     notebook_workspace: dict[str, object]
+    notebook_execution: dict[str, object]
     telemetry_event_count: int
     telemetry_event_types: list[str]
     known_future_artifacts: dict[str, str]
@@ -81,11 +83,14 @@ def run_phase_regression(
         )
         for candidate in selected_candidates
     )
+    notebook_execution = execute_workspace_lightweight(notebook_dir)
     notebook_workspace = summarize_workspace(notebook_dir)
     notebook_workspace_present = (
         bool(notebook_workspace["wiki_files_exist"])
         and notebook_workspace["notebook_count"] == turns
         and notebook_workspace["markdown_export_count"] == turns
+        and notebook_workspace["lightweight_executed_count"] == turns
+        and bool(notebook_execution["all_lightweight_executed"])
     )
 
     summary = PhaseRegressionResult(
@@ -101,6 +106,7 @@ def run_phase_regression(
         artifact_checks=artifact_checks,
         notebook_workspace_present=notebook_workspace_present,
         notebook_workspace=notebook_workspace,
+        notebook_execution=notebook_execution,
         telemetry_event_count=len(telemetry),
         telemetry_event_types=sorted({event["event_type"] for event in telemetry}),
         known_future_artifacts={

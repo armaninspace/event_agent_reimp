@@ -36,6 +36,7 @@ def test_write_turn_notebook_creates_ipynb_markdown_and_appends_wiki(tmp_path: P
     notebook = json.loads(artifacts.notebook_path.read_text(encoding="utf-8"))
     assert notebook["nbformat"] == 4
     assert notebook["metadata"]["event_agent"]["status"] == "scaffolded"
+    assert any(cell["cell_type"] == "code" for cell in notebook["cells"])
     assert "Notebook status" in artifacts.markdown_path.read_text(encoding="utf-8")
     assert "turn-01-crowd-spending" in (tmp_path / "decision-records.md").read_text(encoding="utf-8")
 
@@ -51,3 +52,4 @@ def test_summarize_workspace_counts_turn_artifacts(tmp_path: Path) -> None:
     assert summary["wiki_files_exist"] is True
     assert summary["notebook_count"] == 2
     assert summary["markdown_export_count"] == 2
+    assert summary["lightweight_executed_count"] == 0
