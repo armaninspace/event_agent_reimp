@@ -49,6 +49,7 @@ def test_execute_workspace_lightweight_counts_all_notebooks(tmp_path: Path) -> N
     assert summary["executed_notebook_count"] == 2
     assert summary["failed_notebook_count"] == 0
     assert summary["all_lightweight_executed"] is True
+    assert summary["correction_notebook_executed"] is False
 
 
 def test_execute_notebook_nbclient_updates_metadata(tmp_path: Path) -> None:
@@ -72,3 +73,4 @@ def test_execute_workspace_nbclient_counts_all_notebooks(tmp_path: Path) -> None
     assert summary["executed_notebook_count"] == 2
     assert summary["failed_notebook_count"] == 0
     assert summary["all_nbclient_executed"] is True
+    assert summary["correction_notebook_executed"] is False

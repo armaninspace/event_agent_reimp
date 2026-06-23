@@ -9,8 +9,9 @@ from pathlib import Path
 from app.data_snapshot import build_reference_snapshot, snapshot_is_complete
 from app.friends_loop import run_friends_question_loop
 from app.hypothesis_routing import count_workflow_statistical_misroutes
+from app.multiple_testing import build_correction_report
 from app.notebook_execution import execute_workspace_lightweight, execute_workspace_nbclient
-from app.notebook_workspace import summarize_workspace
+from app.notebook_workspace import summarize_workspace, write_correction_notebook
 
 
 CURRENT_REQUIRED_ARTIFACTS = (
@@ -38,6 +39,8 @@ class PhaseRegressionResult:
     turns_have_statistical_evidence: bool
     data_snapshot_complete: bool
     data_snapshot: dict[str, object]
+    correction_notebook_present: bool
+    correction_notebook_executed: bool
     current_required_artifacts_exist: bool
     artifact_checks: dict[str, bool]
     notebook_workspace_present: bool
@@ -71,6 +74,8 @@ def run_phase_regression(
         reference_dir=reference_dir,
         notebook_dir=notebook_dir,
     )
+    correction_report = build_correction_report(reference_dir)
+    write_correction_notebook(notebook_dir, correction_report=correction_report)
     artifact_paths = session["artifact_paths"]
     assert isinstance(artifact_paths, dict)
 
@@ -142,6 +147,10 @@ def run_phase_regression(
         turns_have_statistical_evidence=turns_have_statistical_evidence,
         data_snapshot_complete=snapshot_is_complete(data_snapshot),
         data_snapshot=data_snapshot,
+        correction_notebook_present=bool(notebook_workspace["correction_notebook_exists"])
+        and bool(notebook_workspace["correction_markdown_exists"]),
+        correction_notebook_executed=bool(notebook_workspace["correction_notebook_executed"])
+        and bool(notebook_execution["correction_notebook_executed"]),
         current_required_artifacts_exist=all(artifact_checks.values()),
         artifact_checks=artifact_checks,
         notebook_workspace_present=notebook_workspace_present,

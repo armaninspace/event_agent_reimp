@@ -40,6 +40,8 @@ class ReplicationAudit:
     turns_have_statistical_evidence: bool
     data_snapshot_complete: bool
     data_snapshot_combined_sha256: str | None
+    correction_notebook_present: bool
+    correction_notebook_executed: bool
     selected_forum_metadata_count: int
     selected_tournament_metadata_count: int
     selected_reflection_metadata_count: int
@@ -58,7 +60,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-020-data-snapshot-hashes"),
+    run_dir: Path = Path("app/runs/phase-021-final-corrections-notebook"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -84,6 +86,8 @@ def run_replication_audit(
         turns_have_statistical_evidence=bool(summary["turns_have_statistical_evidence"]),
         data_snapshot_complete=snapshot_is_complete(summary.get("data_snapshot")),
         data_snapshot_combined_sha256=_combined_sha(summary.get("data_snapshot")),
+        correction_notebook_present=bool(summary.get("correction_notebook_present")),
+        correction_notebook_executed=bool(summary.get("correction_notebook_executed")),
         selected_forum_metadata_count=sum(_has_key(candidate, "forum") for candidate in selected),
         selected_tournament_metadata_count=sum(_has_key(candidate, "tournament") for candidate in selected),
         selected_reflection_metadata_count=sum(_has_key(candidate, "reflection") for candidate in selected),
@@ -131,6 +135,8 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Turns have statistical evidence: {audit.turns_have_statistical_evidence}",
             f"- Data snapshot complete: {audit.data_snapshot_complete}",
             f"- Data snapshot combined SHA-256: `{audit.data_snapshot_combined_sha256}`",
+            f"- Correction notebook present: {audit.correction_notebook_present}",
+            f"- Correction notebook executed: {audit.correction_notebook_executed}",
             f"- Forum metadata count: {audit.selected_forum_metadata_count}",
             f"- Tournament metadata count: {audit.selected_tournament_metadata_count}",
             f"- Reflection metadata count: {audit.selected_reflection_metadata_count}",

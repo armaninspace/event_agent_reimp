@@ -34,6 +34,21 @@ class TurnNotebookArtifacts:
         }
 
 
+@dataclass(frozen=True)
+class CorrectionNotebookArtifacts:
+    """Notebook artifacts written for multiple-testing correction evidence."""
+
+    notebook_path: Path
+    markdown_path: Path
+
+    def to_dict(self) -> dict[str, str]:
+        """Return JSON-serializable paths."""
+        return {
+            "notebook_path": str(self.notebook_path),
+            "markdown_path": str(self.markdown_path),
+        }
+
+
 def initialize_workspace(notebook_dir: Path) -> None:
     """Create required wiki files if they do not already exist."""
     notebook_dir.mkdir(parents=True, exist_ok=True)
@@ -129,6 +144,77 @@ def write_turn_notebook(notebook_dir: Path, *, turn: dict[str, object]) -> TurnN
     return TurnNotebookArtifacts(notebook_path=notebook_path, markdown_path=markdown_path)
 
 
+def write_correction_notebook(notebook_dir: Path, *, correction_report: dict[str, object]) -> CorrectionNotebookArtifacts:
+    """Write final multiple-testing correction notebook and Markdown export."""
+    initialize_workspace(notebook_dir)
+    notebook_path = notebook_dir / "999-multiple-testing-corrections.ipynb"
+    markdown_path = notebook_dir / "999-multiple-testing-corrections.md"
+    result_count = int(correction_report["result_count"])
+    method = str(correction_report["method"])
+    results = correction_report["results"]
+    assert isinstance(results, list)
+    notebook = {
+        "cells": [
+            {
+                "cell_type": "markdown",
+                "id": "corrections-intro",
+                "metadata": {},
+                "source": [
+                    "# Multiple-Testing Corrections\n",
+                    "\n",
+                    "Final correction notebook for the governed evidence run.\n",
+                ],
+            },
+            {
+                "cell_type": "markdown",
+                "id": "corrections-summary",
+                "metadata": {},
+                "source": _render_correction_markdown_lines(correction_report),
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "id": "corrections-validation-code",
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "correction_contract = {\n",
+                    f"    'method': {method!r},\n",
+                    f"    'result_count': {result_count!r},\n",
+                    "    'minimum_expected_results': 1,\n",
+                    "}\n",
+                    "assert correction_contract['result_count'] >= correction_contract['minimum_expected_results']\n",
+                    "assert 'Benjamini-Hochberg' in correction_contract['method']\n",
+                    "print('correction_contract_passed')\n",
+                ],
+            },
+        ],
+        "metadata": {
+            "event_agent": {
+                "artifact_type": "multiple_testing_corrections",
+                "status": "scaffolded",
+                "result_count": result_count,
+            },
+            "kernelspec": {
+                "display_name": "Python 3",
+                "language": "python",
+                "name": "python3",
+            },
+            "language_info": {
+                "name": "python",
+            },
+        },
+        "nbformat": 4,
+        "nbformat_minor": 5,
+    }
+    notebook_path.write_text(json.dumps(notebook, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    markdown_path.write_text("".join(_render_correction_markdown_lines(correction_report)), encoding="utf-8")
+    _append(notebook_dir / "index.md", "- Final corrections: [999-multiple-testing-corrections](999-multiple-testing-corrections.md)\n")
+    _append(notebook_dir / "log.md", "- Wrote final multiple-testing corrections notebook `999-multiple-testing-corrections.ipynb`\n")
+    _append(notebook_dir / "findings.md", f"- Final corrections notebook records {result_count} adjusted statistical results.\n")
+    return CorrectionNotebookArtifacts(notebook_path=notebook_path, markdown_path=markdown_path)
+
+
 def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
     """Summarize workspace files for regression checks."""
     wiki_checks = {filename: (notebook_dir / filename).exists() for filename in WIKI_FILES}
@@ -147,6 +233,12 @@ def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
         notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
         if notebook.get("metadata", {}).get("event_agent", {}).get("status") == "nbclient_executed":
             nbclient_executed_count += 1
+    correction_notebook = notebook_dir / "999-multiple-testing-corrections.ipynb"
+    correction_markdown = notebook_dir / "999-multiple-testing-corrections.md"
+    correction_status = None
+    if correction_notebook.exists():
+        notebook = json.loads(correction_notebook.read_text(encoding="utf-8"))
+        correction_status = notebook.get("metadata", {}).get("event_agent", {}).get("status")
     return {
         "path": str(notebook_dir),
         "wiki_files_exist": all(wiki_checks.values()),
@@ -155,6 +247,10 @@ def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
         "markdown_export_count": len(markdown_exports),
         "lightweight_executed_count": lightweight_executed_count,
         "nbclient_executed_count": nbclient_executed_count,
+        "correction_notebook_exists": correction_notebook.exists(),
+        "correction_markdown_exists": correction_markdown.exists(),
+        "correction_notebook_status": correction_status,
+        "correction_notebook_executed": correction_status in {"lightweight_executed", "nbclient_executed"},
         "notebooks": notebooks,
         "markdown_exports": markdown_exports,
     }
@@ -241,6 +337,36 @@ def _render_statistical_evidence_markdown(value: object) -> list[str]:
         "Statistical caveats:",
         *[f"- {caveat}" for caveat in caveats],
     ]
+
+
+def _render_correction_markdown_lines(report: dict[str, object]) -> list[str]:
+    lines = [
+        "# Multiple-Testing Corrections\n",
+        "\n",
+        f"Schema: `{report['schema_version']}`\n",
+        "\n",
+        f"Method: `{report['method']}`\n",
+        "\n",
+        f"Result count: `{report['result_count']}`\n",
+        "\n",
+        "## Corrected Results\n",
+        "\n",
+    ]
+    results = report["results"]
+    assert isinstance(results, list)
+    for result in results:
+        assert isinstance(result, dict)
+        lines.extend(
+            [
+                f"### {result['result_id']}\n",
+                "\n",
+                f"- P-value: `{result['p_value']}`\n",
+                f"- Adjusted p-value: `{result['adjusted_p_value']}`\n",
+                f"- Status: `{result['status']}`\n",
+                "\n",
+            ]
+        )
+    return lines
 
 
 def _append(path: Path, text: str) -> None:

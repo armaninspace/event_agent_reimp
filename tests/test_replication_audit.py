@@ -12,6 +12,8 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.turns_have_statistical_evidence is True
     assert audit.data_snapshot_complete is True
     assert audit.data_snapshot_combined_sha256 is not None
+    assert audit.correction_notebook_present is True
+    assert audit.correction_notebook_executed is True
     assert audit.selected_forum_metadata_count == 20
     assert audit.selected_tournament_metadata_count == 20
     assert audit.selected_reflection_metadata_count == 20

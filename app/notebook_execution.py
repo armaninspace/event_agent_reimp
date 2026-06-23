@@ -85,12 +85,18 @@ def execute_notebook_lightweight(path: Path) -> NotebookExecutionResult:
 def execute_workspace_lightweight(notebook_dir: Path) -> dict[str, object]:
     """Execute all turn notebooks in a workspace."""
     results = [execute_notebook_lightweight(path) for path in sorted(notebook_dir.glob("turn-*.ipynb"))]
+    correction_path = notebook_dir / "999-multiple-testing-corrections.ipynb"
+    correction_result = execute_notebook_lightweight(correction_path) if correction_path.exists() else None
     failures = [result for result in results if result.validation_error]
+    if correction_result and correction_result.validation_error:
+        failures.append(correction_result)
     return {
         "backend": "lightweight",
         "executed_notebook_count": len(results),
         "failed_notebook_count": len(failures),
         "all_lightweight_executed": bool(results) and not failures,
+        "correction_notebook_executed": correction_result is not None and correction_result.validation_error is None,
+        "correction_notebook_result": correction_result.to_dict() if correction_result else None,
         "results": [result.to_dict() for result in results],
     }
 
@@ -126,12 +132,18 @@ def execute_notebook_nbclient(path: Path, *, timeout: int = 60) -> NotebookExecu
 def execute_workspace_nbclient(notebook_dir: Path, *, timeout: int = 60) -> dict[str, object]:
     """Execute all turn notebooks in a workspace with nbclient."""
     results = [execute_notebook_nbclient(path, timeout=timeout) for path in sorted(notebook_dir.glob("turn-*.ipynb"))]
+    correction_path = notebook_dir / "999-multiple-testing-corrections.ipynb"
+    correction_result = execute_notebook_nbclient(correction_path, timeout=timeout) if correction_path.exists() else None
     failures = [result for result in results if result.validation_error]
+    if correction_result and correction_result.validation_error:
+        failures.append(correction_result)
     return {
         "backend": "nbclient",
         "executed_notebook_count": len(results),
         "failed_notebook_count": len(failures),
         "all_nbclient_executed": bool(results) and not failures,
+        "correction_notebook_executed": correction_result is not None and correction_result.validation_error is None,
+        "correction_notebook_result": correction_result.to_dict() if correction_result else None,
         "results": [result.to_dict() for result in results],
     }
 

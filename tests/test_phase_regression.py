@@ -45,6 +45,8 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
     assert summary.turns_have_statistical_evidence is True
     assert summary.data_snapshot_complete is True
     assert summary.data_snapshot["file_count"] == 2
+    assert summary.correction_notebook_present is True
+    assert summary.correction_notebook_executed is True
     assert summary.current_required_artifacts_exist is True
     assert summary.notebook_workspace_present is True
     assert summary.notebook_workspace["notebook_count"] == 3
@@ -67,6 +69,8 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
     assert loaded["turns_have_statistical_evidence"] is True
     assert loaded["data_snapshot_complete"] is True
     assert len(loaded["data_snapshot"]["combined_sha256"]) == 64
+    assert loaded["correction_notebook_present"] is True
+    assert loaded["correction_notebook_executed"] is True
 
 
 def test_run_phase_regression_supports_nbclient_backend(tmp_path: Path) -> None:
@@ -82,6 +86,7 @@ def test_run_phase_regression_supports_nbclient_backend(tmp_path: Path) -> None:
     )
 
     assert summary.notebook_workspace_present is True
+    assert summary.correction_notebook_executed is True
     assert summary.notebook_execution["backend"] == "nbclient"
     assert summary.notebook_execution["executed_notebook_count"] == 1
     assert summary.notebook_execution["failed_notebook_count"] == 0

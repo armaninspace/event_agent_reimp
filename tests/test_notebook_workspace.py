@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from app.notebook_workspace import WIKI_FILES, initialize_workspace, summarize_workspace, write_turn_notebook
+from app.notebook_workspace import WIKI_FILES, initialize_workspace, summarize_workspace, write_correction_notebook, write_turn_notebook
 
 
 def _turn(candidate_id: str = "turn-01-crowd-spending") -> dict[str, object]:
@@ -63,3 +63,30 @@ def test_summarize_workspace_counts_turn_artifacts(tmp_path: Path) -> None:
     assert summary["notebook_count"] == 2
     assert summary["markdown_export_count"] == 2
     assert summary["lightweight_executed_count"] == 0
+
+
+def test_write_correction_notebook_creates_final_corrections_artifacts(tmp_path: Path) -> None:
+    report = {
+        "schema_version": "phase-test",
+        "method": "Benjamini-Hochberg FDR correction",
+        "result_count": 1,
+        "results": [
+            {
+                "result_id": "matched:city_week:revenue_all",
+                "p_value": 0.01,
+                "adjusted_p_value": 0.02,
+                "status": "ok",
+            }
+        ],
+    }
+
+    artifacts = write_correction_notebook(tmp_path, correction_report=report)
+    summary = summarize_workspace(tmp_path)
+
+    assert artifacts.notebook_path.name == "999-multiple-testing-corrections.ipynb"
+    assert artifacts.markdown_path.name == "999-multiple-testing-corrections.md"
+    assert artifacts.notebook_path.exists()
+    assert artifacts.markdown_path.exists()
+    assert "matched:city_week:revenue_all" in artifacts.markdown_path.read_text(encoding="utf-8")
+    assert summary["correction_notebook_exists"] is True
+    assert summary["correction_markdown_exists"] is True
