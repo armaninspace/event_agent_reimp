@@ -16,8 +16,8 @@ from app.replication_audit import run_replication_audit, write_replication_audit
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run final thesis replication audit.")
-    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-019-replication-audit"))
-    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-019-replication-audit"))
+    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-020-data-snapshot-hashes"))
+    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-020-data-snapshot-hashes"))
     args = parser.parse_args()
 
     audit = run_replication_audit(repo_root=Path("."), run_dir=args.run_dir)

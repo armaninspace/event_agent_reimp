@@ -10,6 +10,8 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.workflow_task_statistical_misroutes == 0
     assert audit.selected_candidates_have_required_metadata is True
     assert audit.turns_have_statistical_evidence is True
+    assert audit.data_snapshot_complete is True
+    assert audit.data_snapshot_combined_sha256 is not None
     assert audit.selected_forum_metadata_count == 20
     assert audit.selected_tournament_metadata_count == 20
     assert audit.selected_reflection_metadata_count == 20

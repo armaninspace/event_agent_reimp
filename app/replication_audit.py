@@ -6,6 +6,8 @@ import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+from app.data_snapshot import snapshot_is_complete
+
 
 REQUIRED_SOURCE_FILES = (
     "data/question_forum/questions.json",
@@ -36,6 +38,8 @@ class ReplicationAudit:
     workflow_task_statistical_misroutes: int
     selected_candidates_have_required_metadata: bool
     turns_have_statistical_evidence: bool
+    data_snapshot_complete: bool
+    data_snapshot_combined_sha256: str | None
     selected_forum_metadata_count: int
     selected_tournament_metadata_count: int
     selected_reflection_metadata_count: int
@@ -54,7 +58,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-019-replication-audit"),
+    run_dir: Path = Path("app/runs/phase-020-data-snapshot-hashes"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -78,6 +82,8 @@ def run_replication_audit(
         workflow_task_statistical_misroutes=int(summary["workflow_task_statistical_misroutes"]),
         selected_candidates_have_required_metadata=bool(summary["selected_candidates_have_required_metadata"]),
         turns_have_statistical_evidence=bool(summary["turns_have_statistical_evidence"]),
+        data_snapshot_complete=snapshot_is_complete(summary.get("data_snapshot")),
+        data_snapshot_combined_sha256=_combined_sha(summary.get("data_snapshot")),
         selected_forum_metadata_count=sum(_has_key(candidate, "forum") for candidate in selected),
         selected_tournament_metadata_count=sum(_has_key(candidate, "tournament") for candidate in selected),
         selected_reflection_metadata_count=sum(_has_key(candidate, "reflection") for candidate in selected),
@@ -123,6 +129,8 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Workflow-task statistical misroutes: {audit.workflow_task_statistical_misroutes}",
             f"- Selected candidates have required metadata: {audit.selected_candidates_have_required_metadata}",
             f"- Turns have statistical evidence: {audit.turns_have_statistical_evidence}",
+            f"- Data snapshot complete: {audit.data_snapshot_complete}",
+            f"- Data snapshot combined SHA-256: `{audit.data_snapshot_combined_sha256}`",
             f"- Forum metadata count: {audit.selected_forum_metadata_count}",
             f"- Tournament metadata count: {audit.selected_tournament_metadata_count}",
             f"- Reflection metadata count: {audit.selected_reflection_metadata_count}",
@@ -141,3 +149,10 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
 
 def _has_key(value: object, key: str) -> bool:
     return isinstance(value, dict) and key in value
+
+
+def _combined_sha(value: object) -> str | None:
+    if not isinstance(value, dict):
+        return None
+    combined = value.get("combined_sha256")
+    return str(combined) if isinstance(combined, str) else None

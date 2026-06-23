@@ -1,0 +1,22 @@
+# Decision Records
+
+- Turn 1: selected `turn-01-crowd-spending` with score 14
+- Turn 2: selected `turn-02-market-coverage` with score 14
+- Turn 3: selected `turn-03-market-coverage` with score 14
+- Turn 4: selected `turn-04-market-coverage` with score 14
+- Turn 5: selected `turn-05-market-coverage` with score 14
+- Turn 6: selected `turn-06-market-coverage` with score 14
+- Turn 7: selected `turn-07-market-coverage` with score 14
+- Turn 8: selected `turn-08-market-coverage` with score 14
+- Turn 9: selected `turn-09-market-coverage` with score 14
+- Turn 10: selected `turn-10-market-coverage` with score 14
+- Turn 11: selected `turn-11-market-coverage` with score 14
+- Turn 12: selected `turn-12-market-coverage` with score 14
+- Turn 13: selected `turn-13-market-coverage` with score 14
+- Turn 14: selected `turn-14-market-coverage` with score 14
+- Turn 15: selected `turn-15-market-coverage` with score 14
+- Turn 16: selected `turn-16-market-coverage` with score 14
+- Turn 17: selected `turn-17-market-coverage` with score 14
+- Turn 18: selected `turn-18-market-coverage` with score 14
+- Turn 19: selected `turn-19-market-coverage` with score 14
+- Turn 20: selected `turn-20-market-coverage` with score 14

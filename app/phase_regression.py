@@ -6,6 +6,7 @@ import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+from app.data_snapshot import build_reference_snapshot, snapshot_is_complete
 from app.friends_loop import run_friends_question_loop
 from app.hypothesis_routing import count_workflow_statistical_misroutes
 from app.notebook_execution import execute_workspace_lightweight, execute_workspace_nbclient
@@ -35,6 +36,8 @@ class PhaseRegressionResult:
     selected_candidate_count: int
     selected_candidates_have_required_metadata: bool
     turns_have_statistical_evidence: bool
+    data_snapshot_complete: bool
+    data_snapshot: dict[str, object]
     current_required_artifacts_exist: bool
     artifact_checks: dict[str, bool]
     notebook_workspace_present: bool
@@ -61,6 +64,7 @@ def run_phase_regression(
     phase_dir = runs_dir / phase_id
     loop_dir = phase_dir / "friends-question-loop"
     notebook_dir = phase_dir / "notebooks"
+    data_snapshot = build_reference_snapshot(reference_dir)
     session = run_friends_question_loop(
         turn_count=turns,
         output_dir=loop_dir,
@@ -136,6 +140,8 @@ def run_phase_regression(
         selected_candidate_count=len(selected_candidates),
         selected_candidates_have_required_metadata=selected_candidates_have_required_metadata,
         turns_have_statistical_evidence=turns_have_statistical_evidence,
+        data_snapshot_complete=snapshot_is_complete(data_snapshot),
+        data_snapshot=data_snapshot,
         current_required_artifacts_exist=all(artifact_checks.values()),
         artifact_checks=artifact_checks,
         notebook_workspace_present=notebook_workspace_present,
