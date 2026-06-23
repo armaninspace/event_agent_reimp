@@ -59,3 +59,22 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
     assert summary_path.exists()
     loaded = json.loads(summary_path.read_text(encoding="utf-8"))
     assert loaded["schema_version"] == "phase-004.phase-regression-summary.v1"
+
+
+def test_run_phase_regression_supports_nbclient_backend(tmp_path: Path) -> None:
+    reference_dir = tmp_path / "reference"
+    _write_reference_files(reference_dir)
+
+    summary, _ = run_phase_regression(
+        phase_id="phase-test-nbclient",
+        turns=1,
+        runs_dir=tmp_path / "runs",
+        reference_dir=reference_dir,
+        notebook_execution_backend="nbclient",
+    )
+
+    assert summary.notebook_workspace_present is True
+    assert summary.notebook_execution["backend"] == "nbclient"
+    assert summary.notebook_execution["executed_notebook_count"] == 1
+    assert summary.notebook_execution["failed_notebook_count"] == 0
+    assert summary.notebook_workspace["nbclient_executed_count"] == 1

@@ -1,0 +1,224 @@
+{
+  "artifact_checks": {
+    "discovery_decision_summary": true,
+    "session_json": true,
+    "session_markdown": true,
+    "telemetry_json": true
+  },
+  "completed_workflows": 20,
+  "current_required_artifacts_exist": true,
+  "known_future_artifacts": {
+    "business_html": "deferred until report phase",
+    "playback_html": "deferred until playback UI phase"
+  },
+  "notebook_execution": {
+    "all_nbclient_executed": true,
+    "backend": "nbclient",
+    "executed_notebook_count": 20,
+    "failed_notebook_count": 0,
+    "results": [
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-01-turn-01-crowd-spending.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-02-turn-02-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-03-turn-03-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-04-turn-04-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-05-turn-05-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-06-turn-06-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-07-turn-07-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-08-turn-08-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-09-turn-09-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-10-turn-10-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-11-turn-11-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-12-turn-12-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-13-turn-13-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-14-turn-14-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-15-turn-15-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-16-turn-16-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-17-turn-17-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-18-turn-18-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-19-turn-19-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-007-nbclient-backend/notebooks/turn-20-turn-20-market-coverage.ipynb",
+        "status": "nbclient_executed",
+        "validation_error": null
+      }
+    ]
+  },
+  "notebook_workspace": {
+    "lightweight_executed_count": 20,
+    "markdown_export_count": 20,
+    "markdown_exports": [
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-01-turn-01-crowd-spending.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-02-turn-02-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-03-turn-03-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-04-turn-04-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-05-turn-05-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-06-turn-06-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-07-turn-07-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-08-turn-08-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-09-turn-09-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-10-turn-10-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-11-turn-11-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-12-turn-12-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-13-turn-13-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-14-turn-14-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-15-turn-15-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-16-turn-16-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-17-turn-17-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-18-turn-18-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-19-turn-19-market-coverage.md",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-20-turn-20-market-coverage.md"
+    ],
+    "nbclient_executed_count": 20,
+    "notebook_count": 20,
+    "notebooks": [
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-01-turn-01-crowd-spending.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-02-turn-02-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-03-turn-03-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-04-turn-04-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-05-turn-05-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-06-turn-06-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-07-turn-07-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-08-turn-08-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-09-turn-09-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-10-turn-10-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-11-turn-11-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-12-turn-12-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-13-turn-13-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-14-turn-14-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-15-turn-15-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-16-turn-16-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-17-turn-17-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-18-turn-18-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-19-turn-19-market-coverage.ipynb",
+      "app/runs/phase-007-nbclient-backend/notebooks/turn-20-turn-20-market-coverage.ipynb"
+    ],
+    "path": "app/runs/phase-007-nbclient-backend/notebooks",
+    "wiki_checks": {
+      "SCHEMA.md": true,
+      "caveats.md": true,
+      "decision-records.md": true,
+      "findings.md": true,
+      "index.md": true,
+      "log.md": true,
+      "question-board.md": true,
+      "semantic-map.md": true
+    },
+    "wiki_files_exist": true
+  },
+  "notebook_workspace_present": true,
+  "phase_id": "phase-007-nbclient-backend",
+  "requested_turns": 20,
+  "schema_version": "phase-004.phase-regression-summary.v1",
+  "selected_candidate_count": 20,
+  "selected_candidates_have_required_metadata": true,
+  "stopped_early": false,
+  "telemetry_event_count": 161,
+  "telemetry_event_types": [
+    "board.proposed",
+    "board.ranked",
+    "discussion.message",
+    "knowledge.read",
+    "memory.seeded",
+    "notebook.created",
+    "turn.completed",
+    "turn.started",
+    "wiki.updated"
+  ],
+  "workflow_task_statistical_misroutes": 0
+}

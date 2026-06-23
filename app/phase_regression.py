@@ -7,7 +7,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from app.friends_loop import run_friends_question_loop
-from app.notebook_execution import execute_workspace_lightweight
+from app.notebook_execution import execute_workspace_lightweight, execute_workspace_nbclient
 from app.notebook_workspace import summarize_workspace
 
 
@@ -51,6 +51,7 @@ def run_phase_regression(
     turns: int = 20,
     runs_dir: Path = Path("app/runs"),
     reference_dir: Path = Path("data/reference"),
+    notebook_execution_backend: str = "lightweight",
 ) -> tuple[PhaseRegressionResult, Path]:
     """Run a deterministic phase regression and write its summary."""
     phase_dir = runs_dir / phase_id
@@ -83,14 +84,23 @@ def run_phase_regression(
         )
         for candidate in selected_candidates
     )
-    notebook_execution = execute_workspace_lightweight(notebook_dir)
+    if notebook_execution_backend == "lightweight":
+        notebook_execution = execute_workspace_lightweight(notebook_dir)
+        execution_ok = bool(notebook_execution["all_lightweight_executed"])
+        executed_count_key = "lightweight_executed_count"
+    elif notebook_execution_backend == "nbclient":
+        notebook_execution = execute_workspace_nbclient(notebook_dir)
+        execution_ok = bool(notebook_execution["all_nbclient_executed"])
+        executed_count_key = "nbclient_executed_count"
+    else:
+        raise ValueError(f"Unsupported notebook execution backend: {notebook_execution_backend}")
     notebook_workspace = summarize_workspace(notebook_dir)
     notebook_workspace_present = (
         bool(notebook_workspace["wiki_files_exist"])
         and notebook_workspace["notebook_count"] == turns
         and notebook_workspace["markdown_export_count"] == turns
-        and notebook_workspace["lightweight_executed_count"] == turns
-        and bool(notebook_execution["all_lightweight_executed"])
+        and notebook_workspace[executed_count_key] == turns
+        and execution_ok
     )
 
     summary = PhaseRegressionResult(

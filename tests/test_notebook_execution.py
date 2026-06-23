@@ -1,7 +1,12 @@
 import json
 from pathlib import Path
 
-from app.notebook_execution import execute_notebook_lightweight, execute_workspace_lightweight
+from app.notebook_execution import (
+    execute_notebook_lightweight,
+    execute_notebook_nbclient,
+    execute_workspace_lightweight,
+    execute_workspace_nbclient,
+)
 from app.notebook_workspace import write_turn_notebook
 
 
@@ -44,3 +49,26 @@ def test_execute_workspace_lightweight_counts_all_notebooks(tmp_path: Path) -> N
     assert summary["executed_notebook_count"] == 2
     assert summary["failed_notebook_count"] == 0
     assert summary["all_lightweight_executed"] is True
+
+
+def test_execute_notebook_nbclient_updates_metadata(tmp_path: Path) -> None:
+    artifacts = write_turn_notebook(tmp_path, turn=_turn())
+
+    result = execute_notebook_nbclient(artifacts.notebook_path)
+
+    assert result.status == "nbclient_executed"
+    assert result.validation_error is None
+    notebook = json.loads(artifacts.notebook_path.read_text(encoding="utf-8"))
+    assert notebook["metadata"]["event_agent"]["status"] == "nbclient_executed"
+    assert "nbclient_executed" in artifacts.markdown_path.read_text(encoding="utf-8")
+
+
+def test_execute_workspace_nbclient_counts_all_notebooks(tmp_path: Path) -> None:
+    write_turn_notebook(tmp_path, turn=_turn(1))
+    write_turn_notebook(tmp_path, turn=_turn(2))
+
+    summary = execute_workspace_nbclient(tmp_path)
+
+    assert summary["executed_notebook_count"] == 2
+    assert summary["failed_notebook_count"] == 0
+    assert summary["all_nbclient_executed"] is True

@@ -21,6 +21,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--turns", type=int, default=20, help="Number of turns to run.")
     parser.add_argument("--runs-dir", type=Path, default=Path("app/runs"), help="Base run artifact directory.")
     parser.add_argument(
+        "--notebook-execution-backend",
+        choices=("lightweight", "nbclient"),
+        default="lightweight",
+        help="Notebook execution backend for generated turn notebooks.",
+    )
+    parser.add_argument(
         "--reference-dir",
         type=Path,
         default=Path("data/reference"),
@@ -37,6 +43,7 @@ def main(argv: list[str] | None = None) -> int:
         turns=args.turns,
         runs_dir=args.runs_dir,
         reference_dir=args.reference_dir,
+        notebook_execution_backend=args.notebook_execution_backend,
     )
     print(f"wrote {summary_path}")
     print(f"requested_turns={summary.requested_turns}")

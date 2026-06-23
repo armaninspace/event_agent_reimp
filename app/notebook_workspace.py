@@ -69,6 +69,7 @@ def write_turn_notebook(notebook_dir: Path, *, turn: dict[str, object]) -> TurnN
         "cells": [
             {
                 "cell_type": "markdown",
+                "id": f"turn-{turn_number:02d}-intro",
                 "metadata": {},
                 "source": [
                     f"# Turn {turn_number}: {selected['question']}\n",
@@ -78,6 +79,7 @@ def write_turn_notebook(notebook_dir: Path, *, turn: dict[str, object]) -> TurnN
             },
             {
                 "cell_type": "markdown",
+                "id": f"turn-{turn_number:02d}-validation-status",
                 "metadata": {},
                 "source": [
                     "## Validation Status\n",
@@ -88,6 +90,7 @@ def write_turn_notebook(notebook_dir: Path, *, turn: dict[str, object]) -> TurnN
             {
                 "cell_type": "code",
                 "execution_count": None,
+                "id": f"turn-{turn_number:02d}-validation-code",
                 "metadata": {},
                 "outputs": [],
                 "source": [
@@ -134,8 +137,16 @@ def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
     lightweight_executed_count = 0
     for notebook_path in notebook_dir.glob("turn-*.ipynb"):
         notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
-        if notebook.get("metadata", {}).get("event_agent", {}).get("status") == "lightweight_executed":
+        if notebook.get("metadata", {}).get("event_agent", {}).get("status") in {
+            "lightweight_executed",
+            "nbclient_executed",
+        }:
             lightweight_executed_count += 1
+    nbclient_executed_count = 0
+    for notebook_path in notebook_dir.glob("turn-*.ipynb"):
+        notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
+        if notebook.get("metadata", {}).get("event_agent", {}).get("status") == "nbclient_executed":
+            nbclient_executed_count += 1
     return {
         "path": str(notebook_dir),
         "wiki_files_exist": all(wiki_checks.values()),
@@ -143,6 +154,7 @@ def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
         "notebook_count": len(notebooks),
         "markdown_export_count": len(markdown_exports),
         "lightweight_executed_count": lightweight_executed_count,
+        "nbclient_executed_count": nbclient_executed_count,
         "notebooks": notebooks,
         "markdown_exports": markdown_exports,
     }
