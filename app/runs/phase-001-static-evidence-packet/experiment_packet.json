@@ -1,0 +1,117 @@
+{
+  "audit_log": [
+    {
+      "event_type": "packet.created",
+      "summary": "Created deterministic static evidence packet.",
+      "time": "2026-06-23T02:00:13+00:00"
+    },
+    {
+      "event_type": "data.profiled",
+      "summary": "Profiled final city-week and MSA-week runtime CSV files.",
+      "time": "2026-06-23T02:00:13+00:00"
+    },
+    {
+      "event_type": "agent_runtime.checked",
+      "summary": "Checked Microsoft Agent Framework package metadata without making external calls.",
+      "time": "2026-06-23T02:00:13+00:00"
+    }
+  ],
+  "caveat": "This packet verifies data readiness and artifact generation only. It does not run matched controls, multiple-testing correction, notebook execution, or a 20-turn agent regression.",
+  "data_profile": {
+    "city_week": {
+      "column_count": 54,
+      "grain": "city-week",
+      "has_game_rows": 2277,
+      "missing_columns": [],
+      "missing_required_values": {
+        "cityid": 0,
+        "game_count": 0,
+        "has_game": 0,
+        "merchants_all": 0,
+        "revenue_all": 0,
+        "week_start_monday": 0
+      },
+      "path": "data/reference/joined_city_week_game_economic.csv",
+      "required_columns": [
+        "cityid",
+        "week_start_monday",
+        "revenue_all",
+        "merchants_all",
+        "has_game",
+        "game_count"
+      ],
+      "row_count": 5777,
+      "unique_geographies": 53,
+      "unique_weeks": 109
+    },
+    "msa_week": {
+      "column_count": 36,
+      "grain": "MSA-week",
+      "has_game_rows": 2542,
+      "missing_columns": [],
+      "missing_required_values": {
+        "game_count": 0,
+        "has_game": 0,
+        "merchants_all": 0,
+        "msa_block_id": 0,
+        "msa_code": 0,
+        "revenue_all": 0,
+        "week_start_monday": 0
+      },
+      "path": "data/reference/joined_msa_week_game_economic.csv",
+      "required_columns": [
+        "msa_code",
+        "week_start_monday",
+        "revenue_all",
+        "merchants_all",
+        "has_game",
+        "game_count",
+        "msa_block_id"
+      ],
+      "row_count": 48723,
+      "unique_geographies": 447,
+      "unique_weeks": 109
+    }
+  },
+  "design": {
+    "data_sources": [
+      "data/reference/joined_city_week_game_economic.csv",
+      "data/reference/joined_msa_week_game_economic.csv"
+    ],
+    "method": "deterministic CSV profiling and packet generation",
+    "phase": "phase-001-static-evidence-packet",
+    "runtime": "Python with Microsoft Agent Framework dependency available for later agent phases"
+  },
+  "generated_at": "2026-06-23T02:00:13+00:00",
+  "hypothesis": {
+    "claim_boundary": "descriptive readiness check only; no causal or inferential claim",
+    "exposure": "has_game / game_count",
+    "headline": "Sports event exposure is associated with measurable local economic activity.",
+    "outcomes": [
+      "revenue_all",
+      "merchants_all"
+    ],
+    "unit": "city-week and MSA-week"
+  },
+  "question": "Do big sports crowds actually turn into more local spending?",
+  "result": {
+    "all_required_columns_present": true,
+    "all_required_values_present": true,
+    "city_week_has_game_rows": 2277,
+    "city_week_rows": 5777,
+    "msa_week_has_game_rows": 2542,
+    "msa_week_rows": 48723,
+    "summary": "Final runtime files are present and suitable for static packet generation."
+  },
+  "runtime_metadata": {
+    "framework_name": "Microsoft Agent Framework",
+    "import_available": true,
+    "import_name": "agent_framework",
+    "language": "python",
+    "package_name": "agent-framework",
+    "package_version": "1.9.0",
+    "platform": "Linux 7.0.2-6-pve (x86_64)",
+    "python_version": "3.12.13"
+  },
+  "schema_version": "phase-001.static-evidence-packet.v1"
+}
