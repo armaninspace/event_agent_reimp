@@ -1,0 +1,30 @@
+{
+  "all_selected_have_evolution": true,
+  "all_selected_have_reflection": true,
+  "all_selected_have_tournament": true,
+  "schema_version": "phase-015.governance-smoke.v1",
+  "selected": [
+    {
+      "candidate_id": "turn-01-crowd-spending",
+      "evolution_action": "carry_forward",
+      "forum_question_id": "crowd-spending",
+      "reflection_status": "pass",
+      "tournament_rank": 1
+    },
+    {
+      "candidate_id": "turn-02-market-coverage",
+      "evolution_action": "combine",
+      "forum_question_id": "market-coverage",
+      "reflection_status": "pass",
+      "tournament_rank": 1
+    },
+    {
+      "candidate_id": "turn-03-market-coverage",
+      "evolution_action": "strengthen",
+      "forum_question_id": "market-coverage",
+      "reflection_status": "pass",
+      "tournament_rank": 1
+    }
+  ],
+  "turn_count": 3
+}

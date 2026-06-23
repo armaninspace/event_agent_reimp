@@ -9,6 +9,9 @@ from pathlib import Path
 from app.hypothesis_routing import classify_question
 from app.notebook_workspace import write_turn_notebook
 from app.question_forum import DEFAULT_FORUM_PATH, QuestionForumRecord, load_question_forum
+from app.question_evolution import evolve_candidates
+from app.question_reflection import reflect_candidates
+from app.question_tournament import run_question_tournament
 from app.reference_data import build_reference_quality_report
 from app.reporting import render_business_report, render_playback_ui
 
@@ -111,7 +114,7 @@ class Spark:
                 semantic_slot="city_week_event_spending",
                 evidence_value=5,
                 testability=5,
-                novelty=3 if "turn-01-crowd-spending" in prior_selected_ids else 4,
+                novelty=1 if "turn-01-crowd-spending" in prior_selected_ids else 4,
                 caveat="Observational data cannot prove that crowds caused spending changes.",
                 forum=self._forum_metadata("crowd-spending"),
             ),
@@ -264,6 +267,7 @@ def run_friends_question_loop(
     data_agent = DataAgent()
     telemetry = TelemetryRecorder()
     prior_selected_ids: set[str] = set()
+    prior_selected_forum_ids: set[str] = set()
     turns: list[dict[str, object]] = []
 
     telemetry.record(
@@ -312,10 +316,38 @@ def run_friends_question_loop(
         )
         reviews = skeptic.review(candidates)
         mapped = mapper.map_candidates(candidates=candidates, reference_dir=reference_dir)
-        ranked = moderator.rank(candidates)
-        selected, rejected = moderator.select(candidates)
+        candidate_records = [candidate.to_dict() for candidate in candidates]
+        tournament = run_question_tournament(candidate_records)
+        reflections = reflect_candidates(candidate_records)
+        evolutions = evolve_candidates(candidate_records, prior_selected_forum_ids=prior_selected_forum_ids)
+        ranked = sorted(candidates, key=lambda candidate: int(tournament[candidate.candidate_id]["rank"]))
+        eligible = [candidate for candidate in ranked if reflections[candidate.candidate_id]["status"] != "not-answerable"]
+        selected = eligible[0] if eligible else ranked[0]
+        rejected = [candidate for candidate in ranked if candidate.candidate_id != selected.candidate_id]
         classification = classify_question(selected.question)
         prior_selected_ids.add(selected.candidate_id)
+        prior_selected_forum_ids.add(str(selected.forum["question_id"]))
+        telemetry.record(
+            event_type="tournament.completed",
+            turn=turn,
+            actor="Moderator",
+            summary="Completed pairwise candidate tournament.",
+            payload={"ranks": {candidate_id: item["rank"] for candidate_id, item in tournament.items()}},
+        )
+        telemetry.record(
+            event_type="reflection.completed",
+            turn=turn,
+            actor="Skeptic",
+            summary="Completed reviewer reflection pass.",
+            payload={"statuses": {candidate_id: item["status"] for candidate_id, item in reflections.items()}},
+        )
+        telemetry.record(
+            event_type="evolution.completed",
+            turn=turn,
+            actor="Spark",
+            summary="Completed question evolution pass.",
+            payload={"actions": {candidate_id: item["action"] for candidate_id, item in evolutions.items()}},
+        )
         telemetry.record(
             event_type="board.ranked",
             turn=turn,
@@ -325,6 +357,7 @@ def run_friends_question_loop(
                 "ranked_candidate_ids": [candidate.candidate_id for candidate in ranked],
                 "selected_candidate_id": selected.candidate_id,
                 "rejected_candidate_ids": [candidate.candidate_id for candidate in rejected],
+                "tournament_ranks": {candidate_id: item["rank"] for candidate_id, item in tournament.items()},
             },
         )
         telemetry.record(
@@ -361,8 +394,8 @@ def run_friends_question_loop(
         )
         turn_record = {
             "turn": turn,
-            "selected_candidate": selected.to_dict(),
-            "rejected_candidates": [candidate.to_dict() for candidate in rejected],
+            "selected_candidate": _candidate_record(selected, tournament, reflections, evolutions),
+            "rejected_candidates": [_candidate_record(candidate, tournament, reflections, evolutions) for candidate in rejected],
             "classification": classification.to_dict(),
             "reviews": reviews,
             "mapping": mapped,
@@ -439,6 +472,19 @@ def _render_session_markdown(session: dict[str, object]) -> str:
             ]
         )
     return "\n".join(lines)
+
+
+def _candidate_record(
+    candidate: Candidate,
+    tournament: dict[str, dict[str, object]],
+    reflections: dict[str, dict[str, object]],
+    evolutions: dict[str, dict[str, object]],
+) -> dict[str, object]:
+    data = candidate.to_dict()
+    data["tournament"] = tournament[candidate.candidate_id]
+    data["reflection"] = reflections[candidate.candidate_id]
+    data["evolution"] = evolutions[candidate.candidate_id]
+    return data
 
 
 def _render_decision_summary(session: dict[str, object]) -> str:

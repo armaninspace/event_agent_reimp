@@ -1,0 +1,678 @@
+{
+  "artifact_paths": {
+    "business_evidence_report": "app/runs/phase-015-governance-metadata/friends-question-loop-smoke/business_evidence_report.html",
+    "discovery_decision_summary": "app/runs/phase-015-governance-metadata/friends-question-loop-smoke/discovery_decision_summary.md",
+    "playback_ui": "app/runs/phase-015-governance-metadata/friends-question-loop-smoke/ui/index.html",
+    "session_json": "app/runs/phase-015-governance-metadata/friends-question-loop-smoke/friends_loop_session.json",
+    "session_markdown": "app/runs/phase-015-governance-metadata/friends-question-loop-smoke/friends_loop_session.md",
+    "telemetry_json": "app/runs/phase-015-governance-metadata/friends-question-loop-smoke/friends_loop_telemetry.json"
+  },
+  "schema_version": "phase-003.friends-loop-session.v1",
+  "session_summary": {
+    "completed_turns": 3,
+    "requested_turns": 3,
+    "stopped_early": false
+  },
+  "turns": [
+    {
+      "classification": {
+        "classification": "eda_question",
+        "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+        "required_fields_missing": [
+          "h0",
+          "h1",
+          "population",
+          "unit",
+          "exposure",
+          "comparison",
+          "outcome",
+          "direction",
+          "test_family",
+          "alpha",
+          "decision_rule"
+        ],
+        "required_fields_present": [],
+        "route": "eda_review"
+      },
+      "mapping": {
+        "turn-01-confounding-risk": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "identification_risk"
+        },
+        "turn-01-crowd-spending": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "city_week_event_spending"
+        },
+        "turn-01-market-coverage": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "msa_week_coverage"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "candidate_id": "turn-01-market-coverage",
+          "caveat": "Coverage strength is not the same as evidence of impact.",
+          "evidence_value": 4,
+          "evolution": {
+            "action": "combine",
+            "rationale": "Combine market coverage with later impact tests once coverage is sufficient.",
+            "source_question_id": "market-coverage"
+          },
+          "forum": {
+            "kind": "coverage",
+            "persona": "regional economic analyst",
+            "popularity": 8,
+            "priority": 9,
+            "question_id": "market-coverage",
+            "source_url": "local://question-forum/market-coverage",
+            "status": "proposed",
+            "tags": [
+              "coverage",
+              "msa-week",
+              "readiness"
+            ]
+          },
+          "novelty": 5,
+          "question": "Which markets have enough event exposure for a careful spending comparison?",
+          "rationale": "Analysts need coverage checks before interpreting event-week comparisons.",
+          "reflection": {
+            "answerability": "answerable with current reference files as an exploratory workflow",
+            "misleading_risk": "Coverage strength is not the same as evidence of impact.",
+            "status": "pass",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 14,
+          "semantic_slot": "msa_week_coverage",
+          "testability": 5,
+          "tournament": {
+            "candidate_id": "turn-01-market-coverage",
+            "component_scores": {
+              "evidence_value": 4,
+              "novelty": 5,
+              "policy_business_relevance": 9,
+              "public_interest": 8,
+              "testability": 5
+            },
+            "losses": 1,
+            "rank": 2,
+            "score": 31,
+            "transcript": [
+              "turn-01-market-coverage beats turn-01-confounding-risk: higher combined governance score",
+              "turn-01-crowd-spending beats turn-01-market-coverage: higher combined governance score"
+            ],
+            "wins": 1
+          }
+        },
+        {
+          "candidate_id": "turn-01-confounding-risk",
+          "caveat": "This is a review task until matched controls exist.",
+          "evidence_value": 4,
+          "evolution": {
+            "action": "split",
+            "rationale": "Separate confounding review from direct impact estimation.",
+            "source_question_id": "confounding-risk"
+          },
+          "forum": {
+            "kind": "identification_review",
+            "persona": "skeptical policy reviewer",
+            "popularity": 7,
+            "priority": 8,
+            "question_id": "confounding-risk",
+            "source_url": "local://question-forum/confounding-risk",
+            "status": "needs-review",
+            "tags": [
+              "confounding",
+              "matched-controls",
+              "claim-boundaries"
+            ]
+          },
+          "novelty": 4,
+          "question": "Where should a skeptic worry that game weeks and spending are confounded?",
+          "rationale": "Policy readers need claim boundaries before accepting event-impact narratives.",
+          "reflection": {
+            "answerability": "reviewable with current files but not a direct impact test",
+            "misleading_risk": "This is a review task until matched controls exist.",
+            "status": "needs-review",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 11,
+          "semantic_slot": "identification_risk",
+          "testability": 3,
+          "tournament": {
+            "candidate_id": "turn-01-confounding-risk",
+            "component_scores": {
+              "evidence_value": 4,
+              "novelty": 4,
+              "policy_business_relevance": 8,
+              "public_interest": 7,
+              "testability": 3
+            },
+            "losses": 2,
+            "rank": 3,
+            "score": 26,
+            "transcript": [
+              "turn-01-crowd-spending beats turn-01-confounding-risk: higher combined governance score",
+              "turn-01-market-coverage beats turn-01-confounding-risk: higher combined governance score"
+            ],
+            "wins": 0
+          }
+        }
+      ],
+      "reviews": {
+        "turn-01-confounding-risk": {
+          "claim_boundary": "This is a review task until matched controls exist.",
+          "status": "needs-review"
+        },
+        "turn-01-crowd-spending": {
+          "claim_boundary": "Observational data cannot prove that crowds caused spending changes.",
+          "status": "pass"
+        },
+        "turn-01-market-coverage": {
+          "claim_boundary": "Coverage strength is not the same as evidence of impact.",
+          "status": "pass"
+        }
+      },
+      "selected_candidate": {
+        "candidate_id": "turn-01-crowd-spending",
+        "caveat": "Observational data cannot prove that crowds caused spending changes.",
+        "evidence_value": 5,
+        "evolution": {
+          "action": "carry_forward",
+          "rationale": "Carry the public question forward as an initial evidence workflow.",
+          "source_question_id": "crowd-spending"
+        },
+        "forum": {
+          "kind": "event_impact",
+          "persona": "downtown business owner",
+          "popularity": 9,
+          "priority": 10,
+          "question_id": "crowd-spending",
+          "source_url": "local://question-forum/crowd-spending",
+          "status": "selected",
+          "tags": [
+            "sports-events",
+            "local-spending",
+            "city-week"
+          ]
+        },
+        "novelty": 4,
+        "question": "Do big sports crowds actually turn into more local spending?",
+        "rationale": "Business owners need to know whether high-attendance weeks show measurable spending differences.",
+        "reflection": {
+          "answerability": "answerable with current reference files as an exploratory workflow",
+          "misleading_risk": "Observational data cannot prove that crowds caused spending changes.",
+          "status": "pass",
+          "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+        },
+        "score": 14,
+        "semantic_slot": "city_week_event_spending",
+        "testability": 5,
+        "tournament": {
+          "candidate_id": "turn-01-crowd-spending",
+          "component_scores": {
+            "evidence_value": 5,
+            "novelty": 4,
+            "policy_business_relevance": 10,
+            "public_interest": 9,
+            "testability": 5
+          },
+          "losses": 0,
+          "rank": 1,
+          "score": 33,
+          "transcript": [
+            "turn-01-crowd-spending beats turn-01-confounding-risk: higher combined governance score",
+            "turn-01-crowd-spending beats turn-01-market-coverage: higher combined governance score"
+          ],
+          "wins": 2
+        }
+      },
+      "turn": 1
+    },
+    {
+      "classification": {
+        "classification": "eda_question",
+        "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+        "required_fields_missing": [
+          "h0",
+          "h1",
+          "population",
+          "unit",
+          "exposure",
+          "comparison",
+          "outcome",
+          "direction",
+          "test_family",
+          "alpha",
+          "decision_rule"
+        ],
+        "required_fields_present": [],
+        "route": "eda_review"
+      },
+      "mapping": {
+        "turn-02-confounding-risk": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "identification_risk"
+        },
+        "turn-02-crowd-spending": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "city_week_event_spending"
+        },
+        "turn-02-market-coverage": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "msa_week_coverage"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "candidate_id": "turn-02-crowd-spending",
+          "caveat": "Observational data cannot prove that crowds caused spending changes.",
+          "evidence_value": 5,
+          "evolution": {
+            "action": "strengthen",
+            "rationale": "Prior selection exists, so this turn should sharpen diagnostics instead of repeating the same claim.",
+            "source_question_id": "crowd-spending"
+          },
+          "forum": {
+            "kind": "event_impact",
+            "persona": "downtown business owner",
+            "popularity": 9,
+            "priority": 10,
+            "question_id": "crowd-spending",
+            "source_url": "local://question-forum/crowd-spending",
+            "status": "selected",
+            "tags": [
+              "sports-events",
+              "local-spending",
+              "city-week"
+            ]
+          },
+          "novelty": 1,
+          "question": "Do big sports crowds actually turn into more local spending?",
+          "rationale": "Business owners need to know whether high-attendance weeks show measurable spending differences.",
+          "reflection": {
+            "answerability": "answerable with current reference files as an exploratory workflow",
+            "misleading_risk": "Observational data cannot prove that crowds caused spending changes.",
+            "status": "pass",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 11,
+          "semantic_slot": "city_week_event_spending",
+          "testability": 5,
+          "tournament": {
+            "candidate_id": "turn-02-crowd-spending",
+            "component_scores": {
+              "evidence_value": 5,
+              "novelty": 1,
+              "policy_business_relevance": 10,
+              "public_interest": 9,
+              "testability": 5
+            },
+            "losses": 1,
+            "rank": 2,
+            "score": 30,
+            "transcript": [
+              "turn-02-crowd-spending beats turn-02-confounding-risk: higher combined governance score",
+              "turn-02-market-coverage beats turn-02-crowd-spending: higher combined governance score"
+            ],
+            "wins": 1
+          }
+        },
+        {
+          "candidate_id": "turn-02-confounding-risk",
+          "caveat": "This is a review task until matched controls exist.",
+          "evidence_value": 4,
+          "evolution": {
+            "action": "split",
+            "rationale": "Separate confounding review from direct impact estimation.",
+            "source_question_id": "confounding-risk"
+          },
+          "forum": {
+            "kind": "identification_review",
+            "persona": "skeptical policy reviewer",
+            "popularity": 7,
+            "priority": 8,
+            "question_id": "confounding-risk",
+            "source_url": "local://question-forum/confounding-risk",
+            "status": "needs-review",
+            "tags": [
+              "confounding",
+              "matched-controls",
+              "claim-boundaries"
+            ]
+          },
+          "novelty": 4,
+          "question": "Where should a skeptic worry that game weeks and spending are confounded?",
+          "rationale": "Policy readers need claim boundaries before accepting event-impact narratives.",
+          "reflection": {
+            "answerability": "reviewable with current files but not a direct impact test",
+            "misleading_risk": "This is a review task until matched controls exist.",
+            "status": "needs-review",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 11,
+          "semantic_slot": "identification_risk",
+          "testability": 3,
+          "tournament": {
+            "candidate_id": "turn-02-confounding-risk",
+            "component_scores": {
+              "evidence_value": 4,
+              "novelty": 4,
+              "policy_business_relevance": 8,
+              "public_interest": 7,
+              "testability": 3
+            },
+            "losses": 2,
+            "rank": 3,
+            "score": 26,
+            "transcript": [
+              "turn-02-crowd-spending beats turn-02-confounding-risk: higher combined governance score",
+              "turn-02-market-coverage beats turn-02-confounding-risk: higher combined governance score"
+            ],
+            "wins": 0
+          }
+        }
+      ],
+      "reviews": {
+        "turn-02-confounding-risk": {
+          "claim_boundary": "This is a review task until matched controls exist.",
+          "status": "needs-review"
+        },
+        "turn-02-crowd-spending": {
+          "claim_boundary": "Observational data cannot prove that crowds caused spending changes.",
+          "status": "pass"
+        },
+        "turn-02-market-coverage": {
+          "claim_boundary": "Coverage strength is not the same as evidence of impact.",
+          "status": "pass"
+        }
+      },
+      "selected_candidate": {
+        "candidate_id": "turn-02-market-coverage",
+        "caveat": "Coverage strength is not the same as evidence of impact.",
+        "evidence_value": 4,
+        "evolution": {
+          "action": "combine",
+          "rationale": "Combine market coverage with later impact tests once coverage is sufficient.",
+          "source_question_id": "market-coverage"
+        },
+        "forum": {
+          "kind": "coverage",
+          "persona": "regional economic analyst",
+          "popularity": 8,
+          "priority": 9,
+          "question_id": "market-coverage",
+          "source_url": "local://question-forum/market-coverage",
+          "status": "proposed",
+          "tags": [
+            "coverage",
+            "msa-week",
+            "readiness"
+          ]
+        },
+        "novelty": 5,
+        "question": "Which markets have enough event exposure for a careful spending comparison?",
+        "rationale": "Analysts need coverage checks before interpreting event-week comparisons.",
+        "reflection": {
+          "answerability": "answerable with current reference files as an exploratory workflow",
+          "misleading_risk": "Coverage strength is not the same as evidence of impact.",
+          "status": "pass",
+          "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+        },
+        "score": 14,
+        "semantic_slot": "msa_week_coverage",
+        "testability": 5,
+        "tournament": {
+          "candidate_id": "turn-02-market-coverage",
+          "component_scores": {
+            "evidence_value": 4,
+            "novelty": 5,
+            "policy_business_relevance": 9,
+            "public_interest": 8,
+            "testability": 5
+          },
+          "losses": 0,
+          "rank": 1,
+          "score": 31,
+          "transcript": [
+            "turn-02-market-coverage beats turn-02-confounding-risk: higher combined governance score",
+            "turn-02-market-coverage beats turn-02-crowd-spending: higher combined governance score"
+          ],
+          "wins": 2
+        }
+      },
+      "turn": 2
+    },
+    {
+      "classification": {
+        "classification": "eda_question",
+        "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+        "required_fields_missing": [
+          "h0",
+          "h1",
+          "population",
+          "unit",
+          "exposure",
+          "comparison",
+          "outcome",
+          "direction",
+          "test_family",
+          "alpha",
+          "decision_rule"
+        ],
+        "required_fields_present": [],
+        "route": "eda_review"
+      },
+      "mapping": {
+        "turn-03-confounding-risk": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "identification_risk"
+        },
+        "turn-03-crowd-spending": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "city_week_event_spending"
+        },
+        "turn-03-market-coverage": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "msa_week_coverage"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "candidate_id": "turn-03-crowd-spending",
+          "caveat": "Observational data cannot prove that crowds caused spending changes.",
+          "evidence_value": 5,
+          "evolution": {
+            "action": "strengthen",
+            "rationale": "Prior selection exists, so this turn should sharpen diagnostics instead of repeating the same claim.",
+            "source_question_id": "crowd-spending"
+          },
+          "forum": {
+            "kind": "event_impact",
+            "persona": "downtown business owner",
+            "popularity": 9,
+            "priority": 10,
+            "question_id": "crowd-spending",
+            "source_url": "local://question-forum/crowd-spending",
+            "status": "selected",
+            "tags": [
+              "sports-events",
+              "local-spending",
+              "city-week"
+            ]
+          },
+          "novelty": 1,
+          "question": "Do big sports crowds actually turn into more local spending?",
+          "rationale": "Business owners need to know whether high-attendance weeks show measurable spending differences.",
+          "reflection": {
+            "answerability": "answerable with current reference files as an exploratory workflow",
+            "misleading_risk": "Observational data cannot prove that crowds caused spending changes.",
+            "status": "pass",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 11,
+          "semantic_slot": "city_week_event_spending",
+          "testability": 5,
+          "tournament": {
+            "candidate_id": "turn-03-crowd-spending",
+            "component_scores": {
+              "evidence_value": 5,
+              "novelty": 1,
+              "policy_business_relevance": 10,
+              "public_interest": 9,
+              "testability": 5
+            },
+            "losses": 1,
+            "rank": 2,
+            "score": 30,
+            "transcript": [
+              "turn-03-crowd-spending beats turn-03-confounding-risk: higher combined governance score",
+              "turn-03-market-coverage beats turn-03-crowd-spending: higher combined governance score"
+            ],
+            "wins": 1
+          }
+        },
+        {
+          "candidate_id": "turn-03-confounding-risk",
+          "caveat": "This is a review task until matched controls exist.",
+          "evidence_value": 4,
+          "evolution": {
+            "action": "split",
+            "rationale": "Separate confounding review from direct impact estimation.",
+            "source_question_id": "confounding-risk"
+          },
+          "forum": {
+            "kind": "identification_review",
+            "persona": "skeptical policy reviewer",
+            "popularity": 7,
+            "priority": 8,
+            "question_id": "confounding-risk",
+            "source_url": "local://question-forum/confounding-risk",
+            "status": "needs-review",
+            "tags": [
+              "confounding",
+              "matched-controls",
+              "claim-boundaries"
+            ]
+          },
+          "novelty": 4,
+          "question": "Where should a skeptic worry that game weeks and spending are confounded?",
+          "rationale": "Policy readers need claim boundaries before accepting event-impact narratives.",
+          "reflection": {
+            "answerability": "reviewable with current files but not a direct impact test",
+            "misleading_risk": "This is a review task until matched controls exist.",
+            "status": "needs-review",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 11,
+          "semantic_slot": "identification_risk",
+          "testability": 3,
+          "tournament": {
+            "candidate_id": "turn-03-confounding-risk",
+            "component_scores": {
+              "evidence_value": 4,
+              "novelty": 4,
+              "policy_business_relevance": 8,
+              "public_interest": 7,
+              "testability": 3
+            },
+            "losses": 2,
+            "rank": 3,
+            "score": 26,
+            "transcript": [
+              "turn-03-crowd-spending beats turn-03-confounding-risk: higher combined governance score",
+              "turn-03-market-coverage beats turn-03-confounding-risk: higher combined governance score"
+            ],
+            "wins": 0
+          }
+        }
+      ],
+      "reviews": {
+        "turn-03-confounding-risk": {
+          "claim_boundary": "This is a review task until matched controls exist.",
+          "status": "needs-review"
+        },
+        "turn-03-crowd-spending": {
+          "claim_boundary": "Observational data cannot prove that crowds caused spending changes.",
+          "status": "pass"
+        },
+        "turn-03-market-coverage": {
+          "claim_boundary": "Coverage strength is not the same as evidence of impact.",
+          "status": "pass"
+        }
+      },
+      "selected_candidate": {
+        "candidate_id": "turn-03-market-coverage",
+        "caveat": "Coverage strength is not the same as evidence of impact.",
+        "evidence_value": 4,
+        "evolution": {
+          "action": "strengthen",
+          "rationale": "Prior selection exists, so this turn should sharpen diagnostics instead of repeating the same claim.",
+          "source_question_id": "market-coverage"
+        },
+        "forum": {
+          "kind": "coverage",
+          "persona": "regional economic analyst",
+          "popularity": 8,
+          "priority": 9,
+          "question_id": "market-coverage",
+          "source_url": "local://question-forum/market-coverage",
+          "status": "proposed",
+          "tags": [
+            "coverage",
+            "msa-week",
+            "readiness"
+          ]
+        },
+        "novelty": 5,
+        "question": "Which markets have enough event exposure for a careful spending comparison?",
+        "rationale": "Analysts need coverage checks before interpreting event-week comparisons.",
+        "reflection": {
+          "answerability": "answerable with current reference files as an exploratory workflow",
+          "misleading_risk": "Coverage strength is not the same as evidence of impact.",
+          "status": "pass",
+          "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+        },
+        "score": 14,
+        "semantic_slot": "msa_week_coverage",
+        "testability": 5,
+        "tournament": {
+          "candidate_id": "turn-03-market-coverage",
+          "component_scores": {
+            "evidence_value": 4,
+            "novelty": 5,
+            "policy_business_relevance": 9,
+            "public_interest": 8,
+            "testability": 5
+          },
+          "losses": 0,
+          "rank": 1,
+          "score": 31,
+          "transcript": [
+            "turn-03-market-coverage beats turn-03-confounding-risk: higher combined governance score",
+            "turn-03-market-coverage beats turn-03-crowd-spending: higher combined governance score"
+          ],
+          "wins": 2
+        }
+      },
+      "turn": 3
+    }
+  ]
+}

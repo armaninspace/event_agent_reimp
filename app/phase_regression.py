@@ -83,9 +83,23 @@ def run_phase_regression(
         isinstance(candidate, dict)
         and all(
             key in candidate
-            for key in ("candidate_id", "question", "rationale", "semantic_slot", "score", "caveat", "forum")
+            for key in (
+                "candidate_id",
+                "question",
+                "rationale",
+                "semantic_slot",
+                "score",
+                "caveat",
+                "forum",
+                "tournament",
+                "reflection",
+                "evolution",
+            )
         )
         and _has_forum_metadata(candidate["forum"])
+        and _has_tournament_metadata(candidate["tournament"])
+        and _has_reflection_metadata(candidate["reflection"])
+        and _has_evolution_metadata(candidate["evolution"])
         for candidate in selected_candidates
     )
     if notebook_execution_backend == "lightweight":
@@ -145,4 +159,25 @@ def _has_forum_metadata(value: object) -> bool:
         "status",
         "tags",
     }
+    return required <= value.keys()
+
+
+def _has_tournament_metadata(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    required = {"rank", "wins", "losses", "score", "component_scores", "transcript"}
+    return required <= value.keys()
+
+
+def _has_reflection_metadata(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    required = {"status", "misleading_risk", "weakening_evidence", "answerability"}
+    return required <= value.keys()
+
+
+def _has_evolution_metadata(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    required = {"action", "source_question_id", "rationale"}
     return required <= value.keys()

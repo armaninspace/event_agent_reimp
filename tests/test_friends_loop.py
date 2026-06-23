@@ -35,6 +35,9 @@ def test_run_friends_question_loop_completes_two_turns_with_selected_and_rejecte
         assert turn["selected_candidate"]["candidate_id"]
         assert turn["selected_candidate"]["forum"]["question_id"]
         assert turn["selected_candidate"]["forum"]["persona"]
+        assert turn["selected_candidate"]["tournament"]["rank"] >= 1
+        assert turn["selected_candidate"]["reflection"]["status"] in {"pass", "needs-review"}
+        assert turn["selected_candidate"]["evolution"]["action"] in {"split", "combine", "strengthen", "carry_forward"}
         assert len(turn["rejected_candidates"]) == 2
         assert turn["classification"]["classification"] in {
             "eda_question",
@@ -74,6 +77,9 @@ def test_run_friends_question_loop_writes_artifacts_and_telemetry(tmp_path: Path
         "board.proposed",
         "board.ranked",
         "discussion.message",
+        "tournament.completed",
+        "reflection.completed",
+        "evolution.completed",
         "hypothesis.classified",
         "question.submitted",
         "workflow.stage",

@@ -1,0 +1,664 @@
+[
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0001",
+    "event_type": "memory.seeded",
+    "payload": {
+      "prior_selected_ids": []
+    },
+    "sequence": 1,
+    "summary": "Seeded deterministic in-memory loop state.",
+    "time_offset_ms": 0,
+    "turn": 0
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0002",
+    "event_type": "forum.loaded",
+    "payload": {
+      "forum_path": "data/question_forum/questions.json",
+      "question_ids": [
+        "crowd-spending",
+        "market-coverage",
+        "confounding-risk"
+      ]
+    },
+    "sequence": 2,
+    "summary": "Loaded 3 QuestionForum records.",
+    "time_offset_ms": 10,
+    "turn": 0
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0003",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 1
+    },
+    "sequence": 3,
+    "summary": "Started turn 1.",
+    "time_offset_ms": 20,
+    "turn": 1
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0004",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 4,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 30,
+    "turn": 1
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0005",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-01-confounding-risk",
+        "turn-01-crowd-spending",
+        "turn-01-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 5,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 40,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0006",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-01-confounding-risk": 3,
+        "turn-01-crowd-spending": 1,
+        "turn-01-market-coverage": 2
+      }
+    },
+    "sequence": 6,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 50,
+    "turn": 1
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0007",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-01-confounding-risk": "needs-review",
+        "turn-01-crowd-spending": "pass",
+        "turn-01-market-coverage": "pass"
+      }
+    },
+    "sequence": 7,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 60,
+    "turn": 1
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0008",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-01-confounding-risk": "split",
+        "turn-01-crowd-spending": "carry_forward",
+        "turn-01-market-coverage": "combine"
+      }
+    },
+    "sequence": 8,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 70,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0009",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-01-crowd-spending",
+        "turn-01-market-coverage",
+        "turn-01-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-01-market-coverage",
+        "turn-01-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-01-crowd-spending",
+      "tournament_ranks": {
+        "turn-01-confounding-risk": 3,
+        "turn-01-crowd-spending": 1,
+        "turn-01-market-coverage": 2
+      }
+    },
+    "sequence": 9,
+    "summary": "Selected turn-01-crowd-spending.",
+    "time_offset_ms": 80,
+    "turn": 1
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0010",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Observational data cannot prove that crowds caused spending changes.",
+      "selected_candidate_id": "turn-01-crowd-spending"
+    },
+    "sequence": 10,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 90,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0011",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 11,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 100,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0012",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-01-crowd-spending",
+      "forum": {
+        "kind": "event_impact",
+        "persona": "downtown business owner",
+        "popularity": 9,
+        "priority": 10,
+        "question_id": "crowd-spending",
+        "source_url": "local://question-forum/crowd-spending",
+        "status": "selected",
+        "tags": [
+          "sports-events",
+          "local-spending",
+          "city-week"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 12,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 110,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0013",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 13,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 120,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0014",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-01-crowd-spending"
+    },
+    "sequence": 14,
+    "summary": "Completed turn 1.",
+    "time_offset_ms": 130,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0015",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 2
+    },
+    "sequence": 15,
+    "summary": "Started turn 2.",
+    "time_offset_ms": 140,
+    "turn": 2
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0016",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 16,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 150,
+    "turn": 2
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0017",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-02-confounding-risk",
+        "turn-02-crowd-spending",
+        "turn-02-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 17,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 160,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0018",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-02-confounding-risk": 3,
+        "turn-02-crowd-spending": 2,
+        "turn-02-market-coverage": 1
+      }
+    },
+    "sequence": 18,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 170,
+    "turn": 2
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0019",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-02-confounding-risk": "needs-review",
+        "turn-02-crowd-spending": "pass",
+        "turn-02-market-coverage": "pass"
+      }
+    },
+    "sequence": 19,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 180,
+    "turn": 2
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0020",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-02-confounding-risk": "split",
+        "turn-02-crowd-spending": "strengthen",
+        "turn-02-market-coverage": "combine"
+      }
+    },
+    "sequence": 20,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 190,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0021",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-02-market-coverage",
+        "turn-02-crowd-spending",
+        "turn-02-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-02-crowd-spending",
+        "turn-02-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-02-market-coverage",
+      "tournament_ranks": {
+        "turn-02-confounding-risk": 3,
+        "turn-02-crowd-spending": 2,
+        "turn-02-market-coverage": 1
+      }
+    },
+    "sequence": 21,
+    "summary": "Selected turn-02-market-coverage.",
+    "time_offset_ms": 200,
+    "turn": 2
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0022",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-02-market-coverage"
+    },
+    "sequence": 22,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 210,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0023",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 23,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 220,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0024",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-02-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 24,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 230,
+    "turn": 2
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0025",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 25,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 240,
+    "turn": 2
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0026",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-02-market-coverage"
+    },
+    "sequence": 26,
+    "summary": "Completed turn 2.",
+    "time_offset_ms": 250,
+    "turn": 2
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0027",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 3
+    },
+    "sequence": 27,
+    "summary": "Started turn 3.",
+    "time_offset_ms": 260,
+    "turn": 3
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0028",
+    "event_type": "knowledge.read",
+    "payload": {
+      "reference_dir": "data/reference"
+    },
+    "sequence": 28,
+    "summary": "Read reference data quality context.",
+    "time_offset_ms": 270,
+    "turn": 3
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0029",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-03-confounding-risk",
+        "turn-03-crowd-spending",
+        "turn-03-market-coverage"
+      ],
+      "forum_question_ids": [
+        "confounding-risk",
+        "crowd-spending",
+        "market-coverage"
+      ]
+    },
+    "sequence": 29,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 280,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0030",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-03-confounding-risk": 3,
+        "turn-03-crowd-spending": 2,
+        "turn-03-market-coverage": 1
+      }
+    },
+    "sequence": 30,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 290,
+    "turn": 3
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0031",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-03-confounding-risk": "needs-review",
+        "turn-03-crowd-spending": "pass",
+        "turn-03-market-coverage": "pass"
+      }
+    },
+    "sequence": 31,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 300,
+    "turn": 3
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0032",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-03-confounding-risk": "split",
+        "turn-03-crowd-spending": "strengthen",
+        "turn-03-market-coverage": "strengthen"
+      }
+    },
+    "sequence": 32,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 310,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0033",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-03-market-coverage",
+        "turn-03-crowd-spending",
+        "turn-03-confounding-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-03-crowd-spending",
+        "turn-03-confounding-risk"
+      ],
+      "selected_candidate_id": "turn-03-market-coverage",
+      "tournament_ranks": {
+        "turn-03-confounding-risk": 3,
+        "turn-03-crowd-spending": 2,
+        "turn-03-market-coverage": 1
+      }
+    },
+    "sequence": 33,
+    "summary": "Selected turn-03-market-coverage.",
+    "time_offset_ms": 320,
+    "turn": 3
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0034",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Coverage strength is not the same as evidence of impact.",
+      "selected_candidate_id": "turn-03-market-coverage"
+    },
+    "sequence": 34,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 330,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0035",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 35,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 340,
+    "turn": 3
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0036",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-03-market-coverage",
+      "forum": {
+        "kind": "coverage",
+        "persona": "regional economic analyst",
+        "popularity": 8,
+        "priority": 9,
+        "question_id": "market-coverage",
+        "source_url": "local://question-forum/market-coverage",
+        "status": "proposed",
+        "tags": [
+          "coverage",
+          "msa-week",
+          "readiness"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 36,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 350,
+    "turn": 3
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0037",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 37,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 360,
+    "turn": 3
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0038",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-03-market-coverage"
+    },
+    "sequence": 38,
+    "summary": "Completed turn 3.",
+    "time_offset_ms": 370,
+    "turn": 3
+  }
+]
