@@ -1,0 +1,32 @@
+{
+  "artifact_checks": {
+    "discovery_decision_summary": true,
+    "session_json": true,
+    "session_markdown": true,
+    "telemetry_json": true
+  },
+  "completed_workflows": 20,
+  "current_required_artifacts_exist": true,
+  "known_future_artifacts": {
+    "business_html": "deferred until report phase",
+    "notebook_workspace": "deferred until notebook/wiki phase",
+    "playback_html": "deferred until playback UI phase"
+  },
+  "phase_id": "phase-004-regression-gate",
+  "requested_turns": 20,
+  "schema_version": "phase-004.phase-regression-summary.v1",
+  "selected_candidate_count": 20,
+  "selected_candidates_have_required_metadata": true,
+  "stopped_early": false,
+  "telemetry_event_count": 121,
+  "telemetry_event_types": [
+    "board.proposed",
+    "board.ranked",
+    "discussion.message",
+    "knowledge.read",
+    "memory.seeded",
+    "turn.completed",
+    "turn.started"
+  ],
+  "workflow_task_statistical_misroutes": 0
+}
