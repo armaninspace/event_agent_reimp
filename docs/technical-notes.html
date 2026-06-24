@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Technical Notes: Reimplementing The Agent Evidence System</title>
+<style>
+:root { --bg: #f5f7f8; --paper: #fff; --ink: #1d2733; --muted: #5e6b78; --line: #d8e0e6; --accent: #225c63; --code: #f0f3f5; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.62 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.layout { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); }
+aside { position: sticky; top: 0; height: 100vh; overflow: auto; background: #eaf0f2; border-right: 1px solid var(--line); padding: 22px; }
+aside h2 { margin: 0 0 8px; font-size: 15px; color: var(--accent); }
+aside p { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+nav a { display: block; text-decoration: none; color: #293947; font-size: 13px; line-height: 1.35; padding: 3px 0; }
+nav a:hover { color: var(--accent); text-decoration: underline; }
+.toc-level-1 { font-weight: 700; margin-top: 8px; }
+.toc-level-2 { padding-left: 10px; }
+.toc-level-3 { padding-left: 22px; color: var(--muted); }
+main { max-width: 1040px; width: 100%; margin: 0 auto; background: var(--paper); min-height: 100vh; padding: 48px 44px 80px; }
+h1, h2, h3 { line-height: 1.22; margin: 1.75em 0 0.65em; letter-spacing: 0; color: #17212b; }
+h1:first-child { margin-top: 0; font-size: 36px; }
+h2 { border-top: 1px solid var(--line); padding-top: 24px; font-size: 25px; }
+h3 { font-size: 19px; }
+p { margin: 0 0 1em; }
+ul, ol { margin: 0 0 1em; padding-left: 1.45rem; }
+li { margin: 0.16em 0; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.92em; background: var(--code); padding: 0.08rem 0.25rem; border-radius: 4px; }
+pre { overflow: auto; background: #111827; color: #e8eef5; padding: 16px; border-radius: 8px; border: 1px solid #0f172a; }
+pre code { background: transparent; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.4rem; font-size: 14px; }
+th, td { border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; }
+th { background: #edf4f5; text-align: left; }
+.note { margin-top: 24px; padding: 12px; background: #f8fafb; border: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+@media (max-width: 900px) { .layout { display: block; } aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); } main { padding: 30px 20px 60px; } h1:first-child { font-size: 30px; } }
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+<h2>Technical Notes</h2>
+<p>Single-page rendering of <code>docs/technical-notes.md</code>. Markdown word count: 2014.</p>
+<nav><a class="toc-level-1" href="#technical-notes-reimplementing-the-agent-evidence-system">Technical Notes: Reimplementing The Agent Evidence System</a>
+<a class="toc-level-2" href="#1-the-main-technical-challenge">1. The Main Technical Challenge</a>
+<a class="toc-level-2" href="#2-notebooks-as-agent-reasoning-surfaces">2. Notebooks As Agent Reasoning Surfaces</a>
+<a class="toc-level-2" href="#3-notebook-rendering-and-execution">3. Notebook Rendering And Execution</a>
+<a class="toc-level-2" href="#4-notebook-validation-contracts">4. Notebook Validation Contracts</a>
+<a class="toc-level-2" href="#5-markdown-exports-as-agent-knowledge">5. Markdown Exports As Agent Knowledge</a>
+<a class="toc-level-2" href="#6-notebook-knowledge-base">6. Notebook Knowledge Base</a>
+<a class="toc-level-2" href="#7-wiki-files">7. Wiki Files</a>
+<a class="toc-level-2" href="#8-prompt-surfaces">8. Prompt Surfaces</a>
+<a class="toc-level-2" href="#9-prompt-hashes-and-provenance">9. Prompt Hashes And Provenance</a>
+<a class="toc-level-2" href="#10-telemetry-and-logging">10. Telemetry And Logging</a>
+<a class="toc-level-2" href="#11-playback-rendering">11. Playback Rendering</a>
+<a class="toc-level-2" href="#12-business-report-rendering">12. Business Report Rendering</a>
+<a class="toc-level-2" href="#13-markdown-to-html-documentation-rendering">13. Markdown-To-HTML Documentation Rendering</a>
+<a class="toc-level-2" href="#14-statistical-claim-boundaries">14. Statistical Claim Boundaries</a>
+<a class="toc-level-2" href="#15-multi-turn-gotchas">15. Multi-Turn Gotchas</a>
+<a class="toc-level-2" href="#16-reimplementation-checklist">16. Reimplementation Checklist</a>
+<a class="toc-level-2" href="#17-final-practical-advice">17. Final Practical Advice</a></nav>
+</aside>
+<main>
+<h1 id="technical-notes-reimplementing-the-agent-evidence-system">Technical Notes: Reimplementing The Agent Evidence System</h1>
+<p>These notes are for someone who wants to understand and reimplement the hard technical parts of the event-agent research system: notebook rendering, notebooks as agent reasoning surfaces, notebooks as durable knowledge, prompt surfaces, telemetry, and report rendering.</p>
+<p>The core lesson is that this system is not a prompt demo. It is an artifact-driven agent workflow. The agents matter, but the real reliability comes from the files they produce, the contracts those files obey, and the regression checks that prove the workflow still works after many turns.</p>
+<h2 id="1-the-main-technical-challenge">1. The Main Technical Challenge</h2>
+<p>The difficult part is not getting an agent to write a plausible answer. The difficult part is making an agent system produce evidence that can be inspected later.</p>
+<p>A single run needs to answer:</p>
+<ul>
+<li>What question was proposed?</li>
+<li>What alternatives were rejected?</li>
+<li>Why was one question selected?</li>
+<li>What prior memory was read?</li>
+<li>Was the question a statistical hypothesis, an EDA question, or a workflow task?</li>
+<li>Which dataset and unit of analysis were used?</li>
+<li>Which notebook was written and executed?</li>
+<li>What caveats apply?</li>
+<li>What did the report say?</li>
+<li>Can the whole process be replayed?</li>
+</ul>
+<p>That means the implementation needs more than an LLM call. It needs structured candidate records, notebook artifacts, Markdown exports, telemetry events, prompt hashes, report HTML, and phase regression summaries.</p>
+<h2 id="2-notebooks-as-agent-reasoning-surfaces">2. Notebooks As Agent Reasoning Surfaces</h2>
+<p>The notebooks are not merely output reports. They are an agent reasoning surface. A turn notebook captures what the agents selected, what data was used, how the result was framed, what caveats apply, and what future agents can reuse.</p>
+<p>The notebook should include:</p>
+<ul>
+<li>selected candidate</li>
+<li>candidate kind and semantic slot</li>
+<li>public question</li>
+<li>result summary</li>
+<li>formal hypothesis, when available</li>
+<li>experimental design</li>
+<li>statistical test output</li>
+<li>diagnostics</li>
+<li>caveats</li>
+<li>validation contract</li>
+<li>source notebook/cell references for follow-up questions</li>
+</ul>
+<p>This makes the notebook a bridge between agent reasoning and deterministic execution. The agent can say, "This is the question we selected." The code can say, "This is the result and contract." The notebook puts both in one inspectable artifact.</p>
+<p>The practical challenge is to avoid treating the notebook as prose only. A notebook should contain executable cells with structured payloads. If it only contains markdown narrative, future agents and tests cannot reliably inspect it.</p>
+<h2 id="3-notebook-rendering-and-execution">3. Notebook Rendering And Execution</h2>
+<p>Use <code>nbformat</code> to build notebooks programmatically. Treat notebooks as structured JSON documents with markdown cells, code cells, metadata, outputs, and execution counts.</p>
+<p>Two execution modes are useful:</p>
+<ul>
+<li>lightweight execution</li>
+<li><code>nbclient</code> execution</li>
+</ul>
+<p>Lightweight execution is useful for deterministic generated notebooks that only need simple Python evaluation. It can execute code cells in a controlled namespace, capture stdout, and store outputs. It is fast and avoids heavy kernel startup.</p>
+<p><code>nbclient</code> execution is closer to real Jupyter behavior. It should be used when notebook maturity matters, but it requires a working kernel environment and has more ways to fail.</p>
+<p>Do not conflate execution levels:</p>
+<table>
+<thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>scaffolded</code></td><td>Notebook exists but code has not run.</td></tr>
+<tr><td><code>lightweight_executed</code></td><td>Generated cells ran through the lightweight executor.</td></tr>
+<tr><td><code>nbclient_executed</code></td><td>Notebook ran through a Jupyter kernel via <code>nbclient</code>.</td></tr>
+<tr><td><code>validated</code></td><td>Notebook passed an explicit validation contract.</td></tr>
+</tbody></table>
+<p>The report evaluator should cap claims based on notebook status. A scaffolded notebook cannot support a validated finding. A lightweight-executed notebook is useful, but it is not the same as full notebook validation.</p>
+<h2 id="4-notebook-validation-contracts">4. Notebook Validation Contracts</h2>
+<p>A generated notebook can drift away from the statistical runner if values are copied into multiple places. The fix is to embed a validation contract.</p>
+<p>The runner creates a contract with the fields the notebook must expose. The notebook computes an observed contract from its visible payload and asserts equality.</p>
+<p>Example:</p>
+<pre><code class="language-python">validation_contract = result_summary.get(&quot;notebook_validation_contract&quot;, {})
+observed_contract = {
+    &quot;schema_version&quot;: validation_contract.get(&quot;schema_version&quot;),
+    &quot;kind&quot;: selected_candidate.get(&quot;kind&quot;),
+    &quot;metric&quot;: result_summary.get(&quot;metric&quot;),
+    &quot;value&quot;: result_summary.get(&quot;value&quot;),
+    &quot;claim_strength&quot;: result_summary.get(&quot;claim_strength&quot;),
+}
+assert all(
+    observed_contract.get(key) == validation_contract.get(key)
+    for key in observed_contract
+)</code></pre>
+<p>A stronger contract should also check:</p>
+<ul>
+<li>semantic slot</li>
+<li>statistical decision</li>
+<li>p-value fields</li>
+<li>adjusted decision</li>
+<li>design identifier</li>
+<li>data snapshot hashes</li>
+<li>source notebook references</li>
+</ul>
+<p>This does not prove the analysis is correct. It proves the notebook did not silently diverge from the run payload.</p>
+<h2 id="5-markdown-exports-as-agent-knowledge">5. Markdown Exports As Agent Knowledge</h2>
+<p>Raw <code>.ipynb</code> files are poor reading material for agents. They are verbose JSON. They include output structures, metadata, and cell wrappers. Agents need a compact, readable surface.</p>
+<p>That is why every notebook should have a Markdown export.</p>
+<p>Recommended pair:</p>
+<pre><code class="language-text">turn-07-semantic-msa.ipynb
+turn-07-semantic-msa.md</code></pre>
+<p>The <code>.ipynb</code> file preserves execution metadata. The <code>.md</code> file becomes the agent-readable wiki surface.</p>
+<p>This pattern lets the next turn read prior results without parsing notebook JSON. It also gives human reviewers something they can inspect in a normal diff or text viewer.</p>
+<h2 id="6-notebook-knowledge-base">6. Notebook Knowledge Base</h2>
+<p>Markdown exports are useful, but the system also needs structured memory. The notebook knowledge base should extract facts from each turn into machine-readable JSON and readable Markdown.</p>
+<p>Recommended artifacts:</p>
+<pre><code class="language-text">notebook-knowledge.json
+notebook-knowledge.md</code></pre>
+<p>Each entry should include:</p>
+<ul>
+<li>notebook path</li>
+<li>markdown path</li>
+<li>selected candidate</li>
+<li>result summary</li>
+<li>notebook status</li>
+<li>validation metadata</li>
+<li>semantic slot</li>
+<li>hypothesis seeds</li>
+<li>source cells</li>
+<li>caveats</li>
+</ul>
+<p>This is how notebooks become long-term agent knowledge. Later turns can use prior notebook cells to generate follow-up questions, avoid duplicates, carry forward null results, or request stronger designs.</p>
+<p>The gotcha is memory noise. If every notebook dumps too much prose into the knowledge base, future turns become harder to steer. Keep the JSON structured and keep the Markdown summary compact.</p>
+<h2 id="7-wiki-files">7. Wiki Files</h2>
+<p>The wiki layer is a lightweight coordination mechanism. It should be append-oriented and readable.</p>
+<p>Recommended files:</p>
+<pre><code class="language-text">SCHEMA.md
+index.md
+log.md
+question-board.md
+decision-records.md
+caveats.md
+semantic-map.md
+findings.md</code></pre>
+<p>These files have different jobs:</p>
+<ul>
+<li><code>SCHEMA.md</code> defines workspace conventions.</li>
+<li><code>index.md</code> catalogs notebooks and exports.</li>
+<li><code>log.md</code> records append-only activity.</li>
+<li><code>question-board.md</code> records proposed and selected questions.</li>
+<li><code>decision-records.md</code> records why choices were made.</li>
+<li><code>caveats.md</code> keeps limitations visible.</li>
+<li><code>semantic-map.md</code> links questions to data slots.</li>
+<li><code>findings.md</code> summarizes durable results.</li>
+</ul>
+<p>Do not rewrite history casually. Append new entries. If a finding is superseded, add a supersession note rather than deleting the older result.</p>
+<h2 id="8-prompt-surfaces">8. Prompt Surfaces</h2>
+<p>Prompt files are useful, but they should not be the only place behavior lives.</p>
+<p>A good split is:</p>
+<ul>
+<li>Markdown prompt/spec files define role, voice, responsibilities, prohibited behaviors, and claim boundaries.</li>
+<li>Code enforces candidate schemas, scoring, routing, notebook execution, telemetry, and report generation.</li>
+</ul>
+<p>The agent roles used in the original workflow were:</p>
+<ul>
+<li>Spark: generate ideas.</li>
+<li>Skeptic: protect methodology and caveats.</li>
+<li>Mapper: connect questions to data, semantic slots, and memory.</li>
+<li>Moderator: rank and select.</li>
+<li>DataAgent: write notebooks and durable artifacts.</li>
+</ul>
+<p>The mistake to avoid is putting enforceable contracts into prompt prose only. "Do not overclaim" is a useful prompt instruction, but the report evaluator should also enforce claim caps. "Do not route workflow tasks into statistical testing" is a useful instruction, but the classifier should enforce it.</p>
+<h2 id="9-prompt-hashes-and-provenance">9. Prompt Hashes And Provenance</h2>
+<p>Prompt drift is a real reproducibility problem. If role files change, run behavior may change even when code and data do not.</p>
+<p>Store prompt hashes in every session:</p>
+<pre><code class="language-json">{
+  &quot;friend_prompt_hashes&quot;: {
+    &quot;Spark&quot;: &quot;...&quot;,
+    &quot;Skeptic&quot;: &quot;...&quot;,
+    &quot;Mapper&quot;: &quot;...&quot;,
+    &quot;Moderator&quot;: &quot;...&quot;,
+    &quot;DataAgent&quot;: &quot;...&quot;
+  },
+  &quot;evidence_prompt_hashes&quot;: {}
+}</code></pre>
+<p>Use SHA-256 over the prompt/spec file contents.</p>
+<p>Reports should show whether:</p>
+<ul>
+<li>friend prompt hashes are present</li>
+<li>evidence prompt hashes are present</li>
+<li>all expected prompt specs loaded</li>
+<li>stale/default prompt warnings exist</li>
+</ul>
+<p>This prevents silent fallback to default prompts.</p>
+<h2 id="10-telemetry-and-logging">10. Telemetry And Logging</h2>
+<p>Logging should be structured and replayable. A text log is not enough.</p>
+<p>Each event should include:</p>
+<ul>
+<li>event id</li>
+<li>sequence number</li>
+<li>time offset</li>
+<li>event type</li>
+<li>turn number</li>
+<li>actor</li>
+<li>summary</li>
+<li>payload</li>
+</ul>
+<p>Useful event types:</p>
+<ul>
+<li><code>turn.started</code></li>
+<li><code>knowledge.read</code></li>
+<li><code>board.proposed</code></li>
+<li><code>board.ranked</code></li>
+<li><code>semantic.query</code></li>
+<li><code>hypothesis.classified</code></li>
+<li><code>question.submitted</code></li>
+<li><code>workflow.stage</code></li>
+<li><code>result.studied</code></li>
+<li><code>notebook.created</code></li>
+<li><code>wiki.updated</code></li>
+<li><code>knowledge.updated</code></li>
+<li><code>discussion.message</code></li>
+<li><code>memory.seeded</code></li>
+<li><code>turn.completed</code></li>
+</ul>
+<p>The important gotcha is to log rejected candidates, not only selected ones. Without the rejected board, a reviewer cannot understand the selection decision.</p>
+<p>Another gotcha is workflow visibility. If the report is wrong, you need to know whether the failure came from candidate generation, classification, data access, statistical testing, notebook writing, or report rendering.</p>
+<h2 id="11-playback-rendering">11. Playback Rendering</h2>
+<p>The playback UI is a static HTML view over telemetry. It should not need a server.</p>
+<p>Implementation pattern:</p>
+<ol>
+<li>Write <code>friends_loop_telemetry.json</code>.</li>
+<li>Generate <code>ui/index.html</code>.</li>
+<li>Embed or load the telemetry payload.</li>
+<li>Render current event, board, workflow stage, discussion, result, and timeline.</li>
+</ol>
+<p>If embedding JSON into HTML, escape dangerous sequences:</p>
+<pre><code class="language-python">payload = json.dumps(telemetry, ensure_ascii=False).replace(&quot;&lt;/&quot;, &quot;&lt;\\/&quot;)</code></pre>
+<p>This prevents embedded JSON from prematurely closing a script tag.</p>
+<p>Test moved-log rendering. The UI should still work if someone copies <code>friends_loop_telemetry.json</code> away from the original run directory and rebuilds the playback HTML from that file.</p>
+<h2 id="12-business-report-rendering">12. Business Report Rendering</h2>
+<p>The business report is different from playback. Playback explains process. The business report explains evidence.</p>
+<p>The business report should show:</p>
+<ul>
+<li>public question</li>
+<li>H0/H1 when available</li>
+<li>data/design</li>
+<li>statistical result</li>
+<li>interpretation</li>
+<li>caveats</li>
+<li>next action</li>
+</ul>
+<p>Avoid internal handles in headlines. The report should not lead with <code>semantic_msa_batch_supported_positive</code>. It should lead with the public question.</p>
+<p>Escape all public text before rendering HTML. Forum questions, candidate rationales, and caveats may contain characters that need HTML escaping.</p>
+<h2 id="13-markdown-to-html-documentation-rendering">13. Markdown-To-HTML Documentation Rendering</h2>
+<p>The project also needed browser-readable documentation versions. If you render Markdown to HTML, preserve:</p>
+<ul>
+<li>headings</li>
+<li>tables</li>
+<li>code fences</li>
+<li>inline code</li>
+<li>links</li>
+<li>ordered and unordered lists</li>
+<li>Mermaid blocks</li>
+</ul>
+<p>The most common bug is treating headings inside fenced code blocks as real page headings. Track whether the parser is inside a code fence.</p>
+<p>For Mermaid diagrams, a simple documentation page can use:</p>
+<pre><code class="language-html">&lt;script type=&quot;module&quot;&gt;
+  import mermaid from &quot;https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs&quot;;
+  mermaid.initialize({ startOnLoad: true, theme: &quot;default&quot; });
+&lt;/script&gt;</code></pre>
+<p>For production evidence reports, do not rely on external CDNs unless the report can still be understood without rendered diagrams.</p>
+<h2 id="14-statistical-claim-boundaries">14. Statistical Claim Boundaries</h2>
+<p>Notebook and report surfaces must preserve statistical caution.</p>
+<p>A rejected null means the result rejected H0 under the recorded exploratory design. It does not prove causality.</p>
+<p>Enforce this in multiple places:</p>
+<ul>
+<li>prompt instructions</li>
+<li>methodology cards</li>
+<li>result summaries</li>
+<li>notebook caveats</li>
+<li>report language</li>
+<li>evidence promotion logic</li>
+<li>report evaluator tests</li>
+</ul>
+<p>The system should distinguish:</p>
+<ul>
+<li>exploratory association</li>
+<li>descriptive pattern</li>
+<li>validated finding</li>
+<li>publishable finding</li>
+</ul>
+<p>Do not let a p-value alone promote a claim. Require design quality, diagnostics, notebook maturity, multiple-testing context, and caveats.</p>
+<h2 id="15-multi-turn-gotchas">15. Multi-Turn Gotchas</h2>
+<p>Single-turn tests are not enough. Multi-turn runs expose different failures:</p>
+<ul>
+<li>repeated questions</li>
+<li>stale memory</li>
+<li>missing notebook exports</li>
+<li>workflow tasks routed as hypotheses</li>
+<li>report drift</li>
+<li>prompt hash omissions</li>
+<li>telemetry gaps</li>
+<li>evidence overpromotion</li>
+<li>duplicate semantic slots</li>
+</ul>
+<p>Use a 20-turn regression after changes to candidate selection, prompts, notebooks, telemetry, reports, or memory.</p>
+<p>A good 20-turn summary should check:</p>
+<ul>
+<li>requested turns</li>
+<li>completed workflows</li>
+<li>stopped early flag</li>
+<li>workflow-task statistical misroutes</li>
+<li>metadata coverage</li>
+<li>notebook status counts</li>
+<li>report files</li>
+<li>playback files</li>
+<li>prompt hash coverage</li>
+<li>caveat visibility</li>
+</ul>
+<h2 id="16-reimplementation-checklist">16. Reimplementation Checklist</h2>
+<p>For a clean reimplementation, build in this order:</p>
+<ol>
+<li>Session JSON and run directory.</li>
+<li>Static candidate board.</li>
+<li>Candidate selection and rejected candidate record.</li>
+<li>Notebook writer.</li>
+<li>Markdown notebook export.</li>
+<li>Wiki files.</li>
+<li>Notebook knowledge JSON.</li>
+<li>Telemetry events.</li>
+<li>Playback HTML.</li>
+<li>Business report HTML.</li>
+<li>Hypothesis classifier.</li>
+<li>Statistical test runner.</li>
+<li>Prompt files and prompt hashes.</li>
+<li>Report evaluator.</li>
+<li>20-turn regression summary.</li>
+</ol>
+<p>The key is to keep every layer inspectable. If a future engineer can open the files and reconstruct what happened, the system is on solid ground.</p>
+<h2 id="17-final-practical-advice">17. Final Practical Advice</h2>
+<p>Treat notebooks as evidence objects, not decorations.</p>
+<p>Treat Markdown exports as agent-readable memory, not secondary documentation.</p>
+<p>Treat prompts as versioned inputs, not invisible configuration.</p>
+<p>Treat telemetry as a product surface, not debug spam.</p>
+<p>Treat reports as claim-governance tools, not marketing pages.</p>
+<p>If those principles hold, the reimplementation will preserve the most important technical achievement of the original system: agents that generate ideas and evidence while leaving behind enough structure for humans and future agents to inspect, challenge, and improve the work.</p>
+<div class="note">Generated from <code>docs/technical-notes.md</code> for browser reading.</div>
+</main>
+</div>
+</body>
+</html>
