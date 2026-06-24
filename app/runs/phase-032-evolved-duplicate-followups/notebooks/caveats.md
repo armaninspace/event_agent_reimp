@@ -1,0 +1,22 @@
+# Caveats
+
+- Turn 1: The result remains observational without matched controls.
+- Turn 2: Coverage does not estimate impact by itself.
+- Turn 3: Confounding review needs external calendars for full resolution.
+- Turn 4: The result remains observational without matched controls.
+- Turn 5: Coverage does not estimate impact by itself.
+- Turn 6: Confounding review needs external calendars for full resolution.
+- Turn 7: The result remains observational without matched controls.
+- Turn 8: Coverage does not estimate impact by itself.
+- Turn 9: Confounding review needs external calendars for full resolution.
+- Turn 10: The result remains observational without matched controls.
+- Turn 11: Coverage does not estimate impact by itself.
+- Turn 12: Confounding review needs external calendars for full resolution.
+- Turn 13: The result remains observational without matched controls.
+- Turn 14: Coverage does not estimate impact by itself.
+- Turn 15: Confounding review needs external calendars for full resolution.
+- Turn 16: The result remains observational without matched controls.
+- Turn 17: Coverage does not estimate impact by itself.
+- Turn 18: Confounding review needs external calendars for full resolution.
+- Turn 19: The result remains observational without matched controls.
+- Turn 20: Coverage does not estimate impact by itself.

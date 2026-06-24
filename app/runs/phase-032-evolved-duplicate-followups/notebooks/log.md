@@ -1,0 +1,23 @@
+# Workspace Log
+
+- Turn 1: wrote scaffolded notebook `turn-01-turn-01-openai-01-city-week-event-spending.ipynb`
+- Turn 2: wrote scaffolded notebook `turn-02-turn-02-openai-02-msa-week-coverage.ipynb`
+- Turn 3: wrote scaffolded notebook `turn-03-turn-03-openai-03-identification-risk.ipynb`
+- Turn 4: wrote scaffolded notebook `turn-04-turn-04-openai-01-city-week-event-spending.ipynb`
+- Turn 5: wrote scaffolded notebook `turn-05-turn-05-openai-02-msa-week-coverage.ipynb`
+- Turn 6: wrote scaffolded notebook `turn-06-turn-06-openai-03-identification-risk.ipynb`
+- Turn 7: wrote scaffolded notebook `turn-07-turn-07-openai-01-city-week-event-spending.ipynb`
+- Turn 8: wrote scaffolded notebook `turn-08-turn-08-openai-02-msa-week-coverage.ipynb`
+- Turn 9: wrote scaffolded notebook `turn-09-turn-09-openai-03-identification-risk.ipynb`
+- Turn 10: wrote scaffolded notebook `turn-10-turn-10-openai-01-city-week-event-spending.ipynb`
+- Turn 11: wrote scaffolded notebook `turn-11-turn-11-openai-02-msa-week-coverage.ipynb`
+- Turn 12: wrote scaffolded notebook `turn-12-turn-12-openai-03-identification-risk.ipynb`
+- Turn 13: wrote scaffolded notebook `turn-13-turn-13-openai-01-city-week-event-spending.ipynb`
+- Turn 14: wrote scaffolded notebook `turn-14-turn-14-openai-02-msa-week-coverage.ipynb`
+- Turn 15: wrote scaffolded notebook `turn-15-turn-15-openai-03-identification-risk.ipynb`
+- Turn 16: wrote scaffolded notebook `turn-16-turn-16-openai-01-city-week-event-spending.ipynb`
+- Turn 17: wrote scaffolded notebook `turn-17-turn-17-openai-02-msa-week-coverage.ipynb`
+- Turn 18: wrote scaffolded notebook `turn-18-turn-18-openai-03-identification-risk.ipynb`
+- Turn 19: wrote scaffolded notebook `turn-19-turn-19-openai-01-city-week-event-spending.ipynb`
+- Turn 20: wrote scaffolded notebook `turn-20-turn-20-openai-02-msa-week-coverage.ipynb`
+- Wrote final multiple-testing corrections notebook `999-multiple-testing-corrections.ipynb`

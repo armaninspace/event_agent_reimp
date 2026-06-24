@@ -52,6 +52,7 @@ class PhaseRegressionResult:
     notebook_knowledge: dict[str, object]
     prior_notebook_knowledge_entry_count: int
     prior_knowledge_duplicate_candidate_count: int
+    prior_knowledge_evolved_duplicate_candidate_count: int
     selected_semantic_slot_counts: dict[str, int]
     selected_unique_semantic_slot_count: int
     reasoning_provider: str
@@ -198,6 +199,9 @@ def run_phase_regression(
         notebook_knowledge=notebook_knowledge,
         prior_notebook_knowledge_entry_count=int(session_summary.get("prior_notebook_knowledge_entry_count", 0)),
         prior_knowledge_duplicate_candidate_count=int(session_summary.get("prior_knowledge_duplicate_candidate_count", 0)),
+        prior_knowledge_evolved_duplicate_candidate_count=int(
+            session_summary.get("prior_knowledge_evolved_duplicate_candidate_count", 0)
+        ),
         selected_semantic_slot_counts=_semantic_slot_counts(session_summary.get("selected_semantic_slot_counts")),
         selected_unique_semantic_slot_count=int(session_summary.get("selected_unique_semantic_slot_count", 0)),
         reasoning_provider=str(session_summary.get("reasoning_provider", "deterministic")),

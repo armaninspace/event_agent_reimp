@@ -185,11 +185,15 @@ def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> N
 
     assert session["session_summary"]["prior_notebook_knowledge_entry_count"] == 1
     assert session["session_summary"]["prior_knowledge_duplicate_candidate_count"] == 1
-    assert session["turns"][0]["selected_candidate"]["semantic_slot"] == "msa_week_coverage"
+    assert session["session_summary"]["prior_knowledge_evolved_duplicate_candidate_count"] == 1
+    selected = session["turns"][0]["selected_candidate"]
+    assert selected["semantic_slot"] == "city_week_event_spending"
+    assert "matched-control checks" in selected["question"]
+    assert selected["reasoning"]["prior_knowledge_duplicate"] is True
+    assert selected["reasoning"]["prior_knowledge_evolved_duplicate"] is True
     rejected = session["turns"][0]["rejected_candidates"]
-    assert any(candidate["reasoning"]["prior_knowledge_duplicate"] is True for candidate in rejected)
-    duplicate = next(candidate for candidate in rejected if candidate["reasoning"]["prior_knowledge_duplicate"] is True)
-    assert duplicate["reasoning"]["prior_knowledge_similarity"] >= 0.62
+    assert not any(candidate["reasoning"]["prior_knowledge_duplicate"] is True for candidate in rejected)
+    assert selected["reasoning"]["prior_knowledge_similarity"] >= 0.62
     telemetry = json.loads(Path(session["artifact_paths"]["telemetry_json"]).read_text(encoding="utf-8"))
     knowledge_events = [event for event in telemetry if event["event_type"] == "knowledge.read"]
     assert (
@@ -200,7 +204,7 @@ def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> N
     assert "Which city game weeks show the largest spending lift" in trace_path.read_text(encoding="utf-8")
 
 
-def test_friends_loop_replay_balances_non_duplicate_semantic_slots(tmp_path: Path) -> None:
+def test_friends_loop_replay_evolves_duplicates_and_balances_semantic_slots(tmp_path: Path) -> None:
     reference_dir = tmp_path / "reference"
     _write_reference_files(reference_dir)
     replay_path = tmp_path / "openai_replay.json"
@@ -223,7 +227,7 @@ def test_friends_loop_replay_balances_non_duplicate_semantic_slots(tmp_path: Pat
     )
 
     session = run_friends_question_loop(
-        turn_count=4,
+        turn_count=6,
         output_dir=tmp_path / "run",
         reference_dir=reference_dir,
         reasoning_mode="replay",
@@ -233,9 +237,15 @@ def test_friends_loop_replay_balances_non_duplicate_semantic_slots(tmp_path: Pat
     )
 
     slots = Counter(turn["selected_candidate"]["semantic_slot"] for turn in session["turns"])
-    assert slots == {"msa_week_coverage": 2, "identification_risk": 2}
-    assert session["session_summary"]["selected_unique_semantic_slot_count"] == 2
+    assert slots == {
+        "city_week_event_spending": 2,
+        "identification_risk": 2,
+        "msa_week_coverage": 2,
+    }
+    assert session["session_summary"]["selected_unique_semantic_slot_count"] == 3
+    assert session["session_summary"]["prior_knowledge_evolved_duplicate_candidate_count"] == 6
     assert session["session_summary"]["selected_semantic_slot_counts"] == {
+        "city_week_event_spending": 2,
         "identification_risk": 2,
         "msa_week_coverage": 2,
     }

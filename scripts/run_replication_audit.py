@@ -16,8 +16,8 @@ from app.replication_audit import run_replication_audit, write_replication_audit
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run final thesis replication audit.")
-    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-031-semantic-slot-diversity"))
-    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-031-semantic-slot-diversity"))
+    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-032-evolved-duplicate-followups"))
+    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-032-evolved-duplicate-followups"))
     args = parser.parse_args()
 
     audit = run_replication_audit(repo_root=Path("."), run_dir=args.run_dir)
@@ -32,6 +32,10 @@ def main() -> int:
     print(f"notebook_knowledge_entry_count={audit.notebook_knowledge_entry_count}")
     print(f"prior_notebook_knowledge_entry_count={audit.prior_notebook_knowledge_entry_count}")
     print(f"prior_knowledge_duplicate_candidate_count={audit.prior_knowledge_duplicate_candidate_count}")
+    print(
+        "prior_knowledge_evolved_duplicate_candidate_count="
+        f"{audit.prior_knowledge_evolved_duplicate_candidate_count}"
+    )
     print(f"selected_semantic_slot_counts={audit.selected_semantic_slot_counts}")
     print(f"selected_unique_semantic_slot_count={audit.selected_unique_semantic_slot_count}")
     print(f"selected_openai_reasoning_count={audit.selected_openai_reasoning_count}")

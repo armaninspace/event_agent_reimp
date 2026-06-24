@@ -73,6 +73,10 @@ def main(argv: list[str] | None = None) -> int:
     print(f"notebook_knowledge_present={summary.notebook_knowledge_present}")
     print(f"prior_notebook_knowledge_entry_count={summary.prior_notebook_knowledge_entry_count}")
     print(f"prior_knowledge_duplicate_candidate_count={summary.prior_knowledge_duplicate_candidate_count}")
+    print(
+        "prior_knowledge_evolved_duplicate_candidate_count="
+        f"{summary.prior_knowledge_evolved_duplicate_candidate_count}"
+    )
     print(f"selected_semantic_slot_counts={summary.selected_semantic_slot_counts}")
     print(f"selected_unique_semantic_slot_count={summary.selected_unique_semantic_slot_count}")
     print(f"reasoning_provider={summary.reasoning_provider}")

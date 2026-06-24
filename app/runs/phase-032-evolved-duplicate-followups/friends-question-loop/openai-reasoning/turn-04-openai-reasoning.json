@@ -1,0 +1,43 @@
+{
+  "mode": "replay",
+  "model": "gpt-5",
+  "model_calls_performed": false,
+  "output_hash": "3968c0b9d6714dcb4a1946c2d568ebe869536184bf9b11926361ab41dd2397bf",
+  "prompt": "You are the hypothesis-generation agent for a Python replication of an event-spending thesis.\nGenerate exactly three candidate research questions for the next friends-loop turn.\nUse the provided public QuestionForum records and avoid repeating already selected forum IDs.\nReturn only strict JSON. Do not wrap it in markdown.\n\nTurn: 4\nPrior selected candidate IDs: ['turn-01-openai-01-city-week-event-spending', 'turn-02-openai-02-msa-week-coverage', 'turn-03-openai-03-identification-risk']\nPrior selected forum IDs: ['confounding-risk', 'crowd-spending', 'market-coverage']\nPrior notebook knowledge summary:\n{\n  \"entry_count\": 20,\n  \"latest_seed_question\": \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n  \"latest_semantic_slot\": \"city_week_event_spending\",\n  \"latest_source_cell\": \"turn-20-validation-code\",\n  \"recent_seed_questions\": [\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\"\n  ],\n  \"schema_version\": \"phase-027.notebook-knowledge-summary.v1\",\n  \"source_path\": \"app/runs/phase-027-notebook-knowledge-base/notebooks/notebook-knowledge.json\"\n}\n\nAvailable semantic slots: city_week_event_spending, msa_week_coverage, identification_risk\nScoring fields must be integers from 0 to 10.\n\nOutput contract:\n{\n  \"candidates\": [\n    {\n      \"caveat\": \"One sentence limitation.\",\n      \"evidence_value\": \"integer 0-10\",\n      \"forum_question_id\": \"source forum question_id when applicable\",\n      \"novelty\": \"integer 0-10\",\n      \"question\": \"Stakeholder-readable empirical question.\",\n      \"rationale\": \"Why this is valuable and testable with the local city/MSA weekly event data.\",\n      \"semantic_slot\": \"city_week_event_spending | msa_week_coverage | identification_risk\",\n      \"testability\": \"integer 0-10\"\n    }\n  ]\n}\n\nQuestionForum records:\n[\n  {\n    \"kind\": \"event_impact\",\n    \"persona\": \"downtown business owner\",\n    \"popularity\": 9,\n    \"priority\": 10,\n    \"question\": \"Do big sports crowds actually turn into more local spending?\",\n    \"question_id\": \"crowd-spending\",\n    \"rationale\": \"Business owners need to know whether high-attendance weeks show measurable spending differences.\",\n    \"tags\": [\n      \"sports-events\",\n      \"local-spending\",\n      \"city-week\"\n    ]\n  },\n  {\n    \"kind\": \"coverage\",\n    \"persona\": \"regional economic analyst\",\n    \"popularity\": 8,\n    \"priority\": 9,\n    \"question\": \"Which markets have enough event exposure for a careful spending comparison?\",\n    \"question_id\": \"market-coverage\",\n    \"rationale\": \"Analysts need coverage checks before interpreting event-week comparisons.\",\n    \"tags\": [\n      \"coverage\",\n      \"msa-week\",\n      \"readiness\"\n    ]\n  },\n  {\n    \"kind\": \"identification_review\",\n    \"persona\": \"skeptical policy reviewer\",\n    \"popularity\": 7,\n    \"priority\": 8,\n    \"question\": \"Where should a skeptic worry that game weeks and spending are confounded?\",\n    \"question_id\": \"confounding-risk\",\n    \"rationale\": \"Policy readers need claim boundaries before accepting event-impact narratives.\",\n    \"tags\": [\n      \"confounding\",\n      \"matched-controls\",\n      \"claim-boundaries\"\n    ]\n  }\n]",
+  "prompt_hash": "0220d094212d2a547e66f91ccf17971d8108e90eb57b6dfeb70b649c0cb8833c",
+  "proposals": [
+    {
+      "caveat": "The result remains observational without matched controls.",
+      "evidence_value": 8,
+      "forum_question_id": "crowd-spending",
+      "novelty": 5,
+      "question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "rationale": "This tests the headline spending question against the city-week table.",
+      "semantic_slot": "city_week_event_spending",
+      "testability": 8
+    },
+    {
+      "caveat": "Coverage does not estimate impact by itself.",
+      "evidence_value": 7,
+      "forum_question_id": "market-coverage",
+      "novelty": 6,
+      "question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+      "rationale": "Coverage determines where later statistical tests are credible.",
+      "semantic_slot": "msa_week_coverage",
+      "testability": 9
+    },
+    {
+      "caveat": "Confounding review needs external calendars for full resolution.",
+      "evidence_value": 6,
+      "forum_question_id": "confounding-risk",
+      "novelty": 7,
+      "question": "Where do game weeks overlap with likely confounders in the weekly spending data?",
+      "rationale": "A skeptical pass identifies markets where timing may bias conclusions.",
+      "semantic_slot": "identification_risk",
+      "testability": 7
+    }
+  ],
+  "provider": "openai",
+  "raw_output": "{\"candidates\":[{\"question\":\"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\"rationale\":\"This tests the headline spending question against the city-week table.\",\"semantic_slot\":\"city_week_event_spending\",\"evidence_value\":8,\"testability\":8,\"novelty\":5,\"caveat\":\"The result remains observational without matched controls.\",\"forum_question_id\":\"crowd-spending\"},{\"question\":\"Which MSAs have enough game and non-game weeks for a stable comparison?\",\"rationale\":\"Coverage determines where later statistical tests are credible.\",\"semantic_slot\":\"msa_week_coverage\",\"evidence_value\":7,\"testability\":9,\"novelty\":6,\"caveat\":\"Coverage does not estimate impact by itself.\",\"forum_question_id\":\"market-coverage\"},{\"question\":\"Where do game weeks overlap with likely confounders in the weekly spending data?\",\"rationale\":\"A skeptical pass identifies markets where timing may bias conclusions.\",\"semantic_slot\":\"identification_risk\",\"evidence_value\":6,\"testability\":7,\"novelty\":7,\"caveat\":\"Confounding review needs external calendars for full resolution.\",\"forum_question_id\":\"confounding-risk\"}]}",
+  "trace_path": null
+}

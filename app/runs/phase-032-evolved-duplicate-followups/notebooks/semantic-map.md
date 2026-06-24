@@ -1,0 +1,22 @@
+# Semantic Map
+
+- `city_week_event_spending` -> `turn-01-openai-01-city-week-event-spending`
+- `msa_week_coverage` -> `turn-02-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-03-openai-03-identification-risk`
+- `city_week_event_spending` -> `turn-04-openai-01-city-week-event-spending`
+- `msa_week_coverage` -> `turn-05-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-06-openai-03-identification-risk`
+- `city_week_event_spending` -> `turn-07-openai-01-city-week-event-spending`
+- `msa_week_coverage` -> `turn-08-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-09-openai-03-identification-risk`
+- `city_week_event_spending` -> `turn-10-openai-01-city-week-event-spending`
+- `msa_week_coverage` -> `turn-11-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-12-openai-03-identification-risk`
+- `city_week_event_spending` -> `turn-13-openai-01-city-week-event-spending`
+- `msa_week_coverage` -> `turn-14-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-15-openai-03-identification-risk`
+- `city_week_event_spending` -> `turn-16-openai-01-city-week-event-spending`
+- `msa_week_coverage` -> `turn-17-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-18-openai-03-identification-risk`
+- `city_week_event_spending` -> `turn-19-openai-01-city-week-event-spending`
+- `msa_week_coverage` -> `turn-20-openai-02-msa-week-coverage`

@@ -321,6 +321,7 @@ def run_friends_question_loop(
     prior_selected_forum_ids: set[str] = set()
     selected_semantic_slot_counts: dict[str, int] = {}
     prior_knowledge_duplicate_candidate_count = 0
+    prior_knowledge_evolved_duplicate_candidate_count = 0
     turns: list[dict[str, object]] = []
 
     telemetry.record(
@@ -403,6 +404,9 @@ def run_friends_question_loop(
             prior_knowledge_duplicate_candidate_count += sum(
                 1 for candidate in candidates if bool(candidate.reasoning.get("prior_knowledge_duplicate"))
             )
+            prior_knowledge_evolved_duplicate_candidate_count += sum(
+                1 for candidate in candidates if bool(candidate.reasoning.get("prior_knowledge_evolved_duplicate"))
+            )
             telemetry.record(
                 event_type="openai.reasoning.completed",
                 turn=turn,
@@ -419,6 +423,11 @@ def run_friends_question_loop(
                     "prior_notebook_knowledge_entry_count": notebook_knowledge_summary["entry_count"],
                     "prior_knowledge_duplicate_candidate_count": sum(
                         1 for candidate in candidates if bool(candidate.reasoning.get("prior_knowledge_duplicate"))
+                    ),
+                    "prior_knowledge_evolved_duplicate_candidate_count": sum(
+                        1
+                        for candidate in candidates
+                        if bool(candidate.reasoning.get("prior_knowledge_evolved_duplicate"))
                     ),
                     "candidate_ids": [candidate.candidate_id for candidate in candidates],
                 },
@@ -580,6 +589,7 @@ def run_friends_question_loop(
             "prior_notebook_knowledge_entry_count": notebook_knowledge_summary["entry_count"],
             "prior_notebook_knowledge_path": notebook_knowledge_summary["source_path"],
             "prior_knowledge_duplicate_candidate_count": prior_knowledge_duplicate_candidate_count,
+            "prior_knowledge_evolved_duplicate_candidate_count": prior_knowledge_evolved_duplicate_candidate_count,
             "selected_semantic_slot_counts": dict(sorted(selected_semantic_slot_counts.items())),
             "selected_unique_semantic_slot_count": len(selected_semantic_slot_counts),
         },
@@ -666,7 +676,10 @@ def _select_diverse_candidate(
     eligible = [candidate for candidate in ranked if reflections[candidate.candidate_id]["status"] != "not-answerable"]
     pool = eligible if eligible else ranked
     non_duplicate_pool = [
-        candidate for candidate in pool if not bool(candidate.reasoning.get("prior_knowledge_duplicate"))
+        candidate
+        for candidate in pool
+        if not bool(candidate.reasoning.get("prior_knowledge_duplicate"))
+        or bool(candidate.reasoning.get("prior_knowledge_evolved_duplicate"))
     ]
     selection_pool = non_duplicate_pool if non_duplicate_pool else pool
     minimum_prior_count = min(selected_semantic_slot_counts.get(candidate.semantic_slot, 0) for candidate in selection_pool)
@@ -694,27 +707,47 @@ def _openai_candidates(
     for index, proposal in enumerate(proposals, start=1):
         similarity = _prior_question_similarity(proposal.question, recent_seed_questions)
         is_duplicate = similarity >= duplicate_threshold
+        is_evolved_duplicate = is_duplicate
+        question = _evolved_duplicate_question(proposal) if is_evolved_duplicate else proposal.question
+        rationale = (
+            proposal.rationale
+            + " Prior notebook knowledge already covered the original seed, so this follow-up asks for stronger validation."
+            if is_evolved_duplicate
+            else proposal.rationale
+        )
         candidate_records.append(
             Candidate(
                 candidate_id=f"turn-{turn:02d}-openai-{index:02d}-{_slug(proposal.semantic_slot)}",
-                question=proposal.question,
-                rationale=proposal.rationale,
+                question=question,
+                rationale=rationale,
                 semantic_slot=proposal.semantic_slot,
                 evidence_value=proposal.evidence_value,
                 testability=proposal.testability,
-                novelty=1 if is_duplicate else proposal.novelty,
+                novelty=max(4, proposal.novelty) if is_evolved_duplicate else proposal.novelty,
                 caveat=proposal.caveat,
                 forum=spark.forum_metadata_for_openai(proposal),
                 reasoning={
                     **reasoning,
                     "proposal_index": index,
                     "prior_knowledge_duplicate": is_duplicate,
+                    "prior_knowledge_evolved_duplicate": is_evolved_duplicate,
+                    "prior_knowledge_original_question": proposal.question if is_evolved_duplicate else None,
                     "prior_knowledge_similarity": round(similarity, 3),
                     "prior_knowledge_duplicate_threshold": duplicate_threshold,
                 },
             )
         )
     return sorted(candidate_records, key=lambda candidate: candidate.candidate_id)
+
+
+def _evolved_duplicate_question(proposal: OpenAIProposal) -> str:
+    if proposal.semantic_slot == "city_week_event_spending":
+        return "Which matched-control checks change the city game-week spending lift estimate after the baseline result?"
+    if proposal.semantic_slot == "msa_week_coverage":
+        return "Which additional exposure-balance checks change the MSA readiness conclusion?"
+    if proposal.semantic_slot == "identification_risk":
+        return "Which remaining confounder checks would most change the game-week spending interpretation?"
+    return f"What follow-up validation would make this prior question more reliable: {proposal.question}"
 
 
 def _prior_question_similarity(question: str, prior_questions: list[str]) -> float:
