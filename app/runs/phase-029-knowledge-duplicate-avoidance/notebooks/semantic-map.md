@@ -1,0 +1,22 @@
+# Semantic Map
+
+- `msa_week_coverage` -> `turn-01-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-02-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-03-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-04-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-05-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-06-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-07-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-08-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-09-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-10-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-11-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-12-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-13-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-14-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-15-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-16-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-17-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-18-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-19-openai-02-msa-week-coverage`
+- `msa_week_coverage` -> `turn-20-openai-02-msa-week-coverage`

@@ -46,6 +46,7 @@ class ReplicationAudit:
     notebook_knowledge_present: bool
     notebook_knowledge_entry_count: int
     prior_notebook_knowledge_entry_count: int
+    prior_knowledge_duplicate_candidate_count: int
     selected_forum_metadata_count: int
     selected_tournament_metadata_count: int
     selected_reflection_metadata_count: int
@@ -77,7 +78,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-028-prior-knowledge-seeding"),
+    run_dir: Path = Path("app/runs/phase-029-knowledge-duplicate-avoidance"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -116,6 +117,7 @@ def run_replication_audit(
         notebook_knowledge_present=bool(summary.get("notebook_knowledge_present")),
         notebook_knowledge_entry_count=_notebook_knowledge_entry_count(summary.get("notebook_knowledge")),
         prior_notebook_knowledge_entry_count=int(summary.get("prior_notebook_knowledge_entry_count", 0)),
+        prior_knowledge_duplicate_candidate_count=int(summary.get("prior_knowledge_duplicate_candidate_count", 0)),
         selected_forum_metadata_count=sum(_has_key(candidate, "forum") for candidate in selected),
         selected_tournament_metadata_count=sum(_has_key(candidate, "tournament") for candidate in selected),
         selected_reflection_metadata_count=sum(_has_key(candidate, "reflection") for candidate in selected),
@@ -181,6 +183,7 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Notebook knowledge present: {audit.notebook_knowledge_present}",
             f"- Notebook knowledge entry count: {audit.notebook_knowledge_entry_count}",
             f"- Prior notebook knowledge entry count: {audit.prior_notebook_knowledge_entry_count}",
+            f"- Prior-knowledge duplicate candidate count: {audit.prior_knowledge_duplicate_candidate_count}",
             f"- Forum metadata count: {audit.selected_forum_metadata_count}",
             f"- Tournament metadata count: {audit.selected_tournament_metadata_count}",
             f"- Reflection metadata count: {audit.selected_reflection_metadata_count}",

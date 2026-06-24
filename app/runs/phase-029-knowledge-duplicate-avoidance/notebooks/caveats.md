@@ -1,0 +1,22 @@
+# Caveats
+
+- Turn 1: Coverage does not estimate impact by itself.
+- Turn 2: Coverage does not estimate impact by itself.
+- Turn 3: Coverage does not estimate impact by itself.
+- Turn 4: Coverage does not estimate impact by itself.
+- Turn 5: Coverage does not estimate impact by itself.
+- Turn 6: Coverage does not estimate impact by itself.
+- Turn 7: Coverage does not estimate impact by itself.
+- Turn 8: Coverage does not estimate impact by itself.
+- Turn 9: Coverage does not estimate impact by itself.
+- Turn 10: Coverage does not estimate impact by itself.
+- Turn 11: Coverage does not estimate impact by itself.
+- Turn 12: Coverage does not estimate impact by itself.
+- Turn 13: Coverage does not estimate impact by itself.
+- Turn 14: Coverage does not estimate impact by itself.
+- Turn 15: Coverage does not estimate impact by itself.
+- Turn 16: Coverage does not estimate impact by itself.
+- Turn 17: Coverage does not estimate impact by itself.
+- Turn 18: Coverage does not estimate impact by itself.
+- Turn 19: Coverage does not estimate impact by itself.
+- Turn 20: Coverage does not estimate impact by itself.

@@ -72,6 +72,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"notebook_workspace_present={summary.notebook_workspace_present}")
     print(f"notebook_knowledge_present={summary.notebook_knowledge_present}")
     print(f"prior_notebook_knowledge_entry_count={summary.prior_notebook_knowledge_entry_count}")
+    print(f"prior_knowledge_duplicate_candidate_count={summary.prior_knowledge_duplicate_candidate_count}")
     print(f"reasoning_provider={summary.reasoning_provider}")
     print(f"reasoning_mode={summary.reasoning_mode}")
     print(f"selected_candidates_have_openai_reasoning={summary.selected_candidates_have_openai_reasoning}")

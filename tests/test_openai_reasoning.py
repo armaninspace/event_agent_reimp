@@ -161,10 +161,10 @@ def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> N
             {
                 "entry_count": 1,
                 "entries": [
-                    {
-                        "seed_question": "Prior notebook seed?",
-                        "semantic_slot": "city_week_event_spending",
-                        "source_cell_ids": ["turn-01-validation-code"],
+                        {
+                            "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+                            "semantic_slot": "city_week_event_spending",
+                            "source_cell_ids": ["turn-01-validation-code"],
                     }
                 ],
             }
@@ -183,8 +183,15 @@ def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> N
     )
 
     assert session["session_summary"]["prior_notebook_knowledge_entry_count"] == 1
+    assert session["session_summary"]["prior_knowledge_duplicate_candidate_count"] == 1
+    assert session["turns"][0]["selected_candidate"]["semantic_slot"] == "msa_week_coverage"
+    rejected = session["turns"][0]["rejected_candidates"]
+    assert any(candidate["reasoning"]["prior_knowledge_duplicate"] is True for candidate in rejected)
     telemetry = json.loads(Path(session["artifact_paths"]["telemetry_json"]).read_text(encoding="utf-8"))
     knowledge_events = [event for event in telemetry if event["event_type"] == "knowledge.read"]
-    assert knowledge_events[0]["payload"]["notebook_knowledge"]["latest_seed_question"] == "Prior notebook seed?"
+    assert (
+        knowledge_events[0]["payload"]["notebook_knowledge"]["latest_seed_question"]
+        == "Which city game weeks show the largest spending lift after accounting for baseline weeks?"
+    )
     trace_path = Path(session["turns"][0]["selected_candidate"]["reasoning"]["trace_path"])
-    assert "Prior notebook seed?" in trace_path.read_text(encoding="utf-8")
+    assert "Which city game weeks show the largest spending lift" in trace_path.read_text(encoding="utf-8")

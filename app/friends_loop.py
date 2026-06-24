@@ -318,6 +318,7 @@ def run_friends_question_loop(
     notebook_knowledge_summary = load_notebook_knowledge_summary(prior_notebook_knowledge_path)
     prior_selected_ids: set[str] = set()
     prior_selected_forum_ids: set[str] = set()
+    prior_knowledge_duplicate_candidate_count = 0
     turns: list[dict[str, object]] = []
 
     telemetry.record(
@@ -386,6 +387,7 @@ def run_friends_question_loop(
                 turn=turn,
                 proposals=openai_batch.proposals,
                 spark=spark,
+                notebook_knowledge_summary=notebook_knowledge_summary,
                 reasoning={
                     "provider": openai_batch.provider,
                     "mode": openai_batch.mode,
@@ -395,6 +397,9 @@ def run_friends_question_loop(
                     "model_calls_performed": openai_batch.model_calls_performed,
                     "trace_path": openai_batch.trace_path,
                 },
+            )
+            prior_knowledge_duplicate_candidate_count += sum(
+                1 for candidate in candidates if bool(candidate.reasoning.get("prior_knowledge_duplicate"))
             )
             telemetry.record(
                 event_type="openai.reasoning.completed",
@@ -410,6 +415,9 @@ def run_friends_question_loop(
                     "output_hash": openai_batch.output_hash,
                     "trace_path": openai_batch.trace_path,
                     "prior_notebook_knowledge_entry_count": notebook_knowledge_summary["entry_count"],
+                    "prior_knowledge_duplicate_candidate_count": sum(
+                        1 for candidate in candidates if bool(candidate.reasoning.get("prior_knowledge_duplicate"))
+                    ),
                     "candidate_ids": [candidate.candidate_id for candidate in candidates],
                 },
             )
@@ -560,6 +568,7 @@ def run_friends_question_loop(
             "openai_model": reasoning_config.model if reasoning_config.mode in {"openai", "replay"} else None,
             "prior_notebook_knowledge_entry_count": notebook_knowledge_summary["entry_count"],
             "prior_notebook_knowledge_path": notebook_knowledge_summary["source_path"],
+            "prior_knowledge_duplicate_candidate_count": prior_knowledge_duplicate_candidate_count,
         },
         "turns": turns,
     }
@@ -620,8 +629,14 @@ def _openai_candidates(
     turn: int,
     proposals: list[OpenAIProposal],
     spark: Spark,
+    notebook_knowledge_summary: dict[str, object],
     reasoning: dict[str, object],
 ) -> list[Candidate]:
+    recent_seed_questions = {
+        str(question).casefold()
+        for question in notebook_knowledge_summary.get("recent_seed_questions", [])
+        if isinstance(question, str)
+    }
     candidates = [
         Candidate(
             candidate_id=f"turn-{turn:02d}-openai-{index:02d}-{_slug(proposal.semantic_slot)}",
@@ -630,10 +645,14 @@ def _openai_candidates(
             semantic_slot=proposal.semantic_slot,
             evidence_value=proposal.evidence_value,
             testability=proposal.testability,
-            novelty=proposal.novelty,
+            novelty=1 if proposal.question.casefold() in recent_seed_questions else proposal.novelty,
             caveat=proposal.caveat,
             forum=spark.forum_metadata_for_openai(proposal),
-            reasoning={**reasoning, "proposal_index": index},
+            reasoning={
+                **reasoning,
+                "proposal_index": index,
+                "prior_knowledge_duplicate": proposal.question.casefold() in recent_seed_questions,
+            },
         )
         for index, proposal in enumerate(proposals, start=1)
     ]
