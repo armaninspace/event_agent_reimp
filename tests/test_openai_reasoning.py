@@ -1,4 +1,5 @@
 import json
+from collections import Counter
 from pathlib import Path
 
 import pytest
@@ -128,7 +129,7 @@ def test_friends_loop_replay_marks_openai_reasoning_without_live_call(tmp_path: 
     reference_dir = tmp_path / "reference"
     _write_reference_files(reference_dir)
     replay_path = tmp_path / "openai_replay.json"
-    replay_path.write_text(json.dumps({"turns": {"1": _raw_candidates()}}), encoding="utf-8")
+    replay_path.write_text(json.dumps({"turns": {"default": _raw_candidates()}}), encoding="utf-8")
 
     session = run_friends_question_loop(
         turn_count=1,
@@ -197,3 +198,44 @@ def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> N
     )
     trace_path = Path(session["turns"][0]["selected_candidate"]["reasoning"]["trace_path"])
     assert "Which city game weeks show the largest spending lift" in trace_path.read_text(encoding="utf-8")
+
+
+def test_friends_loop_replay_balances_non_duplicate_semantic_slots(tmp_path: Path) -> None:
+    reference_dir = tmp_path / "reference"
+    _write_reference_files(reference_dir)
+    replay_path = tmp_path / "openai_replay.json"
+    replay_path.write_text(json.dumps({"turns": {"default": _raw_candidates()}}), encoding="utf-8")
+    knowledge_path = tmp_path / "notebook-knowledge.json"
+    knowledge_path.write_text(
+        json.dumps(
+            {
+                "entry_count": 1,
+                "entries": [
+                    {
+                        "seed_question": "Which city game weeks show the largest spending lift after baseline adjustment?",
+                        "semantic_slot": "city_week_event_spending",
+                        "source_cell_ids": ["turn-01-validation-code"],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    session = run_friends_question_loop(
+        turn_count=4,
+        output_dir=tmp_path / "run",
+        reference_dir=reference_dir,
+        reasoning_mode="replay",
+        openai_model="gpt-5",
+        openai_replay_path=replay_path,
+        prior_notebook_knowledge_path=knowledge_path,
+    )
+
+    slots = Counter(turn["selected_candidate"]["semantic_slot"] for turn in session["turns"])
+    assert slots == {"msa_week_coverage": 2, "identification_risk": 2}
+    assert session["session_summary"]["selected_unique_semantic_slot_count"] == 2
+    assert session["session_summary"]["selected_semantic_slot_counts"] == {
+        "identification_risk": 2,
+        "msa_week_coverage": 2,
+    }

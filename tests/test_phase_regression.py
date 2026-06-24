@@ -55,6 +55,12 @@ def test_run_phase_regression_writes_summary_and_checks_artifacts(tmp_path: Path
     assert summary.notebook_execution["executed_notebook_count"] == 3
     assert summary.notebook_execution["failed_notebook_count"] == 0
     assert summary.notebook_execution["all_lightweight_executed"] is True
+    assert summary.selected_unique_semantic_slot_count == 3
+    assert summary.selected_semantic_slot_counts == {
+        "city_week_event_spending": 1,
+        "identification_risk": 1,
+        "msa_week_coverage": 1,
+    }
     assert summary.artifact_checks == {
         "session_json": True,
         "session_markdown": True,

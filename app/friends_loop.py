@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from pathlib import Path
 
 from app.hypothesis_routing import classify_question
@@ -319,6 +319,7 @@ def run_friends_question_loop(
     notebook_knowledge_summary = load_notebook_knowledge_summary(prior_notebook_knowledge_path)
     prior_selected_ids: set[str] = set()
     prior_selected_forum_ids: set[str] = set()
+    selected_semantic_slot_counts: dict[str, int] = {}
     prior_knowledge_duplicate_candidate_count = 0
     turns: list[dict[str, object]] = []
 
@@ -422,6 +423,10 @@ def run_friends_question_loop(
                     "candidate_ids": [candidate.candidate_id for candidate in candidates],
                 },
             )
+        candidates = _annotate_semantic_slot_usage(
+            candidates,
+            selected_semantic_slot_counts=selected_semantic_slot_counts,
+        )
         telemetry.record(
             event_type="board.proposed",
             turn=turn,
@@ -439,12 +444,16 @@ def run_friends_question_loop(
         reflections = reflect_candidates(candidate_records)
         evolutions = evolve_candidates(candidate_records, prior_selected_forum_ids=prior_selected_forum_ids)
         ranked = sorted(candidates, key=lambda candidate: int(tournament[candidate.candidate_id]["rank"]))
-        eligible = [candidate for candidate in ranked if reflections[candidate.candidate_id]["status"] != "not-answerable"]
-        selected = eligible[0] if eligible else ranked[0]
+        selected = _select_diverse_candidate(
+            ranked,
+            reflections=reflections,
+            selected_semantic_slot_counts=selected_semantic_slot_counts,
+        )
         rejected = [candidate for candidate in ranked if candidate.candidate_id != selected.candidate_id]
         classification = classify_question(selected.question)
         prior_selected_ids.add(selected.candidate_id)
         prior_selected_forum_ids.add(str(selected.forum["question_id"]))
+        selected_semantic_slot_counts[selected.semantic_slot] = selected_semantic_slot_counts.get(selected.semantic_slot, 0) + 1
         telemetry.record(
             event_type="tournament.completed",
             turn=turn,
@@ -475,6 +484,7 @@ def run_friends_question_loop(
                 "ranked_candidate_ids": [candidate.candidate_id for candidate in ranked],
                 "selected_candidate_id": selected.candidate_id,
                 "rejected_candidate_ids": [candidate.candidate_id for candidate in rejected],
+                "selected_semantic_slot_counts": dict(sorted(selected_semantic_slot_counts.items())),
                 "tournament_ranks": {candidate_id: item["rank"] for candidate_id, item in tournament.items()},
             },
         )
@@ -570,6 +580,8 @@ def run_friends_question_loop(
             "prior_notebook_knowledge_entry_count": notebook_knowledge_summary["entry_count"],
             "prior_notebook_knowledge_path": notebook_knowledge_summary["source_path"],
             "prior_knowledge_duplicate_candidate_count": prior_knowledge_duplicate_candidate_count,
+            "selected_semantic_slot_counts": dict(sorted(selected_semantic_slot_counts.items())),
+            "selected_unique_semantic_slot_count": len(selected_semantic_slot_counts),
         },
         "turns": turns,
     }
@@ -623,6 +635,47 @@ def _candidate_record(
     data["reflection"] = reflections[candidate.candidate_id]
     data["evolution"] = evolutions[candidate.candidate_id]
     return data
+
+
+def _annotate_semantic_slot_usage(
+    candidates: list[Candidate],
+    *,
+    selected_semantic_slot_counts: dict[str, int],
+) -> list[Candidate]:
+    annotated = []
+    for candidate in candidates:
+        prior_count = selected_semantic_slot_counts.get(candidate.semantic_slot, 0)
+        annotated.append(
+            replace(
+                candidate,
+                reasoning={
+                    **candidate.reasoning,
+                    "semantic_slot_prior_selection_count": prior_count,
+                },
+            )
+        )
+    return annotated
+
+
+def _select_diverse_candidate(
+    ranked: list[Candidate],
+    *,
+    reflections: dict[str, dict[str, object]],
+    selected_semantic_slot_counts: dict[str, int],
+) -> Candidate:
+    eligible = [candidate for candidate in ranked if reflections[candidate.candidate_id]["status"] != "not-answerable"]
+    pool = eligible if eligible else ranked
+    non_duplicate_pool = [
+        candidate for candidate in pool if not bool(candidate.reasoning.get("prior_knowledge_duplicate"))
+    ]
+    selection_pool = non_duplicate_pool if non_duplicate_pool else pool
+    minimum_prior_count = min(selected_semantic_slot_counts.get(candidate.semantic_slot, 0) for candidate in selection_pool)
+    least_used = [
+        candidate
+        for candidate in selection_pool
+        if selected_semantic_slot_counts.get(candidate.semantic_slot, 0) == minimum_prior_count
+    ]
+    return least_used[0]
 
 
 def _openai_candidates(

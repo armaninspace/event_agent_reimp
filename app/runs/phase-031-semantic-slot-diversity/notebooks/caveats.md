@@ -1,0 +1,22 @@
+# Caveats
+
+- Turn 1: Coverage does not estimate impact by itself.
+- Turn 2: Confounding review needs external calendars for full resolution.
+- Turn 3: Coverage does not estimate impact by itself.
+- Turn 4: Confounding review needs external calendars for full resolution.
+- Turn 5: Coverage does not estimate impact by itself.
+- Turn 6: Confounding review needs external calendars for full resolution.
+- Turn 7: Coverage does not estimate impact by itself.
+- Turn 8: Confounding review needs external calendars for full resolution.
+- Turn 9: Coverage does not estimate impact by itself.
+- Turn 10: Confounding review needs external calendars for full resolution.
+- Turn 11: Coverage does not estimate impact by itself.
+- Turn 12: Confounding review needs external calendars for full resolution.
+- Turn 13: Coverage does not estimate impact by itself.
+- Turn 14: Confounding review needs external calendars for full resolution.
+- Turn 15: Coverage does not estimate impact by itself.
+- Turn 16: Confounding review needs external calendars for full resolution.
+- Turn 17: Coverage does not estimate impact by itself.
+- Turn 18: Confounding review needs external calendars for full resolution.
+- Turn 19: Coverage does not estimate impact by itself.
+- Turn 20: Confounding review needs external calendars for full resolution.

@@ -18,6 +18,8 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.notebook_knowledge_entry_count == 20
     assert audit.prior_notebook_knowledge_entry_count == 20
     assert audit.prior_knowledge_duplicate_candidate_count == 20
+    assert audit.selected_unique_semantic_slot_count >= 2
+    assert audit.selected_semantic_slot_counts
     assert audit.selected_forum_metadata_count == 20
     assert audit.selected_tournament_metadata_count == 20
     assert audit.selected_reflection_metadata_count == 20

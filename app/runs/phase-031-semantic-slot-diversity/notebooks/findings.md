@@ -1,0 +1,23 @@
+# Findings
+
+- Turn 1: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 2: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 3: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 4: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 5: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 6: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 7: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 8: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 9: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 10: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 11: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 12: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 13: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 14: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 15: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 16: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 17: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 18: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Turn 19: attached 4 statistical results; min adjusted p-value 6.264109922127072e-48; observational only.
+- Turn 20: attached 4 statistical results; min adjusted p-value 8.018939027100663e-08; observational only.
+- Final corrections notebook records 8 adjusted statistical results.

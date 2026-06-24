@@ -1,0 +1,22 @@
+# Semantic Map
+
+- `msa_week_coverage` -> `turn-01-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-02-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-03-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-04-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-05-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-06-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-07-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-08-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-09-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-10-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-11-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-12-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-13-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-14-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-15-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-16-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-17-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-18-openai-03-identification-risk`
+- `msa_week_coverage` -> `turn-19-openai-02-msa-week-coverage`
+- `identification_risk` -> `turn-20-openai-03-identification-risk`

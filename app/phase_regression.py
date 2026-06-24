@@ -52,6 +52,8 @@ class PhaseRegressionResult:
     notebook_knowledge: dict[str, object]
     prior_notebook_knowledge_entry_count: int
     prior_knowledge_duplicate_candidate_count: int
+    selected_semantic_slot_counts: dict[str, int]
+    selected_unique_semantic_slot_count: int
     reasoning_provider: str
     reasoning_mode: str
     selected_candidates_have_openai_reasoning: bool
@@ -196,6 +198,8 @@ def run_phase_regression(
         notebook_knowledge=notebook_knowledge,
         prior_notebook_knowledge_entry_count=int(session_summary.get("prior_notebook_knowledge_entry_count", 0)),
         prior_knowledge_duplicate_candidate_count=int(session_summary.get("prior_knowledge_duplicate_candidate_count", 0)),
+        selected_semantic_slot_counts=_semantic_slot_counts(session_summary.get("selected_semantic_slot_counts")),
+        selected_unique_semantic_slot_count=int(session_summary.get("selected_unique_semantic_slot_count", 0)),
         reasoning_provider=str(session_summary.get("reasoning_provider", "deterministic")),
         reasoning_mode=str(session_summary.get("reasoning_mode", "deterministic")),
         selected_candidates_have_openai_reasoning=selected_candidates_have_openai_reasoning,
@@ -284,3 +288,9 @@ def _has_notebook_knowledge(value: object, *, expected_count: int) -> bool:
         and int(value.get("entry_count", 0)) == expected_count
         and isinstance(value.get("latest_seed_question"), str)
     )
+
+
+def _semantic_slot_counts(value: object) -> dict[str, int]:
+    if not isinstance(value, dict):
+        return {}
+    return {str(key): int(count) for key, count in value.items() if isinstance(count, int)}
