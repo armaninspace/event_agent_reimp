@@ -16,8 +16,8 @@ from app.replication_audit import run_replication_audit, write_replication_audit
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run final thesis replication audit.")
-    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-027-notebook-knowledge-base"))
-    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-027-notebook-knowledge-base"))
+    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-028-prior-knowledge-seeding"))
+    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-028-prior-knowledge-seeding"))
     args = parser.parse_args()
 
     audit = run_replication_audit(repo_root=Path("."), run_dir=args.run_dir)
@@ -30,6 +30,7 @@ def main() -> int:
     print(f"turns_have_statistical_evidence={audit.turns_have_statistical_evidence}")
     print(f"notebook_knowledge_present={audit.notebook_knowledge_present}")
     print(f"notebook_knowledge_entry_count={audit.notebook_knowledge_entry_count}")
+    print(f"prior_notebook_knowledge_entry_count={audit.prior_notebook_knowledge_entry_count}")
     print(f"selected_openai_reasoning_count={audit.selected_openai_reasoning_count}")
     print(f"causal_design_turn_count={audit.causal_design_turn_count}")
     print(f"controlled_observational_turn_count={audit.controlled_observational_turn_count}")

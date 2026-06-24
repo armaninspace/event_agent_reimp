@@ -8,6 +8,7 @@ from pathlib import Path
 
 from app.hypothesis_routing import classify_question
 from app.notebook_workspace import write_turn_notebook
+from app.notebook_knowledge_base import load_notebook_knowledge_summary
 from app.openai_reasoning import OpenAIHypothesisGenerator, OpenAIProposal, OpenAIReasoningConfig
 from app.question_forum import DEFAULT_FORUM_PATH, QuestionForumRecord, load_question_forum
 from app.question_evolution import evolve_candidates
@@ -286,6 +287,7 @@ def run_friends_question_loop(
     openai_model: str | None = None,
     openai_trace_dir: Path | None = None,
     openai_replay_path: Path | None = None,
+    prior_notebook_knowledge_path: Path | None = None,
 ) -> dict[str, object]:
     """Run a deterministic friends question loop and write durable artifacts."""
     forum_records = load_question_forum(question_forum_path) if question_forum_path.exists() else []
@@ -313,6 +315,7 @@ def run_friends_question_loop(
     data_agent = DataAgent()
     telemetry = TelemetryRecorder()
     statistical_execution_report = build_statistical_execution_report(reference_dir)
+    notebook_knowledge_summary = load_notebook_knowledge_summary(prior_notebook_knowledge_path)
     prior_selected_ids: set[str] = set()
     prior_selected_forum_ids: set[str] = set()
     turns: list[dict[str, object]] = []
@@ -360,8 +363,14 @@ def run_friends_question_loop(
             event_type="knowledge.read",
             turn=turn,
             actor="Mapper",
-            summary="Read reference data quality context.",
-            payload={"reference_dir": str(reference_dir)},
+            summary=(
+                "Read reference data quality context and "
+                f"{notebook_knowledge_summary['entry_count']} prior notebook knowledge entries."
+            ),
+            payload={
+                "reference_dir": str(reference_dir),
+                "notebook_knowledge": notebook_knowledge_summary,
+            },
         )
         if openai_generator is None:
             candidates = spark.propose(turn=turn, prior_selected_ids=prior_selected_ids)
@@ -371,6 +380,7 @@ def run_friends_question_loop(
                 forum_records=forum_records,
                 prior_selected_ids=prior_selected_ids,
                 prior_selected_forum_ids=prior_selected_forum_ids,
+                notebook_knowledge_summary=notebook_knowledge_summary,
             )
             candidates = _openai_candidates(
                 turn=turn,
@@ -399,6 +409,7 @@ def run_friends_question_loop(
                     "prompt_hash": openai_batch.prompt_hash,
                     "output_hash": openai_batch.output_hash,
                     "trace_path": openai_batch.trace_path,
+                    "prior_notebook_knowledge_entry_count": notebook_knowledge_summary["entry_count"],
                     "candidate_ids": [candidate.candidate_id for candidate in candidates],
                 },
             )
@@ -547,6 +558,8 @@ def run_friends_question_loop(
             "reasoning_mode": reasoning_config.mode,
             "reasoning_provider": "openai" if reasoning_config.mode in {"openai", "replay"} else "deterministic",
             "openai_model": reasoning_config.model if reasoning_config.mode in {"openai", "replay"} else None,
+            "prior_notebook_knowledge_entry_count": notebook_knowledge_summary["entry_count"],
+            "prior_notebook_knowledge_path": notebook_knowledge_summary["source_path"],
         },
         "turns": turns,
     }

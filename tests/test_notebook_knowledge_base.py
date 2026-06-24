@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from app.notebook_execution import execute_workspace_lightweight
-from app.notebook_knowledge_base import build_notebook_knowledge_base, write_notebook_knowledge_base
+from app.notebook_knowledge_base import build_notebook_knowledge_base, load_notebook_knowledge_summary, write_notebook_knowledge_base
 from app.notebook_workspace import write_turn_notebook
 
 
@@ -54,3 +54,16 @@ def test_build_notebook_knowledge_base_handles_empty_workspace(tmp_path: Path) -
 
     assert knowledge["entry_count"] == 0
     assert knowledge["latest_notebook"] is None
+
+
+def test_load_notebook_knowledge_summary_returns_compact_recent_memory(tmp_path: Path) -> None:
+    write_turn_notebook(tmp_path, turn=_turn(1, "turn-01-a"))
+    execute_workspace_lightweight(tmp_path)
+    json_path, _, _ = write_notebook_knowledge_base(tmp_path)
+
+    summary = load_notebook_knowledge_summary(json_path)
+
+    assert summary["entry_count"] == 1
+    assert summary["latest_seed_question"] == "Do big sports crowds turn into local spending?"
+    assert summary["latest_semantic_slot"] == "city_week_event_spending"
+    assert summary["recent_seed_questions"] == ["Do big sports crowds turn into local spending?"]

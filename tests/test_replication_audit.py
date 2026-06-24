@@ -16,6 +16,7 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.correction_notebook_executed is True
     assert audit.notebook_knowledge_present is True
     assert audit.notebook_knowledge_entry_count == 20
+    assert audit.prior_notebook_knowledge_entry_count == 20
     assert audit.selected_forum_metadata_count == 20
     assert audit.selected_tournament_metadata_count == 20
     assert audit.selected_reflection_metadata_count == 20

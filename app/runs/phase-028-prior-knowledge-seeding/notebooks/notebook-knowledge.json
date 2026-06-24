@@ -1,0 +1,350 @@
+{
+  "entries": [
+    {
+      "candidate_id": "turn-01-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-01-turn-01-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-01-turn-01-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-01-intro",
+        "turn-01-validation-status",
+        "turn-01-validation-code"
+      ],
+      "turn": 1
+    },
+    {
+      "candidate_id": "turn-02-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-02-turn-02-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-02-turn-02-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-02-intro",
+        "turn-02-validation-status",
+        "turn-02-validation-code"
+      ],
+      "turn": 2
+    },
+    {
+      "candidate_id": "turn-03-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-03-turn-03-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-03-turn-03-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-03-intro",
+        "turn-03-validation-status",
+        "turn-03-validation-code"
+      ],
+      "turn": 3
+    },
+    {
+      "candidate_id": "turn-04-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-04-turn-04-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-04-turn-04-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-04-intro",
+        "turn-04-validation-status",
+        "turn-04-validation-code"
+      ],
+      "turn": 4
+    },
+    {
+      "candidate_id": "turn-05-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-05-turn-05-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-05-turn-05-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-05-intro",
+        "turn-05-validation-status",
+        "turn-05-validation-code"
+      ],
+      "turn": 5
+    },
+    {
+      "candidate_id": "turn-06-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-06-turn-06-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-06-turn-06-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-06-intro",
+        "turn-06-validation-status",
+        "turn-06-validation-code"
+      ],
+      "turn": 6
+    },
+    {
+      "candidate_id": "turn-07-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-07-turn-07-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-07-turn-07-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-07-intro",
+        "turn-07-validation-status",
+        "turn-07-validation-code"
+      ],
+      "turn": 7
+    },
+    {
+      "candidate_id": "turn-08-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-08-turn-08-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-08-turn-08-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-08-intro",
+        "turn-08-validation-status",
+        "turn-08-validation-code"
+      ],
+      "turn": 8
+    },
+    {
+      "candidate_id": "turn-09-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-09-turn-09-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-09-turn-09-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-09-intro",
+        "turn-09-validation-status",
+        "turn-09-validation-code"
+      ],
+      "turn": 9
+    },
+    {
+      "candidate_id": "turn-10-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-10-turn-10-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-10-turn-10-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-10-intro",
+        "turn-10-validation-status",
+        "turn-10-validation-code"
+      ],
+      "turn": 10
+    },
+    {
+      "candidate_id": "turn-11-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-11-turn-11-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-11-turn-11-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-11-intro",
+        "turn-11-validation-status",
+        "turn-11-validation-code"
+      ],
+      "turn": 11
+    },
+    {
+      "candidate_id": "turn-12-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-12-turn-12-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-12-turn-12-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-12-intro",
+        "turn-12-validation-status",
+        "turn-12-validation-code"
+      ],
+      "turn": 12
+    },
+    {
+      "candidate_id": "turn-13-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-13-turn-13-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-13-turn-13-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-13-intro",
+        "turn-13-validation-status",
+        "turn-13-validation-code"
+      ],
+      "turn": 13
+    },
+    {
+      "candidate_id": "turn-14-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-14-turn-14-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-14-turn-14-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-14-intro",
+        "turn-14-validation-status",
+        "turn-14-validation-code"
+      ],
+      "turn": 14
+    },
+    {
+      "candidate_id": "turn-15-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-15-turn-15-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-15-turn-15-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-15-intro",
+        "turn-15-validation-status",
+        "turn-15-validation-code"
+      ],
+      "turn": 15
+    },
+    {
+      "candidate_id": "turn-16-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-16-turn-16-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-16-turn-16-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-16-intro",
+        "turn-16-validation-status",
+        "turn-16-validation-code"
+      ],
+      "turn": 16
+    },
+    {
+      "candidate_id": "turn-17-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-17-turn-17-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-17-turn-17-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-17-intro",
+        "turn-17-validation-status",
+        "turn-17-validation-code"
+      ],
+      "turn": 17
+    },
+    {
+      "candidate_id": "turn-18-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-18-turn-18-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-18-turn-18-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-18-intro",
+        "turn-18-validation-status",
+        "turn-18-validation-code"
+      ],
+      "turn": 18
+    },
+    {
+      "candidate_id": "turn-19-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-19-turn-19-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-19-turn-19-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-19-intro",
+        "turn-19-validation-status",
+        "turn-19-validation-code"
+      ],
+      "turn": 19
+    },
+    {
+      "candidate_id": "turn-20-openai-01-city-week-event-spending",
+      "caveat": "The result remains observational without matched controls.",
+      "executed_code_cells": 1,
+      "execution_backend": "lightweight",
+      "markdown_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-20-turn-20-openai-01-city-week-event-spending.md",
+      "notebook_path": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-20-turn-20-openai-01-city-week-event-spending.ipynb",
+      "notebook_status": "lightweight_executed",
+      "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "semantic_slot": "city_week_event_spending",
+      "source_cell_ids": [
+        "turn-20-intro",
+        "turn-20-validation-status",
+        "turn-20-validation-code"
+      ],
+      "turn": 20
+    }
+  ],
+  "entry_count": 20,
+  "latest_notebook": "app/runs/phase-028-prior-knowledge-seeding/notebooks/turn-20-turn-20-openai-01-city-week-event-spending.ipynb",
+  "latest_seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+  "latest_source_cell": "turn-20-validation-code",
+  "notebook_dir": "app/runs/phase-028-prior-knowledge-seeding/notebooks",
+  "schema_version": "phase-027.notebook-knowledge-base.v1"
+}

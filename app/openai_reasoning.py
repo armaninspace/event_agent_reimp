@@ -146,6 +146,7 @@ class OpenAIHypothesisGenerator:
         forum_records: list[QuestionForumRecord],
         prior_selected_ids: set[str],
         prior_selected_forum_ids: set[str],
+        notebook_knowledge_summary: dict[str, object] | None = None,
     ) -> OpenAIProposalBatch:
         """Return parsed proposals from live OpenAI or an explicit replay trace."""
         prompt = build_hypothesis_prompt(
@@ -153,6 +154,7 @@ class OpenAIHypothesisGenerator:
             forum_records=forum_records,
             prior_selected_ids=prior_selected_ids,
             prior_selected_forum_ids=prior_selected_forum_ids,
+            notebook_knowledge_summary=notebook_knowledge_summary,
         )
         prompt_hash = _sha256(prompt)
         if self._config.mode == "replay":
@@ -194,6 +196,7 @@ def build_hypothesis_prompt(
     forum_records: list[QuestionForumRecord],
     prior_selected_ids: set[str],
     prior_selected_forum_ids: set[str],
+    notebook_knowledge_summary: dict[str, object] | None = None,
 ) -> str:
     """Build the prompt sent to OpenAI for hypothesis generation."""
     forum_payload = [
@@ -233,6 +236,8 @@ def build_hypothesis_prompt(
             f"Turn: {turn}",
             f"Prior selected candidate IDs: {sorted(prior_selected_ids)}",
             f"Prior selected forum IDs: {sorted(prior_selected_forum_ids)}",
+            "Prior notebook knowledge summary:",
+            json.dumps(notebook_knowledge_summary or {}, indent=2, sort_keys=True),
             "",
             "Available semantic slots: city_week_event_spending, msa_week_coverage, identification_risk",
             "Scoring fields must be integers from 0 to 10.",

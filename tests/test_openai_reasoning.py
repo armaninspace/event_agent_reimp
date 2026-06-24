@@ -100,9 +100,11 @@ def test_openai_generator_live_uses_client_and_writes_trace(tmp_path: Path) -> N
         forum_records=forum_records,
         prior_selected_ids=set(),
         prior_selected_forum_ids=set(),
+        notebook_knowledge_summary={"entry_count": 2, "latest_seed_question": "Prior question?"},
     )
 
     assert len(client.calls) == 1
+    assert "Prior question?" in client.calls[0]["prompt"]
     assert batch.provider == "openai"
     assert batch.mode == "openai"
     assert batch.model_calls_performed is True
@@ -146,3 +148,43 @@ def test_friends_loop_replay_marks_openai_reasoning_without_live_call(tmp_path: 
     openai_events = [event for event in telemetry if event["event_type"] == "openai.reasoning.completed"]
     assert len(openai_events) == 1
     assert openai_events[0]["payload"]["model_calls_performed"] is False
+
+
+def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> None:
+    reference_dir = tmp_path / "reference"
+    _write_reference_files(reference_dir)
+    replay_path = tmp_path / "openai_replay.json"
+    replay_path.write_text(json.dumps({"turns": {"1": _raw_candidates()}}), encoding="utf-8")
+    knowledge_path = tmp_path / "notebook-knowledge.json"
+    knowledge_path.write_text(
+        json.dumps(
+            {
+                "entry_count": 1,
+                "entries": [
+                    {
+                        "seed_question": "Prior notebook seed?",
+                        "semantic_slot": "city_week_event_spending",
+                        "source_cell_ids": ["turn-01-validation-code"],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    session = run_friends_question_loop(
+        turn_count=1,
+        output_dir=tmp_path / "run",
+        reference_dir=reference_dir,
+        reasoning_mode="replay",
+        openai_model="gpt-5",
+        openai_replay_path=replay_path,
+        prior_notebook_knowledge_path=knowledge_path,
+    )
+
+    assert session["session_summary"]["prior_notebook_knowledge_entry_count"] == 1
+    telemetry = json.loads(Path(session["artifact_paths"]["telemetry_json"]).read_text(encoding="utf-8"))
+    knowledge_events = [event for event in telemetry if event["event_type"] == "knowledge.read"]
+    assert knowledge_events[0]["payload"]["notebook_knowledge"]["latest_seed_question"] == "Prior notebook seed?"
+    trace_path = Path(session["turns"][0]["selected_candidate"]["reasoning"]["trace_path"])
+    assert "Prior notebook seed?" in trace_path.read_text(encoding="utf-8")

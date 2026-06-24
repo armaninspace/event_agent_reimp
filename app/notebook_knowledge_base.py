@@ -53,6 +53,39 @@ def write_notebook_knowledge_base(notebook_dir: Path) -> tuple[Path, Path, dict[
     return json_path, markdown_path, knowledge
 
 
+def load_notebook_knowledge_summary(path: Path | None) -> dict[str, object]:
+    """Load a compact prior notebook knowledge summary for a new run."""
+    if path is None or not path.exists():
+        return {
+            "schema_version": "phase-027.notebook-knowledge-summary.v1",
+            "source_path": str(path) if path else None,
+            "entry_count": 0,
+            "latest_seed_question": None,
+            "latest_source_cell": None,
+            "latest_semantic_slot": None,
+            "recent_seed_questions": [],
+        }
+    knowledge = json.loads(path.read_text(encoding="utf-8"))
+    entries = knowledge.get("entries", [])
+    if not isinstance(entries, list):
+        entries = []
+    recent_entries = [entry for entry in entries[-5:] if isinstance(entry, dict)]
+    latest = recent_entries[-1] if recent_entries else {}
+    return {
+        "schema_version": "phase-027.notebook-knowledge-summary.v1",
+        "source_path": str(path),
+        "entry_count": int(knowledge.get("entry_count", len(entries))),
+        "latest_seed_question": latest.get("seed_question"),
+        "latest_source_cell": _latest_source_cell(latest),
+        "latest_semantic_slot": latest.get("semantic_slot"),
+        "recent_seed_questions": [
+            entry["seed_question"]
+            for entry in recent_entries
+            if isinstance(entry.get("seed_question"), str) and entry["seed_question"]
+        ],
+    }
+
+
 def render_notebook_knowledge_markdown(knowledge: dict[str, object]) -> str:
     """Render notebook knowledge base as compact Markdown."""
     lines = [
@@ -141,3 +174,10 @@ def _extract_prefixed_line(markdown_text: str, prefix: str) -> str | None:
 
 def _optional_string(value: object) -> str | None:
     return value if isinstance(value, str) else None
+
+
+def _latest_source_cell(entry: dict[str, object]) -> str | None:
+    source_cell_ids = entry.get("source_cell_ids")
+    if isinstance(source_cell_ids, list) and source_cell_ids and isinstance(source_cell_ids[-1], str):
+        return source_cell_ids[-1]
+    return None

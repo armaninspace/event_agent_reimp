@@ -50,6 +50,7 @@ class PhaseRegressionResult:
     notebook_execution: dict[str, object]
     notebook_knowledge_present: bool
     notebook_knowledge: dict[str, object]
+    prior_notebook_knowledge_entry_count: int
     reasoning_provider: str
     reasoning_mode: str
     selected_candidates_have_openai_reasoning: bool
@@ -73,6 +74,7 @@ def run_phase_regression(
     reasoning_mode: str = "deterministic",
     openai_model: str | None = None,
     openai_replay_path: Path | None = None,
+    prior_notebook_knowledge_path: Path | None = None,
 ) -> tuple[PhaseRegressionResult, Path]:
     """Run a deterministic phase regression and write its summary."""
     phase_dir = runs_dir / phase_id
@@ -87,6 +89,7 @@ def run_phase_regression(
         reasoning_mode=reasoning_mode,
         openai_model=openai_model,
         openai_replay_path=openai_replay_path,
+        prior_notebook_knowledge_path=prior_notebook_knowledge_path,
     )
     correction_report = build_correction_report(reference_dir)
     write_correction_notebook(notebook_dir, correction_report=correction_report)
@@ -190,6 +193,7 @@ def run_phase_regression(
         notebook_execution=notebook_execution,
         notebook_knowledge_present=_has_notebook_knowledge(notebook_knowledge, expected_count=turns),
         notebook_knowledge=notebook_knowledge,
+        prior_notebook_knowledge_entry_count=int(session_summary.get("prior_notebook_knowledge_entry_count", 0)),
         reasoning_provider=str(session_summary.get("reasoning_provider", "deterministic")),
         reasoning_mode=str(session_summary.get("reasoning_mode", "deterministic")),
         selected_candidates_have_openai_reasoning=selected_candidates_have_openai_reasoning,

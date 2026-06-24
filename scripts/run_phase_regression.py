@@ -40,6 +40,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--openai-model", help="OpenAI model for reasoning-mode openai/replay.")
     parser.add_argument("--openai-replay-path", type=Path, help="Replay JSON for reasoning-mode replay.")
+    parser.add_argument("--prior-notebook-knowledge-path", type=Path, help="Prior notebook-knowledge.json to read.")
     return parser
 
 
@@ -55,6 +56,7 @@ def main(argv: list[str] | None = None) -> int:
         reasoning_mode=args.reasoning_mode,
         openai_model=args.openai_model,
         openai_replay_path=args.openai_replay_path,
+        prior_notebook_knowledge_path=args.prior_notebook_knowledge_path,
     )
     print(f"wrote {summary_path}")
     print(f"requested_turns={summary.requested_turns}")
@@ -69,6 +71,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"current_required_artifacts_exist={summary.current_required_artifacts_exist}")
     print(f"notebook_workspace_present={summary.notebook_workspace_present}")
     print(f"notebook_knowledge_present={summary.notebook_knowledge_present}")
+    print(f"prior_notebook_knowledge_entry_count={summary.prior_notebook_knowledge_entry_count}")
     print(f"reasoning_provider={summary.reasoning_provider}")
     print(f"reasoning_mode={summary.reasoning_mode}")
     print(f"selected_candidates_have_openai_reasoning={summary.selected_candidates_have_openai_reasoning}")
