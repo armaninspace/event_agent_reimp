@@ -40,3 +40,11 @@ Existing container tooling was used for scaffolding and validation:
 | Tool/package | Version | Install command | Reason installed | Classification | Reproducibility or cleanup notes |
 | --- | --- | --- | --- | --- | --- |
 | scipy | 1.18.0 | `python3 -m pip install scipy` | Statistical p-values for exploratory and matched tests | runtime | Installed in user site-packages; pinned in `pyproject.toml` |
+
+## Phase 024
+
+No new package was installed during `phase-024-openai-reasoning`.
+
+| Tool/package | Version | Install command | Reason installed | Classification | Reproducibility or cleanup notes |
+| --- | --- | --- | --- | --- | --- |
+| openai | 2.43.0 | pre-existing | Official OpenAI Python SDK for Responses API-backed hypothesis generation | runtime | Added to `pyproject.toml` as `openai>=2.43.0,<3.0.0` |

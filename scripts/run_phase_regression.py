@@ -32,6 +32,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("data/reference"),
         help="Directory containing final runtime CSV files.",
     )
+    parser.add_argument(
+        "--reasoning-mode",
+        choices=("deterministic", "openai", "replay"),
+        default="deterministic",
+        help="Hypothesis generation mode.",
+    )
+    parser.add_argument("--openai-model", help="OpenAI model for reasoning-mode openai/replay.")
+    parser.add_argument("--openai-replay-path", type=Path, help="Replay JSON for reasoning-mode replay.")
     return parser
 
 
@@ -44,6 +52,9 @@ def main(argv: list[str] | None = None) -> int:
         runs_dir=args.runs_dir,
         reference_dir=args.reference_dir,
         notebook_execution_backend=args.notebook_execution_backend,
+        reasoning_mode=args.reasoning_mode,
+        openai_model=args.openai_model,
+        openai_replay_path=args.openai_replay_path,
     )
     print(f"wrote {summary_path}")
     print(f"requested_turns={summary.requested_turns}")
@@ -56,6 +67,10 @@ def main(argv: list[str] | None = None) -> int:
     print(f"correction_notebook_executed={summary.correction_notebook_executed}")
     print(f"current_required_artifacts_exist={summary.current_required_artifacts_exist}")
     print(f"notebook_workspace_present={summary.notebook_workspace_present}")
+    print(f"reasoning_provider={summary.reasoning_provider}")
+    print(f"reasoning_mode={summary.reasoning_mode}")
+    print(f"selected_candidates_have_openai_reasoning={summary.selected_candidates_have_openai_reasoning}")
+    print(f"openai_model_calls_performed={summary.openai_model_calls_performed}")
     print(f"executed_notebook_count={summary.notebook_execution['executed_notebook_count']}")
     print(f"failed_notebook_count={summary.notebook_execution['failed_notebook_count']}")
     return 0

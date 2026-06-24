@@ -46,6 +46,10 @@ class PhaseRegressionResult:
     notebook_workspace_present: bool
     notebook_workspace: dict[str, object]
     notebook_execution: dict[str, object]
+    reasoning_provider: str
+    reasoning_mode: str
+    selected_candidates_have_openai_reasoning: bool
+    openai_model_calls_performed: bool
     telemetry_event_count: int
     telemetry_event_types: list[str]
     known_future_artifacts: dict[str, str]
@@ -62,6 +66,9 @@ def run_phase_regression(
     runs_dir: Path = Path("app/runs"),
     reference_dir: Path = Path("data/reference"),
     notebook_execution_backend: str = "lightweight",
+    reasoning_mode: str = "deterministic",
+    openai_model: str | None = None,
+    openai_replay_path: Path | None = None,
 ) -> tuple[PhaseRegressionResult, Path]:
     """Run a deterministic phase regression and write its summary."""
     phase_dir = runs_dir / phase_id
@@ -73,6 +80,9 @@ def run_phase_regression(
         output_dir=loop_dir,
         reference_dir=reference_dir,
         notebook_dir=notebook_dir,
+        reasoning_mode=reasoning_mode,
+        openai_model=openai_model,
+        openai_replay_path=openai_replay_path,
     )
     correction_report = build_correction_report(reference_dir)
     write_correction_notebook(notebook_dir, correction_report=correction_report)
@@ -89,6 +99,18 @@ def run_phase_regression(
     turns_data = session["turns"]
     assert isinstance(turns_data, list)
     selected_candidates = [turn["selected_candidate"] for turn in turns_data]
+    selected_reasoning = [
+        candidate.get("reasoning") for candidate in selected_candidates if isinstance(candidate, dict)
+    ]
+    selected_candidates_have_openai_reasoning = bool(selected_reasoning) and all(
+        isinstance(reasoning, dict) and reasoning.get("provider") == "openai" for reasoning in selected_reasoning
+    )
+    openai_model_calls_performed = any(
+        isinstance(reasoning, dict) and bool(reasoning.get("model_calls_performed"))
+        for reasoning in selected_reasoning
+    )
+    session_summary = session["session_summary"]
+    assert isinstance(session_summary, dict)
     turns_have_statistical_evidence = all(
         isinstance(turn, dict) and _has_statistical_evidence(turn.get("statistical_evidence"))
         for turn in turns_data
@@ -156,6 +178,10 @@ def run_phase_regression(
         notebook_workspace_present=notebook_workspace_present,
         notebook_workspace=notebook_workspace,
         notebook_execution=notebook_execution,
+        reasoning_provider=str(session_summary.get("reasoning_provider", "deterministic")),
+        reasoning_mode=str(session_summary.get("reasoning_mode", "deterministic")),
+        selected_candidates_have_openai_reasoning=selected_candidates_have_openai_reasoning,
+        openai_model_calls_performed=openai_model_calls_performed,
         telemetry_event_count=len(telemetry),
         telemetry_event_types=sorted({event["event_type"] for event in telemetry}),
         known_future_artifacts={

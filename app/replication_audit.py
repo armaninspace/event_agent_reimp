@@ -18,6 +18,7 @@ REQUIRED_SOURCE_FILES = (
     "app/question_reflection.py",
     "app/question_evolution.py",
     "app/hypothesis_evolution.py",
+    "app/openai_reasoning.py",
     "app/statistical_execution.py",
     "app/maf_orchestration.py",
     "app/reporting.py",
@@ -47,6 +48,10 @@ class ReplicationAudit:
     selected_reflection_metadata_count: int
     selected_evolution_metadata_count: int
     selected_evolution_variant_count: int
+    selected_openai_reasoning_count: int
+    openai_model_calls_performed: bool
+    reasoning_provider: str
+    reasoning_mode: str
     statistical_evidence_turn_count: int
     business_report_statistical_sections: int
     business_report_statistical_tables: int
@@ -62,7 +67,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-023-evolution-variants"),
+    run_dir: Path = Path("app/runs/phase-024-openai-reasoning"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -95,13 +100,18 @@ def run_replication_audit(
         selected_reflection_metadata_count=sum(_has_key(candidate, "reflection") for candidate in selected),
         selected_evolution_metadata_count=sum(_has_key(candidate, "evolution") for candidate in selected),
         selected_evolution_variant_count=sum(_has_evolution_variant(candidate.get("evolution")) for candidate in selected if isinstance(candidate, dict)),
+        selected_openai_reasoning_count=sum(_has_openai_reasoning(candidate.get("reasoning")) for candidate in selected if isinstance(candidate, dict)),
+        openai_model_calls_performed=bool(summary.get("openai_model_calls_performed")),
+        reasoning_provider=str(summary.get("reasoning_provider", "deterministic")),
+        reasoning_mode=str(summary.get("reasoning_mode", "deterministic")),
         statistical_evidence_turn_count=sum(_has_key(turn, "statistical_evidence") for turn in turns),
         business_report_statistical_sections=business_report.count("Statistical Evidence"),
         business_report_statistical_tables=business_report.count('class="statistical-results"'),
         notebook_workspace_present=bool(summary["notebook_workspace_present"]),
         final_status="replicated_with_known_limits",
         known_limits=[
-            "Live model-based debate is deferred; governance is deterministic.",
+            "The checked-in Phase 024 audit artifact uses OpenAI replay provenance because OPENAI_API_KEY is not available in this shell.",
+            "Live OpenAI reasoning is implemented and credential-gated, but requires OPENAI_API_KEY at runtime.",
             "Statistical evidence is observational and exploratory, not causal proof.",
             "Microsoft Agent Framework adapter runs deterministically without provider/model calls.",
         ],
@@ -146,6 +156,10 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Reflection metadata count: {audit.selected_reflection_metadata_count}",
             f"- Evolution metadata count: {audit.selected_evolution_metadata_count}",
             f"- Evolution variant count: {audit.selected_evolution_variant_count}",
+            f"- OpenAI reasoning metadata count: {audit.selected_openai_reasoning_count}",
+            f"- OpenAI model calls performed: {audit.openai_model_calls_performed}",
+            f"- Reasoning provider: {audit.reasoning_provider}",
+            f"- Reasoning mode: {audit.reasoning_mode}",
             f"- Statistical evidence turn count: {audit.statistical_evidence_turn_count}",
             f"- Business report statistical sections: {audit.business_report_statistical_sections}",
             f"- Business report statistical tables: {audit.business_report_statistical_tables}",
@@ -174,4 +188,16 @@ def _has_evolution_variant(value: object) -> bool:
     return isinstance(value, dict) and all(
         isinstance(value.get(key), str) and bool(value.get(key))
         for key in ("parent_question_id", "child_question_id", "evolved_question")
+    )
+
+
+def _has_openai_reasoning(value: object) -> bool:
+    return (
+        isinstance(value, dict)
+        and value.get("provider") == "openai"
+        and isinstance(value.get("mode"), str)
+        and isinstance(value.get("model"), str)
+        and isinstance(value.get("prompt_hash"), str)
+        and isinstance(value.get("output_hash"), str)
+        and "model_calls_performed" in value
     )

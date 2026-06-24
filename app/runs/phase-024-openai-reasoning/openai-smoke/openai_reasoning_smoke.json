@@ -1,0 +1,49 @@
+{
+  "all_selected_have_openai_reasoning": true,
+  "artifact_paths": {
+    "business_evidence_report": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/business_evidence_report.html",
+    "discovery_decision_summary": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/discovery_decision_summary.md",
+    "playback_ui": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/ui/index.html",
+    "session_json": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/friends_loop_session.json",
+    "session_markdown": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/friends_loop_session.md",
+    "telemetry_json": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/friends_loop_telemetry.json"
+  },
+  "mode": "replay",
+  "model": "gpt-5",
+  "model_calls_performed": false,
+  "provider": "openai",
+  "schema_version": "phase-024.openai-reasoning-smoke.v1",
+  "selected": [
+    {
+      "candidate_id": "turn-01-openai-01-city-week-event-spending",
+      "question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "reasoning": {
+        "mode": "replay",
+        "model": "gpt-5",
+        "model_calls_performed": false,
+        "output_hash": "3968c0b9d6714dcb4a1946c2d568ebe869536184bf9b11926361ab41dd2397bf",
+        "prompt_hash": "75ff76add2a644c6e4dbc43e0a9b1dd3e9e95e16cf6c5793905b7b93b23c2578",
+        "proposal_index": 1,
+        "provider": "openai",
+        "trace_path": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/openai-reasoning/turn-01-openai-reasoning.json"
+      },
+      "semantic_slot": "city_week_event_spending"
+    },
+    {
+      "candidate_id": "turn-02-openai-01-city-week-event-spending",
+      "question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+      "reasoning": {
+        "mode": "replay",
+        "model": "gpt-5",
+        "model_calls_performed": false,
+        "output_hash": "3968c0b9d6714dcb4a1946c2d568ebe869536184bf9b11926361ab41dd2397bf",
+        "prompt_hash": "6c268a1c6f4e064bf29b46c37d5993236c40194e614c3d8796550587af059930",
+        "proposal_index": 1,
+        "provider": "openai",
+        "trace_path": "app/runs/phase-024-openai-reasoning/openai-smoke/friends-question-loop/openai-reasoning/turn-02-openai-reasoning.json"
+      },
+      "semantic_slot": "city_week_event_spending"
+    }
+  ],
+  "selected_candidate_count": 2
+}

@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from app.hypothesis_routing import classify_question
 from app.notebook_workspace import write_turn_notebook
+from app.openai_reasoning import OpenAIHypothesisGenerator, OpenAIProposal, OpenAIReasoningConfig
 from app.question_forum import DEFAULT_FORUM_PATH, QuestionForumRecord, load_question_forum
 from app.question_evolution import evolve_candidates
 from app.question_reflection import reflect_candidates
@@ -37,6 +38,7 @@ class Candidate:
     novelty: int
     caveat: str
     forum: dict[str, object]
+    reasoning: dict[str, object] = field(default_factory=lambda: {"provider": "deterministic", "mode": "deterministic"})
 
     @property
     def score(self) -> int:
@@ -118,6 +120,7 @@ class Spark:
                 novelty=1 if "turn-01-crowd-spending" in prior_selected_ids else 4,
                 caveat="Observational data cannot prove that crowds caused spending changes.",
                 forum=self._forum_metadata("crowd-spending"),
+                reasoning={"provider": "deterministic", "mode": "deterministic", "model_calls_performed": False},
             ),
             Candidate(
                 candidate_id=f"turn-{turn:02d}-market-coverage",
@@ -132,6 +135,7 @@ class Spark:
                 novelty=5,
                 caveat="Coverage strength is not the same as evidence of impact.",
                 forum=self._forum_metadata("market-coverage"),
+                reasoning={"provider": "deterministic", "mode": "deterministic", "model_calls_performed": False},
             ),
             Candidate(
                 candidate_id=f"turn-{turn:02d}-confounding-risk",
@@ -146,6 +150,7 @@ class Spark:
                 novelty=4,
                 caveat="This is a review task until matched controls exist.",
                 forum=self._forum_metadata("confounding-risk"),
+                reasoning={"provider": "deterministic", "mode": "deterministic", "model_calls_performed": False},
             ),
         ]
         return sorted(candidates, key=lambda candidate: candidate.candidate_id)
@@ -171,6 +176,25 @@ class Spark:
             "source_url": "local://question-forum/fallback",
             "status": "proposed",
             "tags": ["fallback"],
+        }
+
+    def forum_metadata_for_openai(self, proposal: OpenAIProposal) -> dict[str, object]:
+        """Return source forum metadata for an OpenAI proposal."""
+        record = self._forum_records.get(proposal.forum_question_id)
+        if record:
+            metadata = record.candidate_metadata()
+            metadata["source"] = "openai_selected_forum_record"
+            return metadata
+        return {
+            "question_id": proposal.forum_question_id,
+            "kind": "model-generated",
+            "persona": "OpenAI hypothesis generator",
+            "priority": 0,
+            "popularity": 0,
+            "source_url": "openai://responses",
+            "status": "proposed",
+            "tags": ["openai-generated"],
+            "source": "openai_generated",
         }
 
 
@@ -258,10 +282,31 @@ def run_friends_question_loop(
     reference_dir: Path = Path("data/reference"),
     notebook_dir: Path | None = None,
     question_forum_path: Path = DEFAULT_FORUM_PATH,
+    reasoning_mode: str = "deterministic",
+    openai_model: str | None = None,
+    openai_trace_dir: Path | None = None,
+    openai_replay_path: Path | None = None,
 ) -> dict[str, object]:
     """Run a deterministic friends question loop and write durable artifacts."""
     forum_records = load_question_forum(question_forum_path) if question_forum_path.exists() else []
     spark = Spark(forum_records)
+    normalized_reasoning_mode = reasoning_mode.strip().lower()
+    resolved_openai_trace_dir = (
+        openai_trace_dir
+        if openai_trace_dir is not None
+        else output_dir / "openai-reasoning"
+        if normalized_reasoning_mode in {"openai", "replay"}
+        else None
+    )
+    reasoning_config = OpenAIReasoningConfig.from_env(
+        mode=reasoning_mode,
+        model=openai_model,
+        trace_dir=resolved_openai_trace_dir,
+        replay_path=openai_replay_path,
+    )
+    openai_generator = (
+        OpenAIHypothesisGenerator(config=reasoning_config) if reasoning_config.mode in {"openai", "replay"} else None
+    )
     skeptic = Skeptic()
     mapper = Mapper()
     moderator = Moderator()
@@ -289,6 +334,19 @@ def run_friends_question_loop(
             "question_ids": [record.question_id for record in forum_records],
         },
     )
+    telemetry.record(
+        event_type="reasoning.configured",
+        turn=0,
+        actor="Spark",
+        summary=f"Configured {reasoning_config.mode} hypothesis reasoning.",
+        payload={
+            "mode": reasoning_config.mode,
+            "provider": "openai" if reasoning_config.mode in {"openai", "replay"} else "deterministic",
+            "model": reasoning_config.model if reasoning_config.mode in {"openai", "replay"} else None,
+            "trace_dir": str(reasoning_config.trace_dir) if reasoning_config.trace_dir else None,
+            "replay_path": str(reasoning_config.replay_path) if reasoning_config.replay_path else None,
+        },
+    )
 
     for turn in range(1, turn_count + 1):
         telemetry.record(
@@ -305,7 +363,45 @@ def run_friends_question_loop(
             summary="Read reference data quality context.",
             payload={"reference_dir": str(reference_dir)},
         )
-        candidates = spark.propose(turn=turn, prior_selected_ids=prior_selected_ids)
+        if openai_generator is None:
+            candidates = spark.propose(turn=turn, prior_selected_ids=prior_selected_ids)
+        else:
+            openai_batch = openai_generator.propose(
+                turn=turn,
+                forum_records=forum_records,
+                prior_selected_ids=prior_selected_ids,
+                prior_selected_forum_ids=prior_selected_forum_ids,
+            )
+            candidates = _openai_candidates(
+                turn=turn,
+                proposals=openai_batch.proposals,
+                spark=spark,
+                reasoning={
+                    "provider": openai_batch.provider,
+                    "mode": openai_batch.mode,
+                    "model": openai_batch.model,
+                    "prompt_hash": openai_batch.prompt_hash,
+                    "output_hash": openai_batch.output_hash,
+                    "model_calls_performed": openai_batch.model_calls_performed,
+                    "trace_path": openai_batch.trace_path,
+                },
+            )
+            telemetry.record(
+                event_type="openai.reasoning.completed",
+                turn=turn,
+                actor="Spark",
+                summary=f"Generated {len(candidates)} OpenAI-backed candidates.",
+                payload={
+                    "mode": openai_batch.mode,
+                    "provider": openai_batch.provider,
+                    "model": openai_batch.model,
+                    "model_calls_performed": openai_batch.model_calls_performed,
+                    "prompt_hash": openai_batch.prompt_hash,
+                    "output_hash": openai_batch.output_hash,
+                    "trace_path": openai_batch.trace_path,
+                    "candidate_ids": [candidate.candidate_id for candidate in candidates],
+                },
+            )
         telemetry.record(
             event_type="board.proposed",
             turn=turn,
@@ -448,6 +544,9 @@ def run_friends_question_loop(
             "requested_turns": turn_count,
             "completed_turns": len(turns),
             "stopped_early": False,
+            "reasoning_mode": reasoning_config.mode,
+            "reasoning_provider": "openai" if reasoning_config.mode in {"openai", "replay"} else "deterministic",
+            "openai_model": reasoning_config.model if reasoning_config.mode in {"openai", "replay"} else None,
         },
         "turns": turns,
     }
@@ -501,6 +600,35 @@ def _candidate_record(
     data["reflection"] = reflections[candidate.candidate_id]
     data["evolution"] = evolutions[candidate.candidate_id]
     return data
+
+
+def _openai_candidates(
+    *,
+    turn: int,
+    proposals: list[OpenAIProposal],
+    spark: Spark,
+    reasoning: dict[str, object],
+) -> list[Candidate]:
+    candidates = [
+        Candidate(
+            candidate_id=f"turn-{turn:02d}-openai-{index:02d}-{_slug(proposal.semantic_slot)}",
+            question=proposal.question,
+            rationale=proposal.rationale,
+            semantic_slot=proposal.semantic_slot,
+            evidence_value=proposal.evidence_value,
+            testability=proposal.testability,
+            novelty=proposal.novelty,
+            caveat=proposal.caveat,
+            forum=spark.forum_metadata_for_openai(proposal),
+            reasoning={**reasoning, "proposal_index": index},
+        )
+        for index, proposal in enumerate(proposals, start=1)
+    ]
+    return sorted(candidates, key=lambda candidate: candidate.candidate_id)
+
+
+def _slug(value: str) -> str:
+    return "".join(character if character.isalnum() else "-" for character in value.lower()).strip("-")
 
 
 def _render_decision_summary(session: dict[str, object]) -> str:
