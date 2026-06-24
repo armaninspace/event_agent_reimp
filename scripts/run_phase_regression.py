@@ -68,6 +68,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"correction_notebook_executed={summary.correction_notebook_executed}")
     print(f"current_required_artifacts_exist={summary.current_required_artifacts_exist}")
     print(f"notebook_workspace_present={summary.notebook_workspace_present}")
+    print(f"notebook_knowledge_present={summary.notebook_knowledge_present}")
     print(f"reasoning_provider={summary.reasoning_provider}")
     print(f"reasoning_mode={summary.reasoning_mode}")
     print(f"selected_candidates_have_openai_reasoning={summary.selected_candidates_have_openai_reasoning}")

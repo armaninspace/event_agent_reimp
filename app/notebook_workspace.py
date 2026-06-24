@@ -235,6 +235,8 @@ def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
             nbclient_executed_count += 1
     correction_notebook = notebook_dir / "999-multiple-testing-corrections.ipynb"
     correction_markdown = notebook_dir / "999-multiple-testing-corrections.md"
+    knowledge_json = notebook_dir / "notebook-knowledge.json"
+    knowledge_markdown = notebook_dir / "notebook-knowledge.md"
     correction_status = None
     if correction_notebook.exists():
         notebook = json.loads(correction_notebook.read_text(encoding="utf-8"))
@@ -249,6 +251,8 @@ def summarize_workspace(notebook_dir: Path) -> dict[str, object]:
         "nbclient_executed_count": nbclient_executed_count,
         "correction_notebook_exists": correction_notebook.exists(),
         "correction_markdown_exists": correction_markdown.exists(),
+        "notebook_knowledge_json_exists": knowledge_json.exists(),
+        "notebook_knowledge_markdown_exists": knowledge_markdown.exists(),
         "correction_notebook_status": correction_status,
         "correction_notebook_executed": correction_status in {"lightweight_executed", "nbclient_executed"},
         "notebooks": notebooks,

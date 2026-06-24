@@ -1,0 +1,26 @@
+{
+  "candidate_count": 3,
+  "candidate_questions": [
+    "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
+    "Which MSAs have enough game and non-game weeks for a stable comparison?",
+    "Where do game weeks overlap with likely confounders in the weekly spending data?"
+  ],
+  "executor_id": "codex-openai-hypothesis-generator",
+  "framework_name": "Microsoft Agent Framework",
+  "input_message": "replicate governed thesis workflow",
+  "model_calls_performed": false,
+  "output_count": 1,
+  "outputs": [
+    "{\"candidate_count\": 3, \"candidate_questions\": [\"Which city game weeks show the largest spending lift after accounting for baseline weeks?\", \"Which MSAs have enough game and non-game weeks for a stable comparison?\", \"Where do game weeks overlap with likely confounders in the weekly spending data?\"], \"message\": \"replicate governed thesis workflow\", \"mode\": \"replay\", \"model\": \"gpt-5\", \"model_calls_performed\": false, \"output_hash\": \"3968c0b9d6714dcb4a1946c2d568ebe869536184bf9b11926361ab41dd2397bf\", \"prompt_hash\": \"75ff76add2a644c6e4dbc43e0a9b1dd3e9e95e16cf6c5793905b7b93b23c2578\", \"provider\": \"openai\", \"trace_path\": \"app/runs/phase-027-notebook-knowledge-base/openai-reasoning/turn-01-openai-reasoning.json\"}"
+  ],
+  "package_name": "agent-framework",
+  "package_version": "1.9.0",
+  "reasoning_mode": "replay",
+  "reasoning_model": "gpt-5",
+  "reasoning_provider": "openai",
+  "schema_version": "phase-025.maf-openai-bridge.v1",
+  "trace_paths": [
+    "app/runs/phase-027-notebook-knowledge-base/openai-reasoning/turn-01-openai-reasoning.json"
+  ],
+  "workflow_name": "codex-thesis-replication-workflow"
+}

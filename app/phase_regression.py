@@ -12,6 +12,7 @@ from app.hypothesis_routing import count_workflow_statistical_misroutes
 from app.multiple_testing import build_correction_report
 from app.notebook_execution import execute_workspace_lightweight, execute_workspace_nbclient
 from app.notebook_workspace import summarize_workspace, write_correction_notebook
+from app.notebook_knowledge_base import write_notebook_knowledge_base
 
 
 CURRENT_REQUIRED_ARTIFACTS = (
@@ -47,6 +48,8 @@ class PhaseRegressionResult:
     notebook_workspace_present: bool
     notebook_workspace: dict[str, object]
     notebook_execution: dict[str, object]
+    notebook_knowledge_present: bool
+    notebook_knowledge: dict[str, object]
     reasoning_provider: str
     reasoning_mode: str
     selected_candidates_have_openai_reasoning: bool
@@ -153,6 +156,7 @@ def run_phase_regression(
         executed_count_key = "nbclient_executed_count"
     else:
         raise ValueError(f"Unsupported notebook execution backend: {notebook_execution_backend}")
+    _, _, notebook_knowledge = write_notebook_knowledge_base(notebook_dir)
     notebook_workspace = summarize_workspace(notebook_dir)
     notebook_workspace_present = (
         bool(notebook_workspace["wiki_files_exist"])
@@ -184,6 +188,8 @@ def run_phase_regression(
         notebook_workspace_present=notebook_workspace_present,
         notebook_workspace=notebook_workspace,
         notebook_execution=notebook_execution,
+        notebook_knowledge_present=_has_notebook_knowledge(notebook_knowledge, expected_count=turns),
+        notebook_knowledge=notebook_knowledge,
         reasoning_provider=str(session_summary.get("reasoning_provider", "deterministic")),
         reasoning_mode=str(session_summary.get("reasoning_mode", "deterministic")),
         selected_candidates_have_openai_reasoning=selected_candidates_have_openai_reasoning,
@@ -262,3 +268,13 @@ def _has_causal_design(value: object) -> bool:
         return False
     required = {"schema_version", "design_count", "evidence_grade", "diagnostic_ids", "diagnostics", "claim_boundary"}
     return required <= causal_design.keys() and int(causal_design.get("design_count", 0)) >= 1
+
+
+def _has_notebook_knowledge(value: object, *, expected_count: int) -> bool:
+    if not isinstance(value, dict):
+        return False
+    return (
+        value.get("schema_version") == "phase-027.notebook-knowledge-base.v1"
+        and int(value.get("entry_count", 0)) == expected_count
+        and isinstance(value.get("latest_seed_question"), str)
+    )

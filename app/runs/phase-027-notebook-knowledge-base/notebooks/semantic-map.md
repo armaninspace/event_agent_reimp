@@ -1,0 +1,22 @@
+# Semantic Map
+
+- `city_week_event_spending` -> `turn-01-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-02-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-03-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-04-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-05-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-06-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-07-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-08-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-09-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-10-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-11-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-12-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-13-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-14-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-15-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-16-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-17-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-18-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-19-openai-01-city-week-event-spending`
+- `city_week_event_spending` -> `turn-20-openai-01-city-week-event-spending`

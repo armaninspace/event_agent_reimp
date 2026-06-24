@@ -43,6 +43,8 @@ class ReplicationAudit:
     data_snapshot_combined_sha256: str | None
     correction_notebook_present: bool
     correction_notebook_executed: bool
+    notebook_knowledge_present: bool
+    notebook_knowledge_entry_count: int
     selected_forum_metadata_count: int
     selected_tournament_metadata_count: int
     selected_reflection_metadata_count: int
@@ -74,7 +76,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-026-causal-design-diagnostics"),
+    run_dir: Path = Path("app/runs/phase-027-notebook-knowledge-base"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -110,6 +112,8 @@ def run_replication_audit(
         data_snapshot_combined_sha256=_combined_sha(summary.get("data_snapshot")),
         correction_notebook_present=bool(summary.get("correction_notebook_present")),
         correction_notebook_executed=bool(summary.get("correction_notebook_executed")),
+        notebook_knowledge_present=bool(summary.get("notebook_knowledge_present")),
+        notebook_knowledge_entry_count=_notebook_knowledge_entry_count(summary.get("notebook_knowledge")),
         selected_forum_metadata_count=sum(_has_key(candidate, "forum") for candidate in selected),
         selected_tournament_metadata_count=sum(_has_key(candidate, "tournament") for candidate in selected),
         selected_reflection_metadata_count=sum(_has_key(candidate, "reflection") for candidate in selected),
@@ -172,6 +176,8 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Data snapshot combined SHA-256: `{audit.data_snapshot_combined_sha256}`",
             f"- Correction notebook present: {audit.correction_notebook_present}",
             f"- Correction notebook executed: {audit.correction_notebook_executed}",
+            f"- Notebook knowledge present: {audit.notebook_knowledge_present}",
+            f"- Notebook knowledge entry count: {audit.notebook_knowledge_entry_count}",
             f"- Forum metadata count: {audit.selected_forum_metadata_count}",
             f"- Tournament metadata count: {audit.selected_tournament_metadata_count}",
             f"- Reflection metadata count: {audit.selected_reflection_metadata_count}",
@@ -271,3 +277,9 @@ def _has_controlled_observational_design(value: object) -> bool:
         "controlled_observational",
         "fragile_controlled_observational",
     }
+
+
+def _notebook_knowledge_entry_count(value: object) -> int:
+    if not isinstance(value, dict):
+        return 0
+    return int(value.get("entry_count", 0))

@@ -90,3 +90,5 @@ def test_write_correction_notebook_creates_final_corrections_artifacts(tmp_path:
     assert "matched:city_week:revenue_all" in artifacts.markdown_path.read_text(encoding="utf-8")
     assert summary["correction_notebook_exists"] is True
     assert summary["correction_markdown_exists"] is True
+    assert summary["notebook_knowledge_json_exists"] is False
+    assert summary["notebook_knowledge_markdown_exists"] is False
