@@ -16,8 +16,8 @@ from app.replication_audit import run_replication_audit, write_replication_audit
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run final thesis replication audit.")
-    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-024-openai-reasoning"))
-    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-024-openai-reasoning"))
+    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-025-maf-openai-bridge"))
+    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-025-maf-openai-bridge"))
     args = parser.parse_args()
 
     audit = run_replication_audit(repo_root=Path("."), run_dir=args.run_dir)
@@ -32,6 +32,10 @@ def main() -> int:
     print(f"openai_model_calls_performed={audit.openai_model_calls_performed}")
     print(f"reasoning_provider={audit.reasoning_provider}")
     print(f"reasoning_mode={audit.reasoning_mode}")
+    print(f"maf_adapter_present={audit.maf_adapter_present}")
+    print(f"maf_reasoning_provider={audit.maf_reasoning_provider}")
+    print(f"maf_reasoning_mode={audit.maf_reasoning_mode}")
+    print(f"maf_candidate_count={audit.maf_candidate_count}")
     print(f"business_report_statistical_sections={audit.business_report_statistical_sections}")
     return 0
 

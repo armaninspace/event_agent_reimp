@@ -1,0 +1,274 @@
+{
+  "artifact_checks": {
+    "business_evidence_report": true,
+    "discovery_decision_summary": true,
+    "playback_ui": true,
+    "session_json": true,
+    "session_markdown": true,
+    "telemetry_json": true
+  },
+  "completed_workflows": 20,
+  "correction_notebook_executed": true,
+  "correction_notebook_present": true,
+  "current_required_artifacts_exist": true,
+  "data_snapshot": {
+    "algorithm": "sha256",
+    "combined_sha256": "eb78bb3a0b2f0116c3f03349f4b077781419789f22fb4e2df5de22d58df3c3c1",
+    "file_count": 2,
+    "files": [
+      {
+        "byte_count": 3037004,
+        "path": "data/reference/joined_city_week_game_economic.csv",
+        "row_count": 5777,
+        "sha256": "3e7cd9d5915d0e2a3e33ffb3dda12211fc1b707c745a85866c3f7319b073a083"
+      },
+      {
+        "byte_count": 16997114,
+        "path": "data/reference/joined_msa_week_game_economic.csv",
+        "row_count": 48723,
+        "sha256": "211726051f58d215314a2a9f39dd7028a3d5cc3e97db7c326f8215e5adbaa6da"
+      }
+    ],
+    "schema_version": "phase-020.reference-data-snapshot.v1"
+  },
+  "data_snapshot_complete": true,
+  "known_future_artifacts": {
+    "statistical_results": "deferred until statistical routing phase"
+  },
+  "notebook_execution": {
+    "all_lightweight_executed": true,
+    "backend": "lightweight",
+    "correction_notebook_executed": true,
+    "correction_notebook_result": {
+      "executed_code_cells": 1,
+      "path": "app/runs/phase-025-maf-openai-bridge/notebooks/999-multiple-testing-corrections.ipynb",
+      "status": "lightweight_executed",
+      "validation_error": null
+    },
+    "executed_notebook_count": 20,
+    "failed_notebook_count": 0,
+    "results": [
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-01-turn-01-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-02-turn-02-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-03-turn-03-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-04-turn-04-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-05-turn-05-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-06-turn-06-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-07-turn-07-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-08-turn-08-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-09-turn-09-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-10-turn-10-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-11-turn-11-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-12-turn-12-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-13-turn-13-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-14-turn-14-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-15-turn-15-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-16-turn-16-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-17-turn-17-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-18-turn-18-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-19-turn-19-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-025-maf-openai-bridge/notebooks/turn-20-turn-20-openai-01-city-week-event-spending.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      }
+    ]
+  },
+  "notebook_workspace": {
+    "correction_markdown_exists": true,
+    "correction_notebook_executed": true,
+    "correction_notebook_exists": true,
+    "correction_notebook_status": "lightweight_executed",
+    "lightweight_executed_count": 20,
+    "markdown_export_count": 20,
+    "markdown_exports": [
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-01-turn-01-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-02-turn-02-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-03-turn-03-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-04-turn-04-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-05-turn-05-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-06-turn-06-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-07-turn-07-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-08-turn-08-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-09-turn-09-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-10-turn-10-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-11-turn-11-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-12-turn-12-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-13-turn-13-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-14-turn-14-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-15-turn-15-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-16-turn-16-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-17-turn-17-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-18-turn-18-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-19-turn-19-openai-01-city-week-event-spending.md",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-20-turn-20-openai-01-city-week-event-spending.md"
+    ],
+    "nbclient_executed_count": 0,
+    "notebook_count": 20,
+    "notebooks": [
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-01-turn-01-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-02-turn-02-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-03-turn-03-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-04-turn-04-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-05-turn-05-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-06-turn-06-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-07-turn-07-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-08-turn-08-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-09-turn-09-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-10-turn-10-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-11-turn-11-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-12-turn-12-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-13-turn-13-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-14-turn-14-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-15-turn-15-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-16-turn-16-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-17-turn-17-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-18-turn-18-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-19-turn-19-openai-01-city-week-event-spending.ipynb",
+      "app/runs/phase-025-maf-openai-bridge/notebooks/turn-20-turn-20-openai-01-city-week-event-spending.ipynb"
+    ],
+    "path": "app/runs/phase-025-maf-openai-bridge/notebooks",
+    "wiki_checks": {
+      "SCHEMA.md": true,
+      "caveats.md": true,
+      "decision-records.md": true,
+      "findings.md": true,
+      "index.md": true,
+      "log.md": true,
+      "question-board.md": true,
+      "semantic-map.md": true
+    },
+    "wiki_files_exist": true
+  },
+  "notebook_workspace_present": true,
+  "openai_model_calls_performed": false,
+  "phase_id": "phase-025-maf-openai-bridge",
+  "reasoning_mode": "replay",
+  "reasoning_provider": "openai",
+  "requested_turns": 20,
+  "schema_version": "phase-004.phase-regression-summary.v1",
+  "selected_candidate_count": 20,
+  "selected_candidates_have_openai_reasoning": true,
+  "selected_candidates_have_required_metadata": true,
+  "stopped_early": false,
+  "telemetry_event_count": 323,
+  "telemetry_event_types": [
+    "board.proposed",
+    "board.ranked",
+    "discussion.message",
+    "evolution.completed",
+    "forum.loaded",
+    "hypothesis.classified",
+    "knowledge.read",
+    "memory.seeded",
+    "notebook.created",
+    "openai.reasoning.completed",
+    "question.submitted",
+    "reasoning.configured",
+    "reflection.completed",
+    "statistics.attached",
+    "tournament.completed",
+    "turn.completed",
+    "turn.started",
+    "wiki.updated",
+    "workflow.stage"
+  ],
+  "turns_have_statistical_evidence": true,
+  "workflow_task_statistical_misroutes": 0
+}

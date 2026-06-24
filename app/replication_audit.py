@@ -52,6 +52,11 @@ class ReplicationAudit:
     openai_model_calls_performed: bool
     reasoning_provider: str
     reasoning_mode: str
+    maf_adapter_present: bool
+    maf_reasoning_provider: str | None
+    maf_reasoning_mode: str | None
+    maf_model_calls_performed: bool
+    maf_candidate_count: int
     statistical_evidence_turn_count: int
     business_report_statistical_sections: int
     business_report_statistical_tables: int
@@ -67,7 +72,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-024-openai-reasoning"),
+    run_dir: Path = Path("app/runs/phase-025-maf-openai-bridge"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -81,6 +86,14 @@ def run_replication_audit(
     business_report = (repo_root / run_dir / "friends-question-loop" / "business_evidence_report.html").read_text(
         encoding="utf-8"
     )
+    maf_adapter = _load_optional_json(repo_root / run_dir / "maf_adapter_smoke.json")
+    known_limits = [
+        "The checked-in audit artifact uses OpenAI replay provenance because OPENAI_API_KEY is not available in this shell.",
+        "Live OpenAI reasoning is implemented and credential-gated, but requires OPENAI_API_KEY at runtime.",
+        "Statistical evidence is observational and exploratory, not causal proof.",
+    ]
+    if not _has_openai_maf_bridge(maf_adapter):
+        known_limits.append("Microsoft Agent Framework provider-backed OpenAI reasoning evidence is missing.")
     audit = ReplicationAudit(
         schema_version="phase-019.replication-audit.v1",
         run_dir=str(run_dir),
@@ -104,17 +117,17 @@ def run_replication_audit(
         openai_model_calls_performed=bool(summary.get("openai_model_calls_performed")),
         reasoning_provider=str(summary.get("reasoning_provider", "deterministic")),
         reasoning_mode=str(summary.get("reasoning_mode", "deterministic")),
+        maf_adapter_present=isinstance(maf_adapter, dict),
+        maf_reasoning_provider=_optional_string(maf_adapter, "reasoning_provider"),
+        maf_reasoning_mode=_optional_string(maf_adapter, "reasoning_mode"),
+        maf_model_calls_performed=bool(maf_adapter.get("model_calls_performed")) if isinstance(maf_adapter, dict) else False,
+        maf_candidate_count=int(maf_adapter.get("candidate_count", 0)) if isinstance(maf_adapter, dict) else 0,
         statistical_evidence_turn_count=sum(_has_key(turn, "statistical_evidence") for turn in turns),
         business_report_statistical_sections=business_report.count("Statistical Evidence"),
         business_report_statistical_tables=business_report.count('class="statistical-results"'),
         notebook_workspace_present=bool(summary["notebook_workspace_present"]),
         final_status="replicated_with_known_limits",
-        known_limits=[
-            "The checked-in Phase 024 audit artifact uses OpenAI replay provenance because OPENAI_API_KEY is not available in this shell.",
-            "Live OpenAI reasoning is implemented and credential-gated, but requires OPENAI_API_KEY at runtime.",
-            "Statistical evidence is observational and exploratory, not causal proof.",
-            "Microsoft Agent Framework adapter runs deterministically without provider/model calls.",
-        ],
+        known_limits=known_limits,
     )
     return audit
 
@@ -160,6 +173,11 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- OpenAI model calls performed: {audit.openai_model_calls_performed}",
             f"- Reasoning provider: {audit.reasoning_provider}",
             f"- Reasoning mode: {audit.reasoning_mode}",
+            f"- MAF adapter present: {audit.maf_adapter_present}",
+            f"- MAF reasoning provider: {audit.maf_reasoning_provider}",
+            f"- MAF reasoning mode: {audit.maf_reasoning_mode}",
+            f"- MAF model calls performed: {audit.maf_model_calls_performed}",
+            f"- MAF candidate count: {audit.maf_candidate_count}",
             f"- Statistical evidence turn count: {audit.statistical_evidence_turn_count}",
             f"- Business report statistical sections: {audit.business_report_statistical_sections}",
             f"- Business report statistical tables: {audit.business_report_statistical_tables}",
@@ -200,4 +218,27 @@ def _has_openai_reasoning(value: object) -> bool:
         and isinstance(value.get("prompt_hash"), str)
         and isinstance(value.get("output_hash"), str)
         and "model_calls_performed" in value
+    )
+
+
+def _load_optional_json(path: Path) -> object:
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _optional_string(value: object, key: str) -> str | None:
+    if not isinstance(value, dict):
+        return None
+    item = value.get(key)
+    return str(item) if isinstance(item, str) else None
+
+
+def _has_openai_maf_bridge(value: object) -> bool:
+    return (
+        isinstance(value, dict)
+        and value.get("framework_name") == "Microsoft Agent Framework"
+        and value.get("reasoning_provider") == "openai"
+        and value.get("reasoning_mode") in {"openai", "replay"}
+        and int(value.get("candidate_count", 0)) >= 3
     )

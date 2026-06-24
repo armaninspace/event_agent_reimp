@@ -1,0 +1,22 @@
+# Caveats
+
+- Turn 1: The result remains observational without matched controls.
+- Turn 2: The result remains observational without matched controls.
+- Turn 3: The result remains observational without matched controls.
+- Turn 4: The result remains observational without matched controls.
+- Turn 5: The result remains observational without matched controls.
+- Turn 6: The result remains observational without matched controls.
+- Turn 7: The result remains observational without matched controls.
+- Turn 8: The result remains observational without matched controls.
+- Turn 9: The result remains observational without matched controls.
+- Turn 10: The result remains observational without matched controls.
+- Turn 11: The result remains observational without matched controls.
+- Turn 12: The result remains observational without matched controls.
+- Turn 13: The result remains observational without matched controls.
+- Turn 14: The result remains observational without matched controls.
+- Turn 15: The result remains observational without matched controls.
+- Turn 16: The result remains observational without matched controls.
+- Turn 17: The result remains observational without matched controls.
+- Turn 18: The result remains observational without matched controls.
+- Turn 19: The result remains observational without matched controls.
+- Turn 20: The result remains observational without matched controls.
