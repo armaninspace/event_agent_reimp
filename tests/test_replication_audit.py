@@ -20,6 +20,8 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.selected_evolution_metadata_count == 20
     assert audit.selected_evolution_variant_count == 20
     assert audit.selected_openai_reasoning_count == 20
+    assert audit.causal_design_turn_count == 20
+    assert audit.controlled_observational_turn_count == 20
     assert audit.openai_model_calls_performed is False
     assert audit.reasoning_provider == "openai"
     assert audit.reasoning_mode == "replay"

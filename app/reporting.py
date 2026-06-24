@@ -56,11 +56,30 @@ def _render_statistical_evidence(value: object) -> str:
         f"<p><strong>Result count:</strong> {html.escape(str(value.get('result_count')))}</p>"
         f"<p><strong>Minimum adjusted p-value:</strong> {html.escape(str(value.get('min_adjusted_p_value')))}</p>"
         f"<p><strong>Adjusted-significance flag:</strong> {html.escape(str(value.get('has_adjusted_significance')))}</p>"
+        f"{_render_causal_design(value.get('causal_design'))}"
         "<p><strong>Result IDs:</strong></p>"
         f"<ul>{''.join(f'<li><code>{html.escape(str(result_id))}</code></li>' for result_id in result_ids)}</ul>"
         f"{_render_statistical_results_table(results)}"
         "<p><strong>Statistical caveats:</strong></p>"
         f"<ul>{''.join(f'<li>{html.escape(str(caveat))}</li>' for caveat in caveats)}</ul>"
+        "</div>"
+    )
+
+
+def _render_causal_design(value: object) -> str:
+    if not isinstance(value, dict):
+        return ""
+    diagnostic_ids = value.get("diagnostic_ids", [])
+    if not isinstance(diagnostic_ids, list):
+        diagnostic_ids = []
+    return (
+        '<div class="causal-design">'
+        "<h4>Causal Design Diagnostics</h4>"
+        f"<p><strong>Design count:</strong> {html.escape(str(value.get('design_count')))}</p>"
+        f"<p><strong>Strongest design:</strong> {html.escape(str(value.get('strongest_design_level')))}</p>"
+        f"<p><strong>Evidence grade:</strong> {html.escape(str(value.get('evidence_grade')))}</p>"
+        f"<p><strong>Claim boundary:</strong> {html.escape(str(value.get('claim_boundary')))}</p>"
+        f"<ul>{''.join(f'<li><code>{html.escape(str(item))}</code></li>' for item in diagnostic_ids)}</ul>"
         "</div>"
     )
 

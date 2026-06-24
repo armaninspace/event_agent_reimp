@@ -62,6 +62,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"stopped_early={summary.stopped_early}")
     print(f"workflow_task_statistical_misroutes={summary.workflow_task_statistical_misroutes}")
     print(f"turns_have_statistical_evidence={summary.turns_have_statistical_evidence}")
+    print(f"turns_have_causal_design_diagnostics={summary.turns_have_causal_design_diagnostics}")
     print(f"data_snapshot_complete={summary.data_snapshot_complete}")
     print(f"correction_notebook_present={summary.correction_notebook_present}")
     print(f"correction_notebook_executed={summary.correction_notebook_executed}")

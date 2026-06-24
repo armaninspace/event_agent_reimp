@@ -16,8 +16,8 @@ from app.replication_audit import run_replication_audit, write_replication_audit
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run final thesis replication audit.")
-    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-025-maf-openai-bridge"))
-    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-025-maf-openai-bridge"))
+    parser.add_argument("--run-dir", type=Path, default=Path("app/runs/phase-026-causal-design-diagnostics"))
+    parser.add_argument("--output-dir", type=Path, default=Path("app/runs/phase-026-causal-design-diagnostics"))
     args = parser.parse_args()
 
     audit = run_replication_audit(repo_root=Path("."), run_dir=args.run_dir)
@@ -29,6 +29,8 @@ def main() -> int:
     print(f"selected_candidates_have_required_metadata={audit.selected_candidates_have_required_metadata}")
     print(f"turns_have_statistical_evidence={audit.turns_have_statistical_evidence}")
     print(f"selected_openai_reasoning_count={audit.selected_openai_reasoning_count}")
+    print(f"causal_design_turn_count={audit.causal_design_turn_count}")
+    print(f"controlled_observational_turn_count={audit.controlled_observational_turn_count}")
     print(f"openai_model_calls_performed={audit.openai_model_calls_performed}")
     print(f"reasoning_provider={audit.reasoning_provider}")
     print(f"reasoning_mode={audit.reasoning_mode}")

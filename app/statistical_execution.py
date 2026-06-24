@@ -5,17 +5,21 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from app.causal_diagnostics import build_causal_design_report, diagnostics_for_semantic_slot, summarize_designs
 from app.multiple_testing import build_correction_report
 
 
 def build_statistical_execution_report(reference_dir: Path) -> dict[str, object]:
     """Build the reusable statistical execution report for a friends-loop run."""
     correction_report = build_correction_report(reference_dir)
+    causal_design_report = build_causal_design_report(reference_dir)
     return {
-        "schema_version": "phase-017.statistical-execution.v1",
+        "schema_version": "phase-026.statistical-execution.v2",
         "source_report_schema": correction_report["schema_version"],
+        "causal_design_schema": causal_design_report["schema_version"],
         "method": correction_report["method"],
         "results": correction_report["results"],
+        "causal_design": causal_design_report,
     }
 
 
@@ -32,6 +36,12 @@ def evidence_for_candidate(candidate: dict[str, object], execution_report: dict[
         for result in results
         if isinstance(result.get("adjusted_p_value"), int | float)
     ]
+    causal_design = summarize_designs(
+        diagnostics_for_semantic_slot(
+            execution_report.get("causal_design", {}),
+            semantic_slot,
+        )
+    )
     return {
         "schema_version": execution_report["schema_version"],
         "method": execution_report["method"],
@@ -42,8 +52,9 @@ def evidence_for_candidate(candidate: dict[str, object], execution_report: dict[
         "min_adjusted_p_value": min(adjusted_values) if adjusted_values else None,
         "has_adjusted_significance": any(value < 0.05 for value in adjusted_values),
         "results": results,
+        "causal_design": causal_design,
         "caveats": [
-            "Statistical evidence is observational and exploratory.",
+            "Statistical evidence is observational; causal-design diagnostics do not prove causality.",
             "Adjusted p-values do not establish causality.",
         ],
     }
@@ -67,6 +78,7 @@ def render_statistical_execution_markdown(report: dict[str, object]) -> str:
         f"Schema: {report['schema_version']}",
         f"Source schema: {report['source_report_schema']}",
         f"Method: {report['method']}",
+        f"Causal design schema: {report.get('causal_design_schema')}",
         f"Result count: {len(report['results'])}",
         "",
     ]

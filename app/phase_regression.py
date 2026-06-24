@@ -37,6 +37,7 @@ class PhaseRegressionResult:
     selected_candidate_count: int
     selected_candidates_have_required_metadata: bool
     turns_have_statistical_evidence: bool
+    turns_have_causal_design_diagnostics: bool
     data_snapshot_complete: bool
     data_snapshot: dict[str, object]
     correction_notebook_present: bool
@@ -115,6 +116,10 @@ def run_phase_regression(
         isinstance(turn, dict) and _has_statistical_evidence(turn.get("statistical_evidence"))
         for turn in turns_data
     )
+    turns_have_causal_design_diagnostics = all(
+        isinstance(turn, dict) and _has_causal_design(turn.get("statistical_evidence"))
+        for turn in turns_data
+    )
     selected_candidates_have_required_metadata = all(
         isinstance(candidate, dict)
         and all(
@@ -167,6 +172,7 @@ def run_phase_regression(
         selected_candidate_count=len(selected_candidates),
         selected_candidates_have_required_metadata=selected_candidates_have_required_metadata,
         turns_have_statistical_evidence=turns_have_statistical_evidence,
+        turns_have_causal_design_diagnostics=turns_have_causal_design_diagnostics,
         data_snapshot_complete=snapshot_is_complete(data_snapshot),
         data_snapshot=data_snapshot,
         correction_notebook_present=bool(notebook_workspace["correction_notebook_exists"])
@@ -243,5 +249,16 @@ def _has_statistical_evidence(value: object) -> bool:
         "has_adjusted_significance",
         "results",
         "caveats",
+        "causal_design",
     }
     return required <= value.keys()
+
+
+def _has_causal_design(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    causal_design = value.get("causal_design")
+    if not isinstance(causal_design, dict):
+        return False
+    required = {"schema_version", "design_count", "evidence_grade", "diagnostic_ids", "diagnostics", "claim_boundary"}
+    return required <= causal_design.keys() and int(causal_design.get("design_count", 0)) >= 1

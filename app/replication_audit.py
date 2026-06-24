@@ -49,6 +49,8 @@ class ReplicationAudit:
     selected_evolution_metadata_count: int
     selected_evolution_variant_count: int
     selected_openai_reasoning_count: int
+    causal_design_turn_count: int
+    controlled_observational_turn_count: int
     openai_model_calls_performed: bool
     reasoning_provider: str
     reasoning_mode: str
@@ -72,7 +74,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-025-maf-openai-bridge"),
+    run_dir: Path = Path("app/runs/phase-026-causal-design-diagnostics"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -90,7 +92,7 @@ def run_replication_audit(
     known_limits = [
         "The checked-in audit artifact uses OpenAI replay provenance because OPENAI_API_KEY is not available in this shell.",
         "Live OpenAI reasoning is implemented and credential-gated, but requires OPENAI_API_KEY at runtime.",
-        "Statistical evidence is observational and exploratory, not causal proof.",
+        "Statistical evidence is controlled observational where matched controls exist, but not causal proof.",
     ]
     if not _has_openai_maf_bridge(maf_adapter):
         known_limits.append("Microsoft Agent Framework provider-backed OpenAI reasoning evidence is missing.")
@@ -114,6 +116,12 @@ def run_replication_audit(
         selected_evolution_metadata_count=sum(_has_key(candidate, "evolution") for candidate in selected),
         selected_evolution_variant_count=sum(_has_evolution_variant(candidate.get("evolution")) for candidate in selected if isinstance(candidate, dict)),
         selected_openai_reasoning_count=sum(_has_openai_reasoning(candidate.get("reasoning")) for candidate in selected if isinstance(candidate, dict)),
+        causal_design_turn_count=sum(_has_causal_design(turn.get("statistical_evidence")) for turn in turns if isinstance(turn, dict)),
+        controlled_observational_turn_count=sum(
+            _has_controlled_observational_design(turn.get("statistical_evidence"))
+            for turn in turns
+            if isinstance(turn, dict)
+        ),
         openai_model_calls_performed=bool(summary.get("openai_model_calls_performed")),
         reasoning_provider=str(summary.get("reasoning_provider", "deterministic")),
         reasoning_mode=str(summary.get("reasoning_mode", "deterministic")),
@@ -170,6 +178,8 @@ def render_replication_audit_markdown(audit: ReplicationAudit) -> str:
             f"- Evolution metadata count: {audit.selected_evolution_metadata_count}",
             f"- Evolution variant count: {audit.selected_evolution_variant_count}",
             f"- OpenAI reasoning metadata count: {audit.selected_openai_reasoning_count}",
+            f"- Causal-design turn count: {audit.causal_design_turn_count}",
+            f"- Controlled-observational turn count: {audit.controlled_observational_turn_count}",
             f"- OpenAI model calls performed: {audit.openai_model_calls_performed}",
             f"- Reasoning provider: {audit.reasoning_provider}",
             f"- Reasoning mode: {audit.reasoning_mode}",
@@ -242,3 +252,22 @@ def _has_openai_maf_bridge(value: object) -> bool:
         and value.get("reasoning_mode") in {"openai", "replay"}
         and int(value.get("candidate_count", 0)) >= 3
     )
+
+
+def _has_causal_design(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    causal_design = value.get("causal_design")
+    return isinstance(causal_design, dict) and int(causal_design.get("design_count", 0)) >= 1
+
+
+def _has_controlled_observational_design(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    causal_design = value.get("causal_design")
+    if not isinstance(causal_design, dict):
+        return False
+    return causal_design.get("evidence_grade") in {
+        "controlled_observational",
+        "fragile_controlled_observational",
+    }
