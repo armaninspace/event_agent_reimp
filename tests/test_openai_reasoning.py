@@ -161,10 +161,10 @@ def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> N
             {
                 "entry_count": 1,
                 "entries": [
-                        {
-                            "seed_question": "Which city game weeks show the largest spending lift after accounting for baseline weeks?",
-                            "semantic_slot": "city_week_event_spending",
-                            "source_cell_ids": ["turn-01-validation-code"],
+                    {
+                        "seed_question": "Which city game weeks show the largest spending lift after baseline adjustment?",
+                        "semantic_slot": "city_week_event_spending",
+                        "source_cell_ids": ["turn-01-validation-code"],
                     }
                 ],
             }
@@ -187,11 +187,13 @@ def test_friends_loop_replay_reads_prior_notebook_knowledge(tmp_path: Path) -> N
     assert session["turns"][0]["selected_candidate"]["semantic_slot"] == "msa_week_coverage"
     rejected = session["turns"][0]["rejected_candidates"]
     assert any(candidate["reasoning"]["prior_knowledge_duplicate"] is True for candidate in rejected)
+    duplicate = next(candidate for candidate in rejected if candidate["reasoning"]["prior_knowledge_duplicate"] is True)
+    assert duplicate["reasoning"]["prior_knowledge_similarity"] >= 0.62
     telemetry = json.loads(Path(session["artifact_paths"]["telemetry_json"]).read_text(encoding="utf-8"))
     knowledge_events = [event for event in telemetry if event["event_type"] == "knowledge.read"]
     assert (
         knowledge_events[0]["payload"]["notebook_knowledge"]["latest_seed_question"]
-        == "Which city game weeks show the largest spending lift after accounting for baseline weeks?"
+        == "Which city game weeks show the largest spending lift after baseline adjustment?"
     )
     trace_path = Path(session["turns"][0]["selected_candidate"]["reasoning"]["trace_path"])
     assert "Which city game weeks show the largest spending lift" in trace_path.read_text(encoding="utf-8")

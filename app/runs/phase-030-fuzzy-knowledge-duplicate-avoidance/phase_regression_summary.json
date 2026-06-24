@@ -1,0 +1,630 @@
+{
+  "artifact_checks": {
+    "business_evidence_report": true,
+    "discovery_decision_summary": true,
+    "playback_ui": true,
+    "session_json": true,
+    "session_markdown": true,
+    "telemetry_json": true
+  },
+  "completed_workflows": 20,
+  "correction_notebook_executed": true,
+  "correction_notebook_present": true,
+  "current_required_artifacts_exist": true,
+  "data_snapshot": {
+    "algorithm": "sha256",
+    "combined_sha256": "eb78bb3a0b2f0116c3f03349f4b077781419789f22fb4e2df5de22d58df3c3c1",
+    "file_count": 2,
+    "files": [
+      {
+        "byte_count": 3037004,
+        "path": "data/reference/joined_city_week_game_economic.csv",
+        "row_count": 5777,
+        "sha256": "3e7cd9d5915d0e2a3e33ffb3dda12211fc1b707c745a85866c3f7319b073a083"
+      },
+      {
+        "byte_count": 16997114,
+        "path": "data/reference/joined_msa_week_game_economic.csv",
+        "row_count": 48723,
+        "sha256": "211726051f58d215314a2a9f39dd7028a3d5cc3e97db7c326f8215e5adbaa6da"
+      }
+    ],
+    "schema_version": "phase-020.reference-data-snapshot.v1"
+  },
+  "data_snapshot_complete": true,
+  "known_future_artifacts": {
+    "statistical_results": "deferred until statistical routing phase"
+  },
+  "notebook_execution": {
+    "all_lightweight_executed": true,
+    "backend": "lightweight",
+    "correction_notebook_executed": true,
+    "correction_notebook_result": {
+      "executed_code_cells": 1,
+      "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/999-multiple-testing-corrections.ipynb",
+      "status": "lightweight_executed",
+      "validation_error": null
+    },
+    "executed_notebook_count": 20,
+    "failed_notebook_count": 0,
+    "results": [
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-01-turn-01-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-02-turn-02-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-03-turn-03-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-04-turn-04-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-05-turn-05-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-06-turn-06-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-07-turn-07-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-08-turn-08-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-09-turn-09-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-10-turn-10-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-11-turn-11-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-12-turn-12-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-13-turn-13-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-14-turn-14-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-15-turn-15-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-16-turn-16-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-17-turn-17-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-18-turn-18-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-19-turn-19-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      },
+      {
+        "executed_code_cells": 1,
+        "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-20-turn-20-openai-02-msa-week-coverage.ipynb",
+        "status": "lightweight_executed",
+        "validation_error": null
+      }
+    ]
+  },
+  "notebook_knowledge": {
+    "entries": [
+      {
+        "candidate_id": "turn-01-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-01-turn-01-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-01-turn-01-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-01-intro",
+          "turn-01-validation-status",
+          "turn-01-validation-code"
+        ],
+        "turn": 1
+      },
+      {
+        "candidate_id": "turn-02-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-02-turn-02-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-02-turn-02-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-02-intro",
+          "turn-02-validation-status",
+          "turn-02-validation-code"
+        ],
+        "turn": 2
+      },
+      {
+        "candidate_id": "turn-03-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-03-turn-03-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-03-turn-03-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-03-intro",
+          "turn-03-validation-status",
+          "turn-03-validation-code"
+        ],
+        "turn": 3
+      },
+      {
+        "candidate_id": "turn-04-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-04-turn-04-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-04-turn-04-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-04-intro",
+          "turn-04-validation-status",
+          "turn-04-validation-code"
+        ],
+        "turn": 4
+      },
+      {
+        "candidate_id": "turn-05-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-05-turn-05-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-05-turn-05-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-05-intro",
+          "turn-05-validation-status",
+          "turn-05-validation-code"
+        ],
+        "turn": 5
+      },
+      {
+        "candidate_id": "turn-06-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-06-turn-06-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-06-turn-06-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-06-intro",
+          "turn-06-validation-status",
+          "turn-06-validation-code"
+        ],
+        "turn": 6
+      },
+      {
+        "candidate_id": "turn-07-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-07-turn-07-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-07-turn-07-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-07-intro",
+          "turn-07-validation-status",
+          "turn-07-validation-code"
+        ],
+        "turn": 7
+      },
+      {
+        "candidate_id": "turn-08-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-08-turn-08-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-08-turn-08-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-08-intro",
+          "turn-08-validation-status",
+          "turn-08-validation-code"
+        ],
+        "turn": 8
+      },
+      {
+        "candidate_id": "turn-09-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-09-turn-09-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-09-turn-09-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-09-intro",
+          "turn-09-validation-status",
+          "turn-09-validation-code"
+        ],
+        "turn": 9
+      },
+      {
+        "candidate_id": "turn-10-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-10-turn-10-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-10-turn-10-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-10-intro",
+          "turn-10-validation-status",
+          "turn-10-validation-code"
+        ],
+        "turn": 10
+      },
+      {
+        "candidate_id": "turn-11-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-11-turn-11-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-11-turn-11-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-11-intro",
+          "turn-11-validation-status",
+          "turn-11-validation-code"
+        ],
+        "turn": 11
+      },
+      {
+        "candidate_id": "turn-12-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-12-turn-12-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-12-turn-12-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-12-intro",
+          "turn-12-validation-status",
+          "turn-12-validation-code"
+        ],
+        "turn": 12
+      },
+      {
+        "candidate_id": "turn-13-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-13-turn-13-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-13-turn-13-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-13-intro",
+          "turn-13-validation-status",
+          "turn-13-validation-code"
+        ],
+        "turn": 13
+      },
+      {
+        "candidate_id": "turn-14-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-14-turn-14-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-14-turn-14-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-14-intro",
+          "turn-14-validation-status",
+          "turn-14-validation-code"
+        ],
+        "turn": 14
+      },
+      {
+        "candidate_id": "turn-15-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-15-turn-15-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-15-turn-15-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-15-intro",
+          "turn-15-validation-status",
+          "turn-15-validation-code"
+        ],
+        "turn": 15
+      },
+      {
+        "candidate_id": "turn-16-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-16-turn-16-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-16-turn-16-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-16-intro",
+          "turn-16-validation-status",
+          "turn-16-validation-code"
+        ],
+        "turn": 16
+      },
+      {
+        "candidate_id": "turn-17-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-17-turn-17-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-17-turn-17-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-17-intro",
+          "turn-17-validation-status",
+          "turn-17-validation-code"
+        ],
+        "turn": 17
+      },
+      {
+        "candidate_id": "turn-18-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-18-turn-18-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-18-turn-18-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-18-intro",
+          "turn-18-validation-status",
+          "turn-18-validation-code"
+        ],
+        "turn": 18
+      },
+      {
+        "candidate_id": "turn-19-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-19-turn-19-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-19-turn-19-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-19-intro",
+          "turn-19-validation-status",
+          "turn-19-validation-code"
+        ],
+        "turn": 19
+      },
+      {
+        "candidate_id": "turn-20-openai-02-msa-week-coverage",
+        "caveat": "Coverage does not estimate impact by itself.",
+        "executed_code_cells": 1,
+        "execution_backend": "lightweight",
+        "markdown_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-20-turn-20-openai-02-msa-week-coverage.md",
+        "notebook_path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-20-turn-20-openai-02-msa-week-coverage.ipynb",
+        "notebook_status": "lightweight_executed",
+        "seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+        "semantic_slot": "msa_week_coverage",
+        "source_cell_ids": [
+          "turn-20-intro",
+          "turn-20-validation-status",
+          "turn-20-validation-code"
+        ],
+        "turn": 20
+      }
+    ],
+    "entry_count": 20,
+    "latest_notebook": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-20-turn-20-openai-02-msa-week-coverage.ipynb",
+    "latest_seed_question": "Which MSAs have enough game and non-game weeks for a stable comparison?",
+    "latest_source_cell": "turn-20-validation-code",
+    "notebook_dir": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks",
+    "schema_version": "phase-027.notebook-knowledge-base.v1"
+  },
+  "notebook_knowledge_present": true,
+  "notebook_workspace": {
+    "correction_markdown_exists": true,
+    "correction_notebook_executed": true,
+    "correction_notebook_exists": true,
+    "correction_notebook_status": "lightweight_executed",
+    "lightweight_executed_count": 20,
+    "markdown_export_count": 20,
+    "markdown_exports": [
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-01-turn-01-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-02-turn-02-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-03-turn-03-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-04-turn-04-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-05-turn-05-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-06-turn-06-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-07-turn-07-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-08-turn-08-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-09-turn-09-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-10-turn-10-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-11-turn-11-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-12-turn-12-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-13-turn-13-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-14-turn-14-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-15-turn-15-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-16-turn-16-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-17-turn-17-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-18-turn-18-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-19-turn-19-openai-02-msa-week-coverage.md",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-20-turn-20-openai-02-msa-week-coverage.md"
+    ],
+    "nbclient_executed_count": 0,
+    "notebook_count": 20,
+    "notebook_knowledge_json_exists": true,
+    "notebook_knowledge_markdown_exists": true,
+    "notebooks": [
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-01-turn-01-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-02-turn-02-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-03-turn-03-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-04-turn-04-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-05-turn-05-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-06-turn-06-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-07-turn-07-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-08-turn-08-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-09-turn-09-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-10-turn-10-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-11-turn-11-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-12-turn-12-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-13-turn-13-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-14-turn-14-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-15-turn-15-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-16-turn-16-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-17-turn-17-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-18-turn-18-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-19-turn-19-openai-02-msa-week-coverage.ipynb",
+      "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks/turn-20-turn-20-openai-02-msa-week-coverage.ipynb"
+    ],
+    "path": "app/runs/phase-030-fuzzy-knowledge-duplicate-avoidance/notebooks",
+    "wiki_checks": {
+      "SCHEMA.md": true,
+      "caveats.md": true,
+      "decision-records.md": true,
+      "findings.md": true,
+      "index.md": true,
+      "log.md": true,
+      "question-board.md": true,
+      "semantic-map.md": true
+    },
+    "wiki_files_exist": true
+  },
+  "notebook_workspace_present": true,
+  "openai_model_calls_performed": false,
+  "phase_id": "phase-030-fuzzy-knowledge-duplicate-avoidance",
+  "prior_knowledge_duplicate_candidate_count": 20,
+  "prior_notebook_knowledge_entry_count": 20,
+  "reasoning_mode": "replay",
+  "reasoning_provider": "openai",
+  "requested_turns": 20,
+  "schema_version": "phase-004.phase-regression-summary.v1",
+  "selected_candidate_count": 20,
+  "selected_candidates_have_openai_reasoning": true,
+  "selected_candidates_have_required_metadata": true,
+  "stopped_early": false,
+  "telemetry_event_count": 323,
+  "telemetry_event_types": [
+    "board.proposed",
+    "board.ranked",
+    "discussion.message",
+    "evolution.completed",
+    "forum.loaded",
+    "hypothesis.classified",
+    "knowledge.read",
+    "memory.seeded",
+    "notebook.created",
+    "openai.reasoning.completed",
+    "question.submitted",
+    "reasoning.configured",
+    "reflection.completed",
+    "statistics.attached",
+    "tournament.completed",
+    "turn.completed",
+    "turn.started",
+    "wiki.updated",
+    "workflow.stage"
+  ],
+  "turns_have_causal_design_diagnostics": true,
+  "turns_have_statistical_evidence": true,
+  "workflow_task_statistical_misroutes": 0
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -632,31 +633,66 @@ def _openai_candidates(
     notebook_knowledge_summary: dict[str, object],
     reasoning: dict[str, object],
 ) -> list[Candidate]:
-    recent_seed_questions = {
-        str(question).casefold()
-        for question in notebook_knowledge_summary.get("recent_seed_questions", [])
-        if isinstance(question, str)
-    }
-    candidates = [
-        Candidate(
-            candidate_id=f"turn-{turn:02d}-openai-{index:02d}-{_slug(proposal.semantic_slot)}",
-            question=proposal.question,
-            rationale=proposal.rationale,
-            semantic_slot=proposal.semantic_slot,
-            evidence_value=proposal.evidence_value,
-            testability=proposal.testability,
-            novelty=1 if proposal.question.casefold() in recent_seed_questions else proposal.novelty,
-            caveat=proposal.caveat,
-            forum=spark.forum_metadata_for_openai(proposal),
-            reasoning={
-                **reasoning,
-                "proposal_index": index,
-                "prior_knowledge_duplicate": proposal.question.casefold() in recent_seed_questions,
-            },
-        )
-        for index, proposal in enumerate(proposals, start=1)
+    recent_seed_questions = [
+        question for question in notebook_knowledge_summary.get("recent_seed_questions", []) if isinstance(question, str)
     ]
-    return sorted(candidates, key=lambda candidate: candidate.candidate_id)
+    duplicate_threshold = 0.62
+    candidate_records: list[Candidate] = []
+    for index, proposal in enumerate(proposals, start=1):
+        similarity = _prior_question_similarity(proposal.question, recent_seed_questions)
+        is_duplicate = similarity >= duplicate_threshold
+        candidate_records.append(
+            Candidate(
+                candidate_id=f"turn-{turn:02d}-openai-{index:02d}-{_slug(proposal.semantic_slot)}",
+                question=proposal.question,
+                rationale=proposal.rationale,
+                semantic_slot=proposal.semantic_slot,
+                evidence_value=proposal.evidence_value,
+                testability=proposal.testability,
+                novelty=1 if is_duplicate else proposal.novelty,
+                caveat=proposal.caveat,
+                forum=spark.forum_metadata_for_openai(proposal),
+                reasoning={
+                    **reasoning,
+                    "proposal_index": index,
+                    "prior_knowledge_duplicate": is_duplicate,
+                    "prior_knowledge_similarity": round(similarity, 3),
+                    "prior_knowledge_duplicate_threshold": duplicate_threshold,
+                },
+            )
+        )
+    return sorted(candidate_records, key=lambda candidate: candidate.candidate_id)
+
+
+def _prior_question_similarity(question: str, prior_questions: list[str]) -> float:
+    question_tokens = _question_tokens(question)
+    if not question_tokens:
+        return 0.0
+    scores = []
+    for prior_question in prior_questions:
+        prior_tokens = _question_tokens(prior_question)
+        if prior_tokens:
+            scores.append(len(question_tokens & prior_tokens) / len(question_tokens | prior_tokens))
+    return max(scores, default=0.0)
+
+
+def _question_tokens(question: str) -> set[str]:
+    stop_words = {
+        "a",
+        "after",
+        "and",
+        "are",
+        "do",
+        "for",
+        "have",
+        "in",
+        "of",
+        "the",
+        "to",
+        "which",
+        "with",
+    }
+    return {token for token in re.findall(r"[a-z0-9]+", question.casefold()) if token not in stop_words}
 
 
 def _slug(value: str) -> str:
