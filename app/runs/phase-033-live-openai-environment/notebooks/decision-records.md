@@ -1,0 +1,22 @@
+# Decision Records
+
+- Turn 1: selected `turn-01-openai-02-msa-week-coverage` with score 26
+- Turn 2: selected `turn-02-openai-01-city-week-event-spending` with score 23
+- Turn 3: selected `turn-03-openai-02-identification-risk` with score 23
+- Turn 4: selected `turn-04-openai-01-city-week-event-spending` with score 23
+- Turn 5: selected `turn-05-openai-03-msa-week-coverage` with score 25
+- Turn 6: selected `turn-06-openai-01-identification-risk` with score 25
+- Turn 7: selected `turn-07-openai-01-city-week-event-spending` with score 24
+- Turn 8: selected `turn-08-openai-01-identification-risk` with score 25
+- Turn 9: selected `turn-09-openai-03-msa-week-coverage` with score 24
+- Turn 10: selected `turn-10-openai-01-city-week-event-spending` with score 23
+- Turn 11: selected `turn-11-openai-01-identification-risk` with score 25
+- Turn 12: selected `turn-12-openai-02-msa-week-coverage` with score 23
+- Turn 13: selected `turn-13-openai-01-city-week-event-spending` with score 24
+- Turn 14: selected `turn-14-openai-01-identification-risk` with score 23
+- Turn 15: selected `turn-15-openai-03-msa-week-coverage` with score 24
+- Turn 16: selected `turn-16-openai-01-city-week-event-spending` with score 24
+- Turn 17: selected `turn-17-openai-01-identification-risk` with score 24
+- Turn 18: selected `turn-18-openai-02-msa-week-coverage` with score 22
+- Turn 19: selected `turn-19-openai-03-identification-risk` with score 25
+- Turn 20: selected `turn-20-openai-01-city-week-event-spending` with score 22

@@ -1,0 +1,441 @@
+{
+  "artifact_paths": {
+    "business_evidence_report": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/business_evidence_report.html",
+    "discovery_decision_summary": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/discovery_decision_summary.md",
+    "playback_ui": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/ui/index.html",
+    "session_json": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/friends_loop_session.json",
+    "session_markdown": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/friends_loop_session.md",
+    "telemetry_json": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/friends_loop_telemetry.json"
+  },
+  "schema_version": "phase-003.friends-loop-session.v1",
+  "session_summary": {
+    "completed_turns": 1,
+    "openai_model": "gpt-5",
+    "prior_knowledge_duplicate_candidate_count": 0,
+    "prior_knowledge_evolved_duplicate_candidate_count": 0,
+    "prior_notebook_knowledge_entry_count": 0,
+    "prior_notebook_knowledge_path": null,
+    "reasoning_mode": "openai",
+    "reasoning_provider": "openai",
+    "requested_turns": 1,
+    "selected_semantic_slot_counts": {
+      "city_week_event_spending": 1
+    },
+    "selected_unique_semantic_slot_count": 1,
+    "stopped_early": false
+  },
+  "turns": [
+    {
+      "classification": {
+        "classification": "eda_question",
+        "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+        "required_fields_missing": [
+          "h0",
+          "h1",
+          "population",
+          "unit",
+          "exposure",
+          "comparison",
+          "outcome",
+          "direction",
+          "test_family",
+          "alpha",
+          "decision_rule"
+        ],
+        "required_fields_present": [],
+        "route": "eda_review"
+      },
+      "mapping": {
+        "turn-01-openai-01-city-week-event-spending": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "city_week_event_spending"
+        },
+        "turn-01-openai-02-msa-week-coverage": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "msa_week_coverage"
+        },
+        "turn-01-openai-03-identification-risk": {
+          "all_required_columns_present": true,
+          "all_required_values_present": true,
+          "dataset_warnings": [],
+          "semantic_slot": "identification_risk"
+        }
+      },
+      "rejected_candidates": [
+        {
+          "candidate_id": "turn-01-openai-02-msa-week-coverage",
+          "caveat": "Coverage thresholds may exclude smaller MSAs, limiting generalizability of subsequent impact estimates.",
+          "evidence_value": 8,
+          "evolution": {
+            "action": "combine",
+            "child_question_id": "market-coverage:combine",
+            "evolved_question": "Which covered markets should be combined with matched impact tests after asking: Which MSAs have sufficient frequency and variation of event weeks to support stable within-MSA spending estimates over time?",
+            "parent_question_id": "market-coverage",
+            "rationale": "Combine market coverage with later impact tests once coverage is sufficient.",
+            "source_question_id": "market-coverage"
+          },
+          "forum": {
+            "kind": "coverage",
+            "persona": "regional economic analyst",
+            "popularity": 8,
+            "priority": 9,
+            "question_id": "market-coverage",
+            "source": "openai_selected_forum_record",
+            "source_url": "local://question-forum/market-coverage",
+            "status": "proposed",
+            "tags": [
+              "coverage",
+              "msa-week",
+              "readiness"
+            ]
+          },
+          "novelty": 5,
+          "question": "Which MSAs have sufficient frequency and variation of event weeks to support stable within-MSA spending estimates over time?",
+          "rationale": "From the MSA-week panel we can compute event exposure rates, dispersion across the year, and minimum detectable effect power to flag markets with adequate sample for analysis.",
+          "reasoning": {
+            "mode": "openai",
+            "model": "gpt-5",
+            "model_calls_performed": true,
+            "output_hash": "a09ebb34c2de165b297a6ef47751ea497335643b5f09fdd7d727af497a7fd4d8",
+            "prior_knowledge_duplicate": false,
+            "prior_knowledge_duplicate_threshold": 0.62,
+            "prior_knowledge_evolved_duplicate": false,
+            "prior_knowledge_original_question": null,
+            "prior_knowledge_similarity": 0.0,
+            "prompt_hash": "091b5500e9d53561411894d46137e13de4fcd64ee254b3671a47a4236cc388dc",
+            "proposal_index": 2,
+            "provider": "openai",
+            "semantic_slot_prior_selection_count": 0,
+            "trace_path": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/openai-reasoning/turn-01-openai-reasoning.json"
+          },
+          "reflection": {
+            "answerability": "answerable with current reference files as an exploratory workflow",
+            "misleading_risk": "Coverage thresholds may exclude smaller MSAs, limiting generalizability of subsequent impact estimates.",
+            "status": "pass",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 23,
+          "semantic_slot": "msa_week_coverage",
+          "testability": 10,
+          "tournament": {
+            "candidate_id": "turn-01-openai-02-msa-week-coverage",
+            "component_scores": {
+              "evidence_value": 8,
+              "novelty": 5,
+              "policy_business_relevance": 9,
+              "public_interest": 8,
+              "testability": 10
+            },
+            "losses": 1,
+            "rank": 2,
+            "score": 40,
+            "transcript": [
+              "turn-01-openai-01-city-week-event-spending beats turn-01-openai-02-msa-week-coverage: higher combined governance score",
+              "turn-01-openai-02-msa-week-coverage beats turn-01-openai-03-identification-risk: higher combined governance score"
+            ],
+            "wins": 1
+          }
+        },
+        {
+          "candidate_id": "turn-01-openai-03-identification-risk",
+          "caveat": "Residual confounding may remain if unobserved local shocks align with event weeks even after calendar controls.",
+          "evidence_value": 7,
+          "evolution": {
+            "action": "split",
+            "child_question_id": "confounding-risk:split",
+            "evolved_question": "Which confounding risks should be reviewed separately before answering: In which cities and weeks are scheduled events most likely confounded with holidays or recurring seasonal spending peaks?",
+            "parent_question_id": "confounding-risk",
+            "rationale": "Separate confounding review from direct impact estimation.",
+            "source_question_id": "confounding-risk"
+          },
+          "forum": {
+            "kind": "identification_review",
+            "persona": "skeptical policy reviewer",
+            "popularity": 7,
+            "priority": 8,
+            "question_id": "confounding-risk",
+            "source": "openai_selected_forum_record",
+            "source_url": "local://question-forum/confounding-risk",
+            "status": "needs-review",
+            "tags": [
+              "confounding",
+              "matched-controls",
+              "claim-boundaries"
+            ]
+          },
+          "novelty": 6,
+          "question": "In which cities and weeks are scheduled events most likely confounded with holidays or recurring seasonal spending peaks?",
+          "rationale": "We can overlay event weeks with standard holiday calendars and identify historical spending peaks in prior years to flag city-weeks where event impacts are hard to disentangle.",
+          "reasoning": {
+            "mode": "openai",
+            "model": "gpt-5",
+            "model_calls_performed": true,
+            "output_hash": "a09ebb34c2de165b297a6ef47751ea497335643b5f09fdd7d727af497a7fd4d8",
+            "prior_knowledge_duplicate": false,
+            "prior_knowledge_duplicate_threshold": 0.62,
+            "prior_knowledge_evolved_duplicate": false,
+            "prior_knowledge_original_question": null,
+            "prior_knowledge_similarity": 0.0,
+            "prompt_hash": "091b5500e9d53561411894d46137e13de4fcd64ee254b3671a47a4236cc388dc",
+            "proposal_index": 3,
+            "provider": "openai",
+            "semantic_slot_prior_selection_count": 0,
+            "trace_path": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/openai-reasoning/turn-01-openai-reasoning.json"
+          },
+          "reflection": {
+            "answerability": "answerable with current reference files as an exploratory workflow",
+            "misleading_risk": "Residual confounding may remain if unobserved local shocks align with event weeks even after calendar controls.",
+            "status": "pass",
+            "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+          },
+          "score": 21,
+          "semantic_slot": "identification_risk",
+          "testability": 8,
+          "tournament": {
+            "candidate_id": "turn-01-openai-03-identification-risk",
+            "component_scores": {
+              "evidence_value": 7,
+              "novelty": 6,
+              "policy_business_relevance": 8,
+              "public_interest": 7,
+              "testability": 8
+            },
+            "losses": 2,
+            "rank": 3,
+            "score": 36,
+            "transcript": [
+              "turn-01-openai-01-city-week-event-spending beats turn-01-openai-03-identification-risk: higher combined governance score",
+              "turn-01-openai-02-msa-week-coverage beats turn-01-openai-03-identification-risk: higher combined governance score"
+            ],
+            "wins": 0
+          }
+        }
+      ],
+      "reviews": {
+        "turn-01-openai-01-city-week-event-spending": {
+          "claim_boundary": "Interpretation will be associative unless event timing can be argued as plausibly exogenous to spending shocks.",
+          "status": "pass"
+        },
+        "turn-01-openai-02-msa-week-coverage": {
+          "claim_boundary": "Coverage thresholds may exclude smaller MSAs, limiting generalizability of subsequent impact estimates.",
+          "status": "pass"
+        },
+        "turn-01-openai-03-identification-risk": {
+          "claim_boundary": "Residual confounding may remain if unobserved local shocks align with event weeks even after calendar controls.",
+          "status": "pass"
+        }
+      },
+      "selected_candidate": {
+        "candidate_id": "turn-01-openai-01-city-week-event-spending",
+        "caveat": "Interpretation will be associative unless event timing can be argued as plausibly exogenous to spending shocks.",
+        "evidence_value": 9,
+        "evolution": {
+          "action": "carry_forward",
+          "child_question_id": "crowd-spending:carry_forward",
+          "evolved_question": "Do high-attendance sports event weeks in a city correspond to measurable increases in local card spending compared with matched non-event weeks?",
+          "parent_question_id": "crowd-spending",
+          "rationale": "Carry the public question forward as an initial evidence workflow.",
+          "source_question_id": "crowd-spending"
+        },
+        "forum": {
+          "kind": "event_impact",
+          "persona": "downtown business owner",
+          "popularity": 9,
+          "priority": 10,
+          "question_id": "crowd-spending",
+          "source": "openai_selected_forum_record",
+          "source_url": "local://question-forum/crowd-spending",
+          "status": "selected",
+          "tags": [
+            "sports-events",
+            "local-spending",
+            "city-week"
+          ]
+        },
+        "novelty": 4,
+        "question": "Do high-attendance sports event weeks in a city correspond to measurable increases in local card spending compared with matched non-event weeks?",
+        "rationale": "Using city-week spending outcomes and event attendance or counts, we can define treated weeks and compare them to matched non-event weeks with city and calendar controls to quantify spending lift.",
+        "reasoning": {
+          "mode": "openai",
+          "model": "gpt-5",
+          "model_calls_performed": true,
+          "output_hash": "a09ebb34c2de165b297a6ef47751ea497335643b5f09fdd7d727af497a7fd4d8",
+          "prior_knowledge_duplicate": false,
+          "prior_knowledge_duplicate_threshold": 0.62,
+          "prior_knowledge_evolved_duplicate": false,
+          "prior_knowledge_original_question": null,
+          "prior_knowledge_similarity": 0.0,
+          "prompt_hash": "091b5500e9d53561411894d46137e13de4fcd64ee254b3671a47a4236cc388dc",
+          "proposal_index": 1,
+          "provider": "openai",
+          "semantic_slot_prior_selection_count": 0,
+          "trace_path": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/openai-reasoning/turn-01-openai-reasoning.json"
+        },
+        "reflection": {
+          "answerability": "answerable with current reference files as an exploratory workflow",
+          "misleading_risk": "Interpretation will be associative unless event timing can be argued as plausibly exogenous to spending shocks.",
+          "status": "pass",
+          "weakening_evidence": "Sparse exposure, missing controls, or inconsistent matched results would weaken this question."
+        },
+        "score": 22,
+        "semantic_slot": "city_week_event_spending",
+        "testability": 9,
+        "tournament": {
+          "candidate_id": "turn-01-openai-01-city-week-event-spending",
+          "component_scores": {
+            "evidence_value": 9,
+            "novelty": 4,
+            "policy_business_relevance": 10,
+            "public_interest": 9,
+            "testability": 9
+          },
+          "losses": 0,
+          "rank": 1,
+          "score": 41,
+          "transcript": [
+            "turn-01-openai-01-city-week-event-spending beats turn-01-openai-02-msa-week-coverage: higher combined governance score",
+            "turn-01-openai-01-city-week-event-spending beats turn-01-openai-03-identification-risk: higher combined governance score"
+          ],
+          "wins": 2
+        }
+      },
+      "statistical_evidence": {
+        "candidate_id": "turn-01-openai-01-city-week-event-spending",
+        "causal_design": {
+          "claim_boundary": "controlled observational evidence; not causal proof",
+          "design_count": 2,
+          "diagnostic_ids": [
+            "causal-design:city_week:revenue_all",
+            "causal-design:city_week:merchants_all"
+          ],
+          "diagnostics": [
+            {
+              "control_rows_used": 9705,
+              "controls_per_matched_exposure": 4.862224448897796,
+              "dataset": "city_week",
+              "design_level": "same_week_same_block_matched",
+              "diagnostic_id": "causal-design:city_week:revenue_all",
+              "evidence_grade": "fragile_controlled_observational",
+              "exposed_rows": 2252,
+              "limitations": [
+                "Design is observational and cannot rule out unobserved confounding.",
+                "Matching only controls for shared week and block identifiers.",
+                "Matched sample is sparse or leaves exposed rows unmatched."
+              ],
+              "matched_exposed_rows": 1996,
+              "matched_exposure_rate": 0.8863232682060391,
+              "outcome": "revenue_all",
+              "unmatched_exposed_rows": 256
+            },
+            {
+              "control_rows_used": 9705,
+              "controls_per_matched_exposure": 4.862224448897796,
+              "dataset": "city_week",
+              "design_level": "same_week_same_block_matched",
+              "diagnostic_id": "causal-design:city_week:merchants_all",
+              "evidence_grade": "fragile_controlled_observational",
+              "exposed_rows": 2252,
+              "limitations": [
+                "Design is observational and cannot rule out unobserved confounding.",
+                "Matching only controls for shared week and block identifiers.",
+                "Matched sample is sparse or leaves exposed rows unmatched."
+              ],
+              "matched_exposed_rows": 1996,
+              "matched_exposure_rate": 0.8863232682060391,
+              "outcome": "merchants_all",
+              "unmatched_exposed_rows": 256
+            }
+          ],
+          "evidence_grade": "fragile_controlled_observational",
+          "schema_version": "phase-026.candidate-causal-design.v1",
+          "strongest_design_level": "same_week_same_block_matched"
+        },
+        "caveats": [
+          "Statistical evidence is observational; causal-design diagnostics do not prove causality.",
+          "Adjusted p-values do not establish causality."
+        ],
+        "has_adjusted_significance": true,
+        "method": "Benjamini-Hochberg FDR correction",
+        "min_adjusted_p_value": 2.4226335941393745e-68,
+        "result_count": 4,
+        "result_ids": [
+          "exploratory:city_week:revenue_all",
+          "exploratory:city_week:merchants_all",
+          "matched:city_week:revenue_all",
+          "matched:city_week:merchants_all"
+        ],
+        "results": [
+          {
+            "adjusted_p_value": 3.9335732598356994e-05,
+            "caveats": [
+              "Exploratory observational association only; this is not causal proof.",
+              "P-values are exploratory metadata only.",
+              "Adjusted p-values do not remove observational confounding."
+            ],
+            "dataset": "city_week",
+            "family": "exploratory",
+            "outcome": "revenue_all",
+            "p_value": 2.9501799448767745e-05,
+            "result_id": "exploratory:city_week:revenue_all",
+            "statistic": 4.181367060174857,
+            "status": "ok"
+          },
+          {
+            "adjusted_p_value": 2.4226335941393745e-68,
+            "caveats": [
+              "Exploratory observational association only; this is not causal proof.",
+              "P-values are exploratory metadata only.",
+              "Adjusted p-values do not remove observational confounding."
+            ],
+            "dataset": "city_week",
+            "family": "exploratory",
+            "outcome": "merchants_all",
+            "p_value": 3.028291992674218e-69,
+            "result_id": "exploratory:city_week:merchants_all",
+            "statistic": 17.862124097096256,
+            "status": "ok"
+          },
+          {
+            "adjusted_p_value": 8.018939027100663e-08,
+            "caveats": [
+              "Exploratory observational matched comparison only; not causal proof.",
+              "Matching uses same week and same block only; residual confounding may remain.",
+              "P-values are exploratory metadata only.",
+              "Adjusted p-values do not remove observational confounding."
+            ],
+            "dataset": "city_week",
+            "family": "matched",
+            "outcome": "revenue_all",
+            "p_value": 4.0094695135503316e-08,
+            "result_id": "matched:city_week:revenue_all",
+            "statistic": -5.511935022976931,
+            "status": "ok"
+          },
+          {
+            "adjusted_p_value": 5.60597360390953e-07,
+            "caveats": [
+              "Exploratory observational matched comparison only; not causal proof.",
+              "Matching uses same week and same block only; residual confounding may remain.",
+              "P-values are exploratory metadata only.",
+              "Adjusted p-values do not remove observational confounding."
+            ],
+            "dataset": "city_week",
+            "family": "matched",
+            "outcome": "merchants_all",
+            "p_value": 3.503733502443456e-07,
+            "result_id": "matched:city_week:merchants_all",
+            "statistic": -5.111369774020397,
+            "status": "ok"
+          }
+        ],
+        "schema_version": "phase-026.statistical-execution.v2",
+        "semantic_slot": "city_week_event_spending"
+      },
+      "turn": 1
+    }
+  ]
+}

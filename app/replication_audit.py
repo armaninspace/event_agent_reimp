@@ -81,7 +81,7 @@ class ReplicationAudit:
 def run_replication_audit(
     *,
     repo_root: Path = Path("."),
-    run_dir: Path = Path("app/runs/phase-032-evolved-duplicate-followups"),
+    run_dir: Path = Path("app/runs/phase-033-live-openai-environment"),
 ) -> ReplicationAudit:
     """Audit whether the local artifacts satisfy the thesis replication checklist."""
     missing = [path for path in REQUIRED_SOURCE_FILES if not (repo_root / path).exists()]
@@ -96,11 +96,15 @@ def run_replication_audit(
         encoding="utf-8"
     )
     maf_adapter = _load_optional_json(repo_root / run_dir / "maf_adapter_smoke.json")
-    known_limits = [
-        "The checked-in audit artifact uses OpenAI replay provenance because OPENAI_API_KEY is not available in this shell.",
-        "Live OpenAI reasoning is implemented and credential-gated, but requires OPENAI_API_KEY at runtime.",
-        "Statistical evidence is controlled observational where matched controls exist, but not causal proof.",
-    ]
+    openai_model_calls_performed = bool(summary.get("openai_model_calls_performed"))
+    known_limits = ["Statistical evidence is controlled observational where matched controls exist, but not causal proof."]
+    if not openai_model_calls_performed:
+        known_limits.extend(
+            [
+                "The checked-in audit artifact uses OpenAI replay provenance because live OpenAI model calls were not performed.",
+                "Live OpenAI reasoning is implemented and credential-gated, but requires OPENAI_API_KEY at runtime.",
+            ]
+        )
     if not _has_openai_maf_bridge(maf_adapter):
         known_limits.append("Microsoft Agent Framework provider-backed OpenAI reasoning evidence is missing.")
     audit = ReplicationAudit(
@@ -138,7 +142,7 @@ def run_replication_audit(
             for turn in turns
             if isinstance(turn, dict)
         ),
-        openai_model_calls_performed=bool(summary.get("openai_model_calls_performed")),
+        openai_model_calls_performed=openai_model_calls_performed,
         reasoning_provider=str(summary.get("reasoning_provider", "deterministic")),
         reasoning_mode=str(summary.get("reasoning_mode", "deterministic")),
         maf_adapter_present=isinstance(maf_adapter, dict),

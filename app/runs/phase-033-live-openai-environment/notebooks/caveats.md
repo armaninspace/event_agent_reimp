@@ -1,0 +1,22 @@
+# Caveats
+
+- Turn 1: Assumes our event calendar and spending data span a sufficient period to assess exposure.
+- Turn 2: Requires consistent week-level exposure counts and controls for seasonality and holidays.
+- Turn 3: Weekly aggregation may mask same-week displacement across days.
+- Turn 4: Assumes away weeks are not themselves local draws and that within-season schedules provide comparable baselines.
+- Turn 5: Thresholds should be tuned to actual data density and seasonality patterns.
+- Turn 6: Relies on stable weekly baselines and no anticipatory shocks.
+- Turn 7: Assumes the count of home games per week is measured accurately and not driven by unobserved promotions.
+- Turn 8: Requires sufficient pre-event, non-overlapping weeks per city to estimate clean pre-trends.
+- Turn 9: Requires defining minimum thresholds for event and non-event weeks per city-season.
+- Turn 10: Only measures spend in the card data sample and may miss cash-heavy venues.
+- Turn 11: Assumes accurate game calendars and stable weekly alignment without major unrelated shocks.
+- Turn 12: Thresholds may be tuned but require consistent weekly coverage flags.
+- Turn 13: Differences could reflect concurrent tourism or media shocks unrelated to the games.
+- Turn 14: Requires a clean set of peer MSAs with verified no-event weeks and good seasonal matching.
+- Turn 15: Overly strict thresholds may exclude informative mid-sized markets.
+- Turn 16: Weekly aggregation may mask category-level substitution and visitor vs. resident effects.
+- Turn 17: Requires clear labeling of event and non-event weeks and consistent spending aggregation granularity.
+- Turn 18: Thresholds for 'sufficient' exposure (e.g., ≥8 treated and ≥8 baseline weeks) may need tuning by variance and sample size.
+- Turn 19: Lead-window length affects power and may miss subtle anticipatory effects.
+- Turn 20: One sentence limitation.

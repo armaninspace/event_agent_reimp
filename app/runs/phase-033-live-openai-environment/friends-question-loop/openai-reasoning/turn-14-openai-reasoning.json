@@ -1,0 +1,43 @@
+{
+  "mode": "openai",
+  "model": "gpt-5",
+  "model_calls_performed": true,
+  "output_hash": "4ea3298c11001389f5617efc8360f8ceeb359a55f54ba0f0d5600251d3b2e330",
+  "prompt": "You are the hypothesis-generation agent for a Python replication of an event-spending thesis.\nGenerate exactly three candidate research questions for the next friends-loop turn.\nUse the provided public QuestionForum records and avoid repeating already selected forum IDs.\nReturn only strict JSON. Do not wrap it in markdown.\n\nTurn: 14\nPrior selected candidate IDs: ['turn-01-openai-02-msa-week-coverage', 'turn-02-openai-01-city-week-event-spending', 'turn-03-openai-02-identification-risk', 'turn-04-openai-01-city-week-event-spending', 'turn-05-openai-03-msa-week-coverage', 'turn-06-openai-01-identification-risk', 'turn-07-openai-01-city-week-event-spending', 'turn-08-openai-01-identification-risk', 'turn-09-openai-03-msa-week-coverage', 'turn-10-openai-01-city-week-event-spending', 'turn-11-openai-01-identification-risk', 'turn-12-openai-02-msa-week-coverage', 'turn-13-openai-01-city-week-event-spending']\nPrior selected forum IDs: ['confounding-risk', 'crowd-spending', 'market-coverage', 'openai-generated-1', 'openai-generated-10', 'openai-generated-11', 'openai-generated-12', 'openai-generated-2', 'openai-generated-4', 'openai-generated-5', 'openai-generated-6', 'openai-generated-7', 'openai-generated-9']\nPrior notebook knowledge summary:\n{\n  \"entry_count\": 20,\n  \"latest_seed_question\": \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n  \"latest_semantic_slot\": \"city_week_event_spending\",\n  \"latest_source_cell\": \"turn-20-validation-code\",\n  \"recent_seed_questions\": [\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\"\n  ],\n  \"schema_version\": \"phase-027.notebook-knowledge-summary.v1\",\n  \"source_path\": \"app/runs/phase-027-notebook-knowledge-base/notebooks/notebook-knowledge.json\"\n}\n\nAvailable semantic slots: city_week_event_spending, msa_week_coverage, identification_risk\nScoring fields must be integers from 0 to 10.\n\nOutput contract:\n{\n  \"candidates\": [\n    {\n      \"caveat\": \"One sentence limitation.\",\n      \"evidence_value\": \"integer 0-10\",\n      \"forum_question_id\": \"source forum question_id when applicable\",\n      \"novelty\": \"integer 0-10\",\n      \"question\": \"Stakeholder-readable empirical question.\",\n      \"rationale\": \"Why this is valuable and testable with the local city/MSA weekly event data.\",\n      \"semantic_slot\": \"city_week_event_spending | msa_week_coverage | identification_risk\",\n      \"testability\": \"integer 0-10\"\n    }\n  ]\n}\n\nQuestionForum records:\n[\n  {\n    \"kind\": \"event_impact\",\n    \"persona\": \"downtown business owner\",\n    \"popularity\": 9,\n    \"priority\": 10,\n    \"question\": \"Do big sports crowds actually turn into more local spending?\",\n    \"question_id\": \"crowd-spending\",\n    \"rationale\": \"Business owners need to know whether high-attendance weeks show measurable spending differences.\",\n    \"tags\": [\n      \"sports-events\",\n      \"local-spending\",\n      \"city-week\"\n    ]\n  },\n  {\n    \"kind\": \"coverage\",\n    \"persona\": \"regional economic analyst\",\n    \"popularity\": 8,\n    \"priority\": 9,\n    \"question\": \"Which markets have enough event exposure for a careful spending comparison?\",\n    \"question_id\": \"market-coverage\",\n    \"rationale\": \"Analysts need coverage checks before interpreting event-week comparisons.\",\n    \"tags\": [\n      \"coverage\",\n      \"msa-week\",\n      \"readiness\"\n    ]\n  },\n  {\n    \"kind\": \"identification_review\",\n    \"persona\": \"skeptical policy reviewer\",\n    \"popularity\": 7,\n    \"priority\": 8,\n    \"question\": \"Where should a skeptic worry that game weeks and spending are confounded?\",\n    \"question_id\": \"confounding-risk\",\n    \"rationale\": \"Policy readers need claim boundaries before accepting event-impact narratives.\",\n    \"tags\": [\n      \"confounding\",\n      \"matched-controls\",\n      \"claim-boundaries\"\n    ]\n  }\n]",
+  "prompt_hash": "1321f11f8c8e454b3377a2f66d0abe39ffa692d4412e4f0d18b73c89a4b5a184",
+  "proposals": [
+    {
+      "caveat": "Requires a clean set of peer MSAs with verified no-event weeks and good seasonal matching.",
+      "evidence_value": 8,
+      "forum_question_id": "openai-generated-13",
+      "novelty": 6,
+      "question": "In weeks when a city hosts a home game, do matched peer MSAs without any events show no comparable spending increase, supporting a causal home-game effect?",
+      "rationale": "Cross-MSA placebo comparisons by week help rule out national shocks and seasonality using only the local event calendar and weekly spending series.",
+      "semantic_slot": "identification_risk",
+      "testability": 9
+    },
+    {
+      "caveat": "Thresholds can be tuned and holiday-adjacent weeks may need exclusion.",
+      "evidence_value": 7,
+      "forum_question_id": "openai-generated-14",
+      "novelty": 5,
+      "question": "Which MSAs have at least 8 home-event weeks and 20 clean non-event weeks in the sample, enabling robust within-MSA event-versus-baseline estimates?",
+      "rationale": "A coverage screen ensures enough treated and control weeks per MSA to support precise comparisons with the available city/MSA weekly event and spending data.",
+      "semantic_slot": "msa_week_coverage",
+      "testability": 10
+    },
+    {
+      "caveat": "Interpretation requires separating weeks with back-to-back events to avoid contamination of the post period.",
+      "evidence_value": 8,
+      "forum_question_id": "openai-generated-15",
+      "novelty": 7,
+      "question": "Does the spending lift in event weeks reverse in the following week within the same city, indicating intertemporal substitution rather than net growth?",
+      "rationale": "A within-city t\u22121, t, t+1 design on weekly data can test persistence of effects using only the local event calendar and spending series.",
+      "semantic_slot": "city_week_event_spending",
+      "testability": 8
+    }
+  ],
+  "provider": "openai",
+  "raw_output": "{\n  \"candidates\": [\n    {\n      \"caveat\": \"Requires a clean set of peer MSAs with verified no-event weeks and good seasonal matching.\",\n      \"evidence_value\": 8,\n      \"forum_question_id\": \"openai-generated-13\",\n      \"novelty\": 6,\n      \"question\": \"In weeks when a city hosts a home game, do matched peer MSAs without any events show no comparable spending increase, supporting a causal home-game effect?\",\n      \"rationale\": \"Cross-MSA placebo comparisons by week help rule out national shocks and seasonality using only the local event calendar and weekly spending series.\",\n      \"semantic_slot\": \"identification_risk\",\n      \"testability\": 9\n    },\n    {\n      \"caveat\": \"Thresholds can be tuned and holiday-adjacent weeks may need exclusion.\",\n      \"evidence_value\": 7,\n      \"forum_question_id\": \"openai-generated-14\",\n      \"novelty\": 5,\n      \"question\": \"Which MSAs have at least 8 home-event weeks and 20 clean non-event weeks in the sample, enabling robust within-MSA event-versus-baseline estimates?\",\n      \"rationale\": \"A coverage screen ensures enough treated and control weeks per MSA to support precise comparisons with the available city/MSA weekly event and spending data.\",\n      \"semantic_slot\": \"msa_week_coverage\",\n      \"testability\": 10\n    },\n    {\n      \"caveat\": \"Interpretation requires separating weeks with back-to-back events to avoid contamination of the post period.\",\n      \"evidence_value\": 8,\n      \"forum_question_id\": \"openai-generated-15\",\n      \"novelty\": 7,\n      \"question\": \"Does the spending lift in event weeks reverse in the following week within the same city, indicating intertemporal substitution rather than net growth?\",\n      \"rationale\": \"A within-city t\u22121, t, t+1 design on weekly data can test persistence of effects using only the local event calendar and spending series.\",\n      \"semantic_slot\": \"city_week_event_spending\",\n      \"testability\": 8\n    }\n  ]\n}",
+  "trace_path": null
+}

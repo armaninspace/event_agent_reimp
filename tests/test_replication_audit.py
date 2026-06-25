@@ -17,8 +17,8 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.notebook_knowledge_present is True
     assert audit.notebook_knowledge_entry_count == 20
     assert audit.prior_notebook_knowledge_entry_count == 20
-    assert audit.prior_knowledge_duplicate_candidate_count == 20
-    assert audit.prior_knowledge_evolved_duplicate_candidate_count == 20
+    assert audit.prior_knowledge_duplicate_candidate_count == 0
+    assert audit.prior_knowledge_evolved_duplicate_candidate_count == 0
     assert audit.selected_unique_semantic_slot_count == 3
     assert audit.selected_semantic_slot_counts
     assert audit.selected_forum_metadata_count == 20
@@ -29,13 +29,13 @@ def test_replication_audit_passes_against_latest_phase_artifacts() -> None:
     assert audit.selected_openai_reasoning_count == 20
     assert audit.causal_design_turn_count == 20
     assert audit.controlled_observational_turn_count == 20
-    assert audit.openai_model_calls_performed is False
+    assert audit.openai_model_calls_performed is True
     assert audit.reasoning_provider == "openai"
-    assert audit.reasoning_mode == "replay"
+    assert audit.reasoning_mode == "openai"
     assert audit.maf_adapter_present is True
     assert audit.maf_reasoning_provider == "openai"
-    assert audit.maf_reasoning_mode == "replay"
-    assert audit.maf_model_calls_performed is False
+    assert audit.maf_reasoning_mode == "openai"
+    assert audit.maf_model_calls_performed is True
     assert audit.maf_candidate_count == 3
     assert audit.statistical_evidence_turn_count == 20
     assert audit.business_report_statistical_sections == 20

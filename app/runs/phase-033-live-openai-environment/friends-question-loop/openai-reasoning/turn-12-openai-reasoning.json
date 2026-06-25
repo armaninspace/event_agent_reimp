@@ -1,0 +1,43 @@
+{
+  "mode": "openai",
+  "model": "gpt-5",
+  "model_calls_performed": true,
+  "output_hash": "3b3264aef9ee3aefcf44c6fdca25fa9335e9dc36025c253c0d51679358bd37c9",
+  "prompt": "You are the hypothesis-generation agent for a Python replication of an event-spending thesis.\nGenerate exactly three candidate research questions for the next friends-loop turn.\nUse the provided public QuestionForum records and avoid repeating already selected forum IDs.\nReturn only strict JSON. Do not wrap it in markdown.\n\nTurn: 12\nPrior selected candidate IDs: ['turn-01-openai-02-msa-week-coverage', 'turn-02-openai-01-city-week-event-spending', 'turn-03-openai-02-identification-risk', 'turn-04-openai-01-city-week-event-spending', 'turn-05-openai-03-msa-week-coverage', 'turn-06-openai-01-identification-risk', 'turn-07-openai-01-city-week-event-spending', 'turn-08-openai-01-identification-risk', 'turn-09-openai-03-msa-week-coverage', 'turn-10-openai-01-city-week-event-spending', 'turn-11-openai-01-identification-risk']\nPrior selected forum IDs: ['confounding-risk', 'crowd-spending', 'market-coverage', 'openai-generated-1', 'openai-generated-10', 'openai-generated-11', 'openai-generated-2', 'openai-generated-4', 'openai-generated-5', 'openai-generated-6', 'openai-generated-7']\nPrior notebook knowledge summary:\n{\n  \"entry_count\": 20,\n  \"latest_seed_question\": \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n  \"latest_semantic_slot\": \"city_week_event_spending\",\n  \"latest_source_cell\": \"turn-20-validation-code\",\n  \"recent_seed_questions\": [\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\"\n  ],\n  \"schema_version\": \"phase-027.notebook-knowledge-summary.v1\",\n  \"source_path\": \"app/runs/phase-027-notebook-knowledge-base/notebooks/notebook-knowledge.json\"\n}\n\nAvailable semantic slots: city_week_event_spending, msa_week_coverage, identification_risk\nScoring fields must be integers from 0 to 10.\n\nOutput contract:\n{\n  \"candidates\": [\n    {\n      \"caveat\": \"One sentence limitation.\",\n      \"evidence_value\": \"integer 0-10\",\n      \"forum_question_id\": \"source forum question_id when applicable\",\n      \"novelty\": \"integer 0-10\",\n      \"question\": \"Stakeholder-readable empirical question.\",\n      \"rationale\": \"Why this is valuable and testable with the local city/MSA weekly event data.\",\n      \"semantic_slot\": \"city_week_event_spending | msa_week_coverage | identification_risk\",\n      \"testability\": \"integer 0-10\"\n    }\n  ]\n}\n\nQuestionForum records:\n[\n  {\n    \"kind\": \"event_impact\",\n    \"persona\": \"downtown business owner\",\n    \"popularity\": 9,\n    \"priority\": 10,\n    \"question\": \"Do big sports crowds actually turn into more local spending?\",\n    \"question_id\": \"crowd-spending\",\n    \"rationale\": \"Business owners need to know whether high-attendance weeks show measurable spending differences.\",\n    \"tags\": [\n      \"sports-events\",\n      \"local-spending\",\n      \"city-week\"\n    ]\n  },\n  {\n    \"kind\": \"coverage\",\n    \"persona\": \"regional economic analyst\",\n    \"popularity\": 8,\n    \"priority\": 9,\n    \"question\": \"Which markets have enough event exposure for a careful spending comparison?\",\n    \"question_id\": \"market-coverage\",\n    \"rationale\": \"Analysts need coverage checks before interpreting event-week comparisons.\",\n    \"tags\": [\n      \"coverage\",\n      \"msa-week\",\n      \"readiness\"\n    ]\n  },\n  {\n    \"kind\": \"identification_review\",\n    \"persona\": \"skeptical policy reviewer\",\n    \"popularity\": 7,\n    \"priority\": 8,\n    \"question\": \"Where should a skeptic worry that game weeks and spending are confounded?\",\n    \"question_id\": \"confounding-risk\",\n    \"rationale\": \"Policy readers need claim boundaries before accepting event-impact narratives.\",\n    \"tags\": [\n      \"confounding\",\n      \"matched-controls\",\n      \"claim-boundaries\"\n    ]\n  }\n]",
+  "prompt_hash": "db8d71f2fe6806a60bc0d387c5dd5ba43f2b3539800597ccd0f2fa907cd43c14",
+  "proposals": [
+    {
+      "caveat": "Assumes comparable spend coverage across cities and no systematic data gaps.",
+      "evidence_value": 8,
+      "forum_question_id": "openai-generated-8",
+      "novelty": 6,
+      "question": "Are spending lifts during home-game weeks larger in cities with lower baseline weekly spending levels?",
+      "rationale": "Quantifies cross-city heterogeneity by correlating baseline spend with event-week lift using existing city-week panels, helping target markets where events move the needle most.",
+      "semantic_slot": "city_week_event_spending",
+      "testability": 9
+    },
+    {
+      "caveat": "Thresholds may be tuned but require consistent weekly coverage flags.",
+      "evidence_value": 9,
+      "forum_question_id": "openai-generated-9",
+      "novelty": 4,
+      "question": "Which MSAs have at least six home-game weeks and twelve matched non-game weeks in the study window to support stable difference-in-differences estimates?",
+      "rationale": "A clear coverage screen ensures sufficient treated and control weeks per MSA, directly computable from the MSA-week event and spending availability tables.",
+      "semantic_slot": "msa_week_coverage",
+      "testability": 10
+    },
+    {
+      "caveat": "Requires enough pre-event observations and stable coverage to estimate pre-trends.",
+      "evidence_value": 8,
+      "forum_question_id": "openai-generated-12",
+      "novelty": 5,
+      "question": "Do spending pre-trends in the four weeks before home-game weeks match those before matched non-game weeks?",
+      "rationale": "A pre-trend check addresses selection bias by comparing week-over-week growth paths using only city/MSA weekly spend and scheduled event indicators.",
+      "semantic_slot": "identification_risk",
+      "testability": 9
+    }
+  ],
+  "provider": "openai",
+  "raw_output": "{\n  \"candidates\": [\n    {\n      \"caveat\": \"Assumes comparable spend coverage across cities and no systematic data gaps.\",\n      \"evidence_value\": 8,\n      \"forum_question_id\": \"openai-generated-8\",\n      \"novelty\": 6,\n      \"question\": \"Are spending lifts during home-game weeks larger in cities with lower baseline weekly spending levels?\",\n      \"rationale\": \"Quantifies cross-city heterogeneity by correlating baseline spend with event-week lift using existing city-week panels, helping target markets where events move the needle most.\",\n      \"semantic_slot\": \"city_week_event_spending\",\n      \"testability\": 9\n    },\n    {\n      \"caveat\": \"Thresholds may be tuned but require consistent weekly coverage flags.\",\n      \"evidence_value\": 9,\n      \"forum_question_id\": \"openai-generated-9\",\n      \"novelty\": 4,\n      \"question\": \"Which MSAs have at least six home-game weeks and twelve matched non-game weeks in the study window to support stable difference-in-differences estimates?\",\n      \"rationale\": \"A clear coverage screen ensures sufficient treated and control weeks per MSA, directly computable from the MSA-week event and spending availability tables.\",\n      \"semantic_slot\": \"msa_week_coverage\",\n      \"testability\": 10\n    },\n    {\n      \"caveat\": \"Requires enough pre-event observations and stable coverage to estimate pre-trends.\",\n      \"evidence_value\": 8,\n      \"forum_question_id\": \"openai-generated-12\",\n      \"novelty\": 5,\n      \"question\": \"Do spending pre-trends in the four weeks before home-game weeks match those before matched non-game weeks?\",\n      \"rationale\": \"A pre-trend check addresses selection bias by comparing week-over-week growth paths using only city/MSA weekly spend and scheduled event indicators.\",\n      \"semantic_slot\": \"identification_risk\",\n      \"testability\": 9\n    }\n  ]\n}",
+  "trace_path": null
+}

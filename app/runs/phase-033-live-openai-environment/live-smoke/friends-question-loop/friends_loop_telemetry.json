@@ -1,0 +1,311 @@
+[
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0001",
+    "event_type": "memory.seeded",
+    "payload": {
+      "prior_selected_ids": []
+    },
+    "sequence": 1,
+    "summary": "Seeded deterministic in-memory loop state.",
+    "time_offset_ms": 0,
+    "turn": 0
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0002",
+    "event_type": "forum.loaded",
+    "payload": {
+      "forum_path": "data/question_forum/questions.json",
+      "question_ids": [
+        "crowd-spending",
+        "market-coverage",
+        "confounding-risk"
+      ]
+    },
+    "sequence": 2,
+    "summary": "Loaded 3 QuestionForum records.",
+    "time_offset_ms": 10,
+    "turn": 0
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0003",
+    "event_type": "reasoning.configured",
+    "payload": {
+      "mode": "openai",
+      "model": "gpt-5",
+      "provider": "openai",
+      "replay_path": null,
+      "trace_dir": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/openai-reasoning"
+    },
+    "sequence": 3,
+    "summary": "Configured openai hypothesis reasoning.",
+    "time_offset_ms": 20,
+    "turn": 0
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0004",
+    "event_type": "turn.started",
+    "payload": {
+      "turn": 1
+    },
+    "sequence": 4,
+    "summary": "Started turn 1.",
+    "time_offset_ms": 30,
+    "turn": 1
+  },
+  {
+    "actor": "Mapper",
+    "event_id": "evt-0005",
+    "event_type": "knowledge.read",
+    "payload": {
+      "notebook_knowledge": {
+        "entry_count": 0,
+        "latest_seed_question": null,
+        "latest_semantic_slot": null,
+        "latest_source_cell": null,
+        "recent_seed_questions": [],
+        "schema_version": "phase-027.notebook-knowledge-summary.v1",
+        "source_path": null
+      },
+      "reference_dir": "data/reference"
+    },
+    "sequence": 5,
+    "summary": "Read reference data quality context and 0 prior notebook knowledge entries.",
+    "time_offset_ms": 40,
+    "turn": 1
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0006",
+    "event_type": "openai.reasoning.completed",
+    "payload": {
+      "candidate_ids": [
+        "turn-01-openai-01-city-week-event-spending",
+        "turn-01-openai-02-msa-week-coverage",
+        "turn-01-openai-03-identification-risk"
+      ],
+      "mode": "openai",
+      "model": "gpt-5",
+      "model_calls_performed": true,
+      "output_hash": "a09ebb34c2de165b297a6ef47751ea497335643b5f09fdd7d727af497a7fd4d8",
+      "prior_knowledge_duplicate_candidate_count": 0,
+      "prior_knowledge_evolved_duplicate_candidate_count": 0,
+      "prior_notebook_knowledge_entry_count": 0,
+      "prompt_hash": "091b5500e9d53561411894d46137e13de4fcd64ee254b3671a47a4236cc388dc",
+      "provider": "openai",
+      "trace_path": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/openai-reasoning/turn-01-openai-reasoning.json"
+    },
+    "sequence": 6,
+    "summary": "Generated 3 OpenAI-backed candidates.",
+    "time_offset_ms": 50,
+    "turn": 1
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0007",
+    "event_type": "board.proposed",
+    "payload": {
+      "candidate_ids": [
+        "turn-01-openai-01-city-week-event-spending",
+        "turn-01-openai-02-msa-week-coverage",
+        "turn-01-openai-03-identification-risk"
+      ],
+      "forum_question_ids": [
+        "crowd-spending",
+        "market-coverage",
+        "confounding-risk"
+      ]
+    },
+    "sequence": 7,
+    "summary": "Proposed 3 candidates.",
+    "time_offset_ms": 60,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0008",
+    "event_type": "tournament.completed",
+    "payload": {
+      "ranks": {
+        "turn-01-openai-01-city-week-event-spending": 1,
+        "turn-01-openai-02-msa-week-coverage": 2,
+        "turn-01-openai-03-identification-risk": 3
+      }
+    },
+    "sequence": 8,
+    "summary": "Completed pairwise candidate tournament.",
+    "time_offset_ms": 70,
+    "turn": 1
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0009",
+    "event_type": "reflection.completed",
+    "payload": {
+      "statuses": {
+        "turn-01-openai-01-city-week-event-spending": "pass",
+        "turn-01-openai-02-msa-week-coverage": "pass",
+        "turn-01-openai-03-identification-risk": "pass"
+      }
+    },
+    "sequence": 9,
+    "summary": "Completed reviewer reflection pass.",
+    "time_offset_ms": 80,
+    "turn": 1
+  },
+  {
+    "actor": "Spark",
+    "event_id": "evt-0010",
+    "event_type": "evolution.completed",
+    "payload": {
+      "actions": {
+        "turn-01-openai-01-city-week-event-spending": "carry_forward",
+        "turn-01-openai-02-msa-week-coverage": "combine",
+        "turn-01-openai-03-identification-risk": "split"
+      }
+    },
+    "sequence": 10,
+    "summary": "Completed question evolution pass.",
+    "time_offset_ms": 90,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0011",
+    "event_type": "board.ranked",
+    "payload": {
+      "ranked_candidate_ids": [
+        "turn-01-openai-01-city-week-event-spending",
+        "turn-01-openai-02-msa-week-coverage",
+        "turn-01-openai-03-identification-risk"
+      ],
+      "rejected_candidate_ids": [
+        "turn-01-openai-02-msa-week-coverage",
+        "turn-01-openai-03-identification-risk"
+      ],
+      "selected_candidate_id": "turn-01-openai-01-city-week-event-spending",
+      "selected_semantic_slot_counts": {
+        "city_week_event_spending": 1
+      },
+      "tournament_ranks": {
+        "turn-01-openai-01-city-week-event-spending": 1,
+        "turn-01-openai-02-msa-week-coverage": 2,
+        "turn-01-openai-03-identification-risk": 3
+      }
+    },
+    "sequence": 11,
+    "summary": "Selected turn-01-openai-01-city-week-event-spending.",
+    "time_offset_ms": 100,
+    "turn": 1
+  },
+  {
+    "actor": "Skeptic",
+    "event_id": "evt-0012",
+    "event_type": "discussion.message",
+    "payload": {
+      "caveat": "Interpretation will be associative unless event timing can be argued as plausibly exogenous to spending shocks.",
+      "selected_candidate_id": "turn-01-openai-01-city-week-event-spending"
+    },
+    "sequence": 12,
+    "summary": "Recorded public caveat for selected candidate.",
+    "time_offset_ms": 110,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0013",
+    "event_type": "hypothesis.classified",
+    "payload": {
+      "classification": "eda_question",
+      "rationale": "Question is data-oriented but lacks the full formal hypothesis contract.",
+      "required_fields_missing": [
+        "h0",
+        "h1",
+        "population",
+        "unit",
+        "exposure",
+        "comparison",
+        "outcome",
+        "direction",
+        "test_family",
+        "alpha",
+        "decision_rule"
+      ],
+      "required_fields_present": [],
+      "route": "eda_review"
+    },
+    "sequence": 13,
+    "summary": "Classified selected candidate as eda_question.",
+    "time_offset_ms": 120,
+    "turn": 1
+  },
+  {
+    "actor": "Moderator",
+    "event_id": "evt-0014",
+    "event_type": "question.submitted",
+    "payload": {
+      "candidate_id": "turn-01-openai-01-city-week-event-spending",
+      "forum": {
+        "kind": "event_impact",
+        "persona": "downtown business owner",
+        "popularity": 9,
+        "priority": 10,
+        "question_id": "crowd-spending",
+        "source": "openai_selected_forum_record",
+        "source_url": "local://question-forum/crowd-spending",
+        "status": "selected",
+        "tags": [
+          "sports-events",
+          "local-spending",
+          "city-week"
+        ]
+      },
+      "route": "eda_review"
+    },
+    "sequence": 14,
+    "summary": "Submitted selected public question to the routed workflow.",
+    "time_offset_ms": 130,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0015",
+    "event_type": "workflow.stage",
+    "payload": {
+      "route": "eda_review"
+    },
+    "sequence": 15,
+    "summary": "Recorded workflow route eda_review.",
+    "time_offset_ms": 140,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0016",
+    "event_type": "statistics.attached",
+    "payload": {
+      "candidate_id": "turn-01-openai-01-city-week-event-spending",
+      "has_adjusted_significance": true,
+      "result_count": 4
+    },
+    "sequence": 16,
+    "summary": "Attached candidate-scoped statistical execution evidence.",
+    "time_offset_ms": 150,
+    "turn": 1
+  },
+  {
+    "actor": "DataAgent",
+    "event_id": "evt-0017",
+    "event_type": "turn.completed",
+    "payload": {
+      "selected_candidate_id": "turn-01-openai-01-city-week-event-spending"
+    },
+    "sequence": 17,
+    "summary": "Completed turn 1.",
+    "time_offset_ms": 160,
+    "turn": 1
+  }
+]

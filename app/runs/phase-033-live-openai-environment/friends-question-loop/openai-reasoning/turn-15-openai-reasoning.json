@@ -1,0 +1,43 @@
+{
+  "mode": "openai",
+  "model": "gpt-5",
+  "model_calls_performed": true,
+  "output_hash": "edd1edb0df6ae96d9dcfca6221621c8911258583057c9d5e83821f98fbe80490",
+  "prompt": "You are the hypothesis-generation agent for a Python replication of an event-spending thesis.\nGenerate exactly three candidate research questions for the next friends-loop turn.\nUse the provided public QuestionForum records and avoid repeating already selected forum IDs.\nReturn only strict JSON. Do not wrap it in markdown.\n\nTurn: 15\nPrior selected candidate IDs: ['turn-01-openai-02-msa-week-coverage', 'turn-02-openai-01-city-week-event-spending', 'turn-03-openai-02-identification-risk', 'turn-04-openai-01-city-week-event-spending', 'turn-05-openai-03-msa-week-coverage', 'turn-06-openai-01-identification-risk', 'turn-07-openai-01-city-week-event-spending', 'turn-08-openai-01-identification-risk', 'turn-09-openai-03-msa-week-coverage', 'turn-10-openai-01-city-week-event-spending', 'turn-11-openai-01-identification-risk', 'turn-12-openai-02-msa-week-coverage', 'turn-13-openai-01-city-week-event-spending', 'turn-14-openai-01-identification-risk']\nPrior selected forum IDs: ['confounding-risk', 'crowd-spending', 'market-coverage', 'openai-generated-1', 'openai-generated-10', 'openai-generated-11', 'openai-generated-12', 'openai-generated-13', 'openai-generated-2', 'openai-generated-4', 'openai-generated-5', 'openai-generated-6', 'openai-generated-7', 'openai-generated-9']\nPrior notebook knowledge summary:\n{\n  \"entry_count\": 20,\n  \"latest_seed_question\": \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n  \"latest_semantic_slot\": \"city_week_event_spending\",\n  \"latest_source_cell\": \"turn-20-validation-code\",\n  \"recent_seed_questions\": [\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\"\n  ],\n  \"schema_version\": \"phase-027.notebook-knowledge-summary.v1\",\n  \"source_path\": \"app/runs/phase-027-notebook-knowledge-base/notebooks/notebook-knowledge.json\"\n}\n\nAvailable semantic slots: city_week_event_spending, msa_week_coverage, identification_risk\nScoring fields must be integers from 0 to 10.\n\nOutput contract:\n{\n  \"candidates\": [\n    {\n      \"caveat\": \"One sentence limitation.\",\n      \"evidence_value\": \"integer 0-10\",\n      \"forum_question_id\": \"source forum question_id when applicable\",\n      \"novelty\": \"integer 0-10\",\n      \"question\": \"Stakeholder-readable empirical question.\",\n      \"rationale\": \"Why this is valuable and testable with the local city/MSA weekly event data.\",\n      \"semantic_slot\": \"city_week_event_spending | msa_week_coverage | identification_risk\",\n      \"testability\": \"integer 0-10\"\n    }\n  ]\n}\n\nQuestionForum records:\n[\n  {\n    \"kind\": \"event_impact\",\n    \"persona\": \"downtown business owner\",\n    \"popularity\": 9,\n    \"priority\": 10,\n    \"question\": \"Do big sports crowds actually turn into more local spending?\",\n    \"question_id\": \"crowd-spending\",\n    \"rationale\": \"Business owners need to know whether high-attendance weeks show measurable spending differences.\",\n    \"tags\": [\n      \"sports-events\",\n      \"local-spending\",\n      \"city-week\"\n    ]\n  },\n  {\n    \"kind\": \"coverage\",\n    \"persona\": \"regional economic analyst\",\n    \"popularity\": 8,\n    \"priority\": 9,\n    \"question\": \"Which markets have enough event exposure for a careful spending comparison?\",\n    \"question_id\": \"market-coverage\",\n    \"rationale\": \"Analysts need coverage checks before interpreting event-week comparisons.\",\n    \"tags\": [\n      \"coverage\",\n      \"msa-week\",\n      \"readiness\"\n    ]\n  },\n  {\n    \"kind\": \"identification_review\",\n    \"persona\": \"skeptical policy reviewer\",\n    \"popularity\": 7,\n    \"priority\": 8,\n    \"question\": \"Where should a skeptic worry that game weeks and spending are confounded?\",\n    \"question_id\": \"confounding-risk\",\n    \"rationale\": \"Policy readers need claim boundaries before accepting event-impact narratives.\",\n    \"tags\": [\n      \"confounding\",\n      \"matched-controls\",\n      \"claim-boundaries\"\n    ]\n  }\n]",
+  "prompt_hash": "bdfdf419435c82fccc0e7bbdf8ab9a6bcef660e5438da1a497548f955a28672d",
+  "proposals": [
+    {
+      "caveat": "Requires consistent merchant category tagging across cities and weeks.",
+      "evidence_value": 7,
+      "forum_question_id": "openai-generated-14",
+      "novelty": 8,
+      "question": "Is the spending lift during city game weeks concentrated in food, beverage, lodging, and transportation categories relative to matched non-game weeks?",
+      "rationale": "Attributing lifts to specific categories clarifies channels of impact and is testable by comparing category-level city-week spend in event weeks versus matched baseline weeks.",
+      "semantic_slot": "city_week_event_spending",
+      "testability": 7
+    },
+    {
+      "caveat": "Parallel-trend diagnostics can be noisy for cities with few event weeks.",
+      "evidence_value": 8,
+      "forum_question_id": "openai-generated-15",
+      "novelty": 6,
+      "question": "Do city game weeks and their matched control weeks show parallel pre-trends in total spending over the four weeks prior?",
+      "rationale": "A simple pre-trend check reduces identification risk and is implementable with city-week spending series by contrasting slopes before event versus matched non-event weeks.",
+      "semantic_slot": "identification_risk",
+      "testability": 9
+    },
+    {
+      "caveat": "Overly strict thresholds may exclude informative mid-sized markets.",
+      "evidence_value": 9,
+      "forum_question_id": "openai-generated-16",
+      "novelty": 5,
+      "question": "How many MSAs meet a minimum design of at least six game weeks and six matched baseline weeks within the sample period?",
+      "rationale": "Establishing exposure and comparison depth per MSA ensures sufficient power for within-MSA estimates and is directly measurable from MSA-week event flags.",
+      "semantic_slot": "msa_week_coverage",
+      "testability": 10
+    }
+  ],
+  "provider": "openai",
+  "raw_output": "{\n  \"candidates\": [\n    {\n      \"caveat\": \"Requires consistent merchant category tagging across cities and weeks.\",\n      \"evidence_value\": 7,\n      \"forum_question_id\": \"openai-generated-14\",\n      \"novelty\": 8,\n      \"question\": \"Is the spending lift during city game weeks concentrated in food, beverage, lodging, and transportation categories relative to matched non-game weeks?\",\n      \"rationale\": \"Attributing lifts to specific categories clarifies channels of impact and is testable by comparing category-level city-week spend in event weeks versus matched baseline weeks.\",\n      \"semantic_slot\": \"city_week_event_spending\",\n      \"testability\": 7\n    },\n    {\n      \"caveat\": \"Parallel-trend diagnostics can be noisy for cities with few event weeks.\",\n      \"evidence_value\": 8,\n      \"forum_question_id\": \"openai-generated-15\",\n      \"novelty\": 6,\n      \"question\": \"Do city game weeks and their matched control weeks show parallel pre-trends in total spending over the four weeks prior?\",\n      \"rationale\": \"A simple pre-trend check reduces identification risk and is implementable with city-week spending series by contrasting slopes before event versus matched non-event weeks.\",\n      \"semantic_slot\": \"identification_risk\",\n      \"testability\": 9\n    },\n    {\n      \"caveat\": \"Overly strict thresholds may exclude informative mid-sized markets.\",\n      \"evidence_value\": 9,\n      \"forum_question_id\": \"openai-generated-16\",\n      \"novelty\": 5,\n      \"question\": \"How many MSAs meet a minimum design of at least six game weeks and six matched baseline weeks within the sample period?\",\n      \"rationale\": \"Establishing exposure and comparison depth per MSA ensures sufficient power for within-MSA estimates and is directly measurable from MSA-week event flags.\",\n      \"semantic_slot\": \"msa_week_coverage\",\n      \"testability\": 10\n    }\n  ]\n}",
+  "trace_path": null
+}

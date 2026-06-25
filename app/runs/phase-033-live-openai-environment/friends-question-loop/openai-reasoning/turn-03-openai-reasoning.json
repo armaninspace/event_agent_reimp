@@ -1,0 +1,43 @@
+{
+  "mode": "openai",
+  "model": "gpt-5",
+  "model_calls_performed": true,
+  "output_hash": "8bc043547a02c0c12b4bb6be26a34a20ab7df5a851310d0bbea649ab19c19e0e",
+  "prompt": "You are the hypothesis-generation agent for a Python replication of an event-spending thesis.\nGenerate exactly three candidate research questions for the next friends-loop turn.\nUse the provided public QuestionForum records and avoid repeating already selected forum IDs.\nReturn only strict JSON. Do not wrap it in markdown.\n\nTurn: 3\nPrior selected candidate IDs: ['turn-01-openai-02-msa-week-coverage', 'turn-02-openai-01-city-week-event-spending']\nPrior selected forum IDs: ['crowd-spending', 'market-coverage']\nPrior notebook knowledge summary:\n{\n  \"entry_count\": 20,\n  \"latest_seed_question\": \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n  \"latest_semantic_slot\": \"city_week_event_spending\",\n  \"latest_source_cell\": \"turn-20-validation-code\",\n  \"recent_seed_questions\": [\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\"\n  ],\n  \"schema_version\": \"phase-027.notebook-knowledge-summary.v1\",\n  \"source_path\": \"app/runs/phase-027-notebook-knowledge-base/notebooks/notebook-knowledge.json\"\n}\n\nAvailable semantic slots: city_week_event_spending, msa_week_coverage, identification_risk\nScoring fields must be integers from 0 to 10.\n\nOutput contract:\n{\n  \"candidates\": [\n    {\n      \"caveat\": \"One sentence limitation.\",\n      \"evidence_value\": \"integer 0-10\",\n      \"forum_question_id\": \"source forum question_id when applicable\",\n      \"novelty\": \"integer 0-10\",\n      \"question\": \"Stakeholder-readable empirical question.\",\n      \"rationale\": \"Why this is valuable and testable with the local city/MSA weekly event data.\",\n      \"semantic_slot\": \"city_week_event_spending | msa_week_coverage | identification_risk\",\n      \"testability\": \"integer 0-10\"\n    }\n  ]\n}\n\nQuestionForum records:\n[\n  {\n    \"kind\": \"event_impact\",\n    \"persona\": \"downtown business owner\",\n    \"popularity\": 9,\n    \"priority\": 10,\n    \"question\": \"Do big sports crowds actually turn into more local spending?\",\n    \"question_id\": \"crowd-spending\",\n    \"rationale\": \"Business owners need to know whether high-attendance weeks show measurable spending differences.\",\n    \"tags\": [\n      \"sports-events\",\n      \"local-spending\",\n      \"city-week\"\n    ]\n  },\n  {\n    \"kind\": \"coverage\",\n    \"persona\": \"regional economic analyst\",\n    \"popularity\": 8,\n    \"priority\": 9,\n    \"question\": \"Which markets have enough event exposure for a careful spending comparison?\",\n    \"question_id\": \"market-coverage\",\n    \"rationale\": \"Analysts need coverage checks before interpreting event-week comparisons.\",\n    \"tags\": [\n      \"coverage\",\n      \"msa-week\",\n      \"readiness\"\n    ]\n  },\n  {\n    \"kind\": \"identification_review\",\n    \"persona\": \"skeptical policy reviewer\",\n    \"popularity\": 7,\n    \"priority\": 8,\n    \"question\": \"Where should a skeptic worry that game weeks and spending are confounded?\",\n    \"question_id\": \"confounding-risk\",\n    \"rationale\": \"Policy readers need claim boundaries before accepting event-impact narratives.\",\n    \"tags\": [\n      \"confounding\",\n      \"matched-controls\",\n      \"claim-boundaries\"\n    ]\n  }\n]",
+  "prompt_hash": "d55f374b8803de243d66d6e3b11b13f17ee5b09fb1f777147f9596386844fb40",
+  "proposals": [
+    {
+      "caveat": "May require adding holiday and simple weather controls to the weekly panel.",
+      "evidence_value": 6,
+      "forum_question_id": "confounding-risk",
+      "novelty": 8,
+      "question": "Do game weeks coincide with other local shocks (holidays, extreme weather, marathons/conventions) that could be driving the observed spending lift?",
+      "rationale": "By flagging weeks with known non-game shocks and re-estimating lifts with controls or exclusions, we can assess confounding using the existing city/MSA weekly spending and event-week flags.",
+      "semantic_slot": "identification_risk",
+      "testability": 7
+    },
+    {
+      "caveat": "Weekly aggregation may mask same-week displacement across days.",
+      "evidence_value": 7,
+      "forum_question_id": "confounding-risk",
+      "novelty": 7,
+      "question": "Do surrounding non-game weeks show offsetting spending drops (t\u22121 or t+1) that indicate temporal substitution rather than true net gains?",
+      "rationale": "Lead/lag indicators around event weeks within each city can reveal anticipation or rebound effects using the current weekly panel.",
+      "semantic_slot": "identification_risk",
+      "testability": 9
+    },
+    {
+      "caveat": "Stricter exclusions can reduce power in smaller markets.",
+      "evidence_value": 6,
+      "forum_question_id": "confounding-risk",
+      "novelty": 7,
+      "question": "How sensitive are event-week lift estimates to excluding multi-event weeks and playoff weeks or to using alternative within-city control windows?",
+      "rationale": "A robustness sweep that drops overlapping-event weeks and playoff spikes and varies matched control windows directly probes identification with the existing city/MSA weekly schedule and spending data.",
+      "semantic_slot": "identification_risk",
+      "testability": 8
+    }
+  ],
+  "provider": "openai",
+  "raw_output": "{\n  \"candidates\": [\n    {\n      \"caveat\": \"May require adding holiday and simple weather controls to the weekly panel.\",\n      \"evidence_value\": 6,\n      \"forum_question_id\": \"confounding-risk\",\n      \"novelty\": 8,\n      \"question\": \"Do game weeks coincide with other local shocks (holidays, extreme weather, marathons/conventions) that could be driving the observed spending lift?\",\n      \"rationale\": \"By flagging weeks with known non-game shocks and re-estimating lifts with controls or exclusions, we can assess confounding using the existing city/MSA weekly spending and event-week flags.\",\n      \"semantic_slot\": \"identification_risk\",\n      \"testability\": 7\n    },\n    {\n      \"caveat\": \"Weekly aggregation may mask same-week displacement across days.\",\n      \"evidence_value\": 7,\n      \"forum_question_id\": \"confounding-risk\",\n      \"novelty\": 7,\n      \"question\": \"Do surrounding non-game weeks show offsetting spending drops (t\u22121 or t+1) that indicate temporal substitution rather than true net gains?\",\n      \"rationale\": \"Lead/lag indicators around event weeks within each city can reveal anticipation or rebound effects using the current weekly panel.\",\n      \"semantic_slot\": \"identification_risk\",\n      \"testability\": 9\n    },\n    {\n      \"caveat\": \"Stricter exclusions can reduce power in smaller markets.\",\n      \"evidence_value\": 6,\n      \"forum_question_id\": \"confounding-risk\",\n      \"novelty\": 7,\n      \"question\": \"How sensitive are event-week lift estimates to excluding multi-event weeks and playoff weeks or to using alternative within-city control windows?\",\n      \"rationale\": \"A robustness sweep that drops overlapping-event weeks and playoff spikes and varies matched control windows directly probes identification with the existing city/MSA weekly schedule and spending data.\",\n      \"semantic_slot\": \"identification_risk\",\n      \"testability\": 8\n    }\n  ]\n}",
+  "trace_path": null
+}

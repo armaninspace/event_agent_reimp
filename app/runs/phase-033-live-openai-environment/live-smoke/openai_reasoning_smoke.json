@@ -1,0 +1,40 @@
+{
+  "all_selected_have_openai_reasoning": true,
+  "artifact_paths": {
+    "business_evidence_report": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/business_evidence_report.html",
+    "discovery_decision_summary": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/discovery_decision_summary.md",
+    "playback_ui": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/ui/index.html",
+    "session_json": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/friends_loop_session.json",
+    "session_markdown": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/friends_loop_session.md",
+    "telemetry_json": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/friends_loop_telemetry.json"
+  },
+  "mode": "live",
+  "model": "gpt-5",
+  "model_calls_performed": true,
+  "provider": "openai",
+  "schema_version": "phase-024.openai-reasoning-smoke.v1",
+  "selected": [
+    {
+      "candidate_id": "turn-01-openai-01-city-week-event-spending",
+      "question": "Do high-attendance sports event weeks in a city correspond to measurable increases in local card spending compared with matched non-event weeks?",
+      "reasoning": {
+        "mode": "openai",
+        "model": "gpt-5",
+        "model_calls_performed": true,
+        "output_hash": "a09ebb34c2de165b297a6ef47751ea497335643b5f09fdd7d727af497a7fd4d8",
+        "prior_knowledge_duplicate": false,
+        "prior_knowledge_duplicate_threshold": 0.62,
+        "prior_knowledge_evolved_duplicate": false,
+        "prior_knowledge_original_question": null,
+        "prior_knowledge_similarity": 0.0,
+        "prompt_hash": "091b5500e9d53561411894d46137e13de4fcd64ee254b3671a47a4236cc388dc",
+        "proposal_index": 1,
+        "provider": "openai",
+        "semantic_slot_prior_selection_count": 0,
+        "trace_path": "app/runs/phase-033-live-openai-environment/live-smoke/friends-question-loop/openai-reasoning/turn-01-openai-reasoning.json"
+      },
+      "semantic_slot": "city_week_event_spending"
+    }
+  ],
+  "selected_candidate_count": 1
+}

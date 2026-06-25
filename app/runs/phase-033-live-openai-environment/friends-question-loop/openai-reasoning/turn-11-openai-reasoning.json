@@ -1,0 +1,43 @@
+{
+  "mode": "openai",
+  "model": "gpt-5",
+  "model_calls_performed": true,
+  "output_hash": "97d907c3cfdbbdf6571f1ffce669311b7983549a90f39256f4aa8971ed6e9a74",
+  "prompt": "You are the hypothesis-generation agent for a Python replication of an event-spending thesis.\nGenerate exactly three candidate research questions for the next friends-loop turn.\nUse the provided public QuestionForum records and avoid repeating already selected forum IDs.\nReturn only strict JSON. Do not wrap it in markdown.\n\nTurn: 11\nPrior selected candidate IDs: ['turn-01-openai-02-msa-week-coverage', 'turn-02-openai-01-city-week-event-spending', 'turn-03-openai-02-identification-risk', 'turn-04-openai-01-city-week-event-spending', 'turn-05-openai-03-msa-week-coverage', 'turn-06-openai-01-identification-risk', 'turn-07-openai-01-city-week-event-spending', 'turn-08-openai-01-identification-risk', 'turn-09-openai-03-msa-week-coverage', 'turn-10-openai-01-city-week-event-spending']\nPrior selected forum IDs: ['confounding-risk', 'crowd-spending', 'market-coverage', 'openai-generated-1', 'openai-generated-10', 'openai-generated-2', 'openai-generated-4', 'openai-generated-5', 'openai-generated-6', 'openai-generated-7']\nPrior notebook knowledge summary:\n{\n  \"entry_count\": 20,\n  \"latest_seed_question\": \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n  \"latest_semantic_slot\": \"city_week_event_spending\",\n  \"latest_source_cell\": \"turn-20-validation-code\",\n  \"recent_seed_questions\": [\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\",\n    \"Which city game weeks show the largest spending lift after accounting for baseline weeks?\"\n  ],\n  \"schema_version\": \"phase-027.notebook-knowledge-summary.v1\",\n  \"source_path\": \"app/runs/phase-027-notebook-knowledge-base/notebooks/notebook-knowledge.json\"\n}\n\nAvailable semantic slots: city_week_event_spending, msa_week_coverage, identification_risk\nScoring fields must be integers from 0 to 10.\n\nOutput contract:\n{\n  \"candidates\": [\n    {\n      \"caveat\": \"One sentence limitation.\",\n      \"evidence_value\": \"integer 0-10\",\n      \"forum_question_id\": \"source forum question_id when applicable\",\n      \"novelty\": \"integer 0-10\",\n      \"question\": \"Stakeholder-readable empirical question.\",\n      \"rationale\": \"Why this is valuable and testable with the local city/MSA weekly event data.\",\n      \"semantic_slot\": \"city_week_event_spending | msa_week_coverage | identification_risk\",\n      \"testability\": \"integer 0-10\"\n    }\n  ]\n}\n\nQuestionForum records:\n[\n  {\n    \"kind\": \"event_impact\",\n    \"persona\": \"downtown business owner\",\n    \"popularity\": 9,\n    \"priority\": 10,\n    \"question\": \"Do big sports crowds actually turn into more local spending?\",\n    \"question_id\": \"crowd-spending\",\n    \"rationale\": \"Business owners need to know whether high-attendance weeks show measurable spending differences.\",\n    \"tags\": [\n      \"sports-events\",\n      \"local-spending\",\n      \"city-week\"\n    ]\n  },\n  {\n    \"kind\": \"coverage\",\n    \"persona\": \"regional economic analyst\",\n    \"popularity\": 8,\n    \"priority\": 9,\n    \"question\": \"Which markets have enough event exposure for a careful spending comparison?\",\n    \"question_id\": \"market-coverage\",\n    \"rationale\": \"Analysts need coverage checks before interpreting event-week comparisons.\",\n    \"tags\": [\n      \"coverage\",\n      \"msa-week\",\n      \"readiness\"\n    ]\n  },\n  {\n    \"kind\": \"identification_review\",\n    \"persona\": \"skeptical policy reviewer\",\n    \"popularity\": 7,\n    \"priority\": 8,\n    \"question\": \"Where should a skeptic worry that game weeks and spending are confounded?\",\n    \"question_id\": \"confounding-risk\",\n    \"rationale\": \"Policy readers need claim boundaries before accepting event-impact narratives.\",\n    \"tags\": [\n      \"confounding\",\n      \"matched-controls\",\n      \"claim-boundaries\"\n    ]\n  }\n]",
+  "prompt_hash": "c80c208d019f482fa040c55c3af7dfa0609040396b6f555ad9f8144bb6f6a5ec",
+  "proposals": [
+    {
+      "caveat": "Assumes accurate game calendars and stable weekly alignment without major unrelated shocks.",
+      "evidence_value": 8,
+      "forum_question_id": "openai-generated-11",
+      "novelty": 8,
+      "question": "Do we observe a spending uptick in the week before home games (placebo lead), indicating potential confounding rather than true event impact?",
+      "rationale": "Lead-week placebo tests on city/MSA weekly panels can reveal pre-trends that would undermine causal claims.",
+      "semantic_slot": "identification_risk",
+      "testability": 9
+    },
+    {
+      "caveat": "Thresholds can be tuned, but sparse markets may need to be dropped to maintain comparability.",
+      "evidence_value": 10,
+      "forum_question_id": "openai-generated-12",
+      "novelty": 5,
+      "question": "Which MSAs have at least six game weeks and six matched non-event weeks within the same season to support within-MSA comparisons?",
+      "rationale": "Simple coverage diagnostics using weekly event counts ensure enough treated and baseline weeks for credible estimates.",
+      "semantic_slot": "msa_week_coverage",
+      "testability": 10
+    },
+    {
+      "caveat": "Assumes merchant category classification is available and consistent across cities and weeks.",
+      "evidence_value": 7,
+      "forum_question_id": "openai-generated-13",
+      "novelty": 7,
+      "question": "Within host cities, which merchant categories see the largest incremental spend during game weeks versus matched baseline weeks?",
+      "rationale": "Category-level splits on city-week data identify where event-driven dollars are concentrated (e.g., bars, restaurants, transport).",
+      "semantic_slot": "city_week_event_spending",
+      "testability": 7
+    }
+  ],
+  "provider": "openai",
+  "raw_output": "{\n  \"candidates\": [\n    {\n      \"caveat\": \"Assumes accurate game calendars and stable weekly alignment without major unrelated shocks.\",\n      \"evidence_value\": 8,\n      \"forum_question_id\": \"openai-generated-11\",\n      \"novelty\": 8,\n      \"question\": \"Do we observe a spending uptick in the week before home games (placebo lead), indicating potential confounding rather than true event impact?\",\n      \"rationale\": \"Lead-week placebo tests on city/MSA weekly panels can reveal pre-trends that would undermine causal claims.\",\n      \"semantic_slot\": \"identification_risk\",\n      \"testability\": 9\n    },\n    {\n      \"caveat\": \"Thresholds can be tuned, but sparse markets may need to be dropped to maintain comparability.\",\n      \"evidence_value\": 10,\n      \"forum_question_id\": \"openai-generated-12\",\n      \"novelty\": 5,\n      \"question\": \"Which MSAs have at least six game weeks and six matched non-event weeks within the same season to support within-MSA comparisons?\",\n      \"rationale\": \"Simple coverage diagnostics using weekly event counts ensure enough treated and baseline weeks for credible estimates.\",\n      \"semantic_slot\": \"msa_week_coverage\",\n      \"testability\": 10\n    },\n    {\n      \"caveat\": \"Assumes merchant category classification is available and consistent across cities and weeks.\",\n      \"evidence_value\": 7,\n      \"forum_question_id\": \"openai-generated-13\",\n      \"novelty\": 7,\n      \"question\": \"Within host cities, which merchant categories see the largest incremental spend during game weeks versus matched baseline weeks?\",\n      \"rationale\": \"Category-level splits on city-week data identify where event-driven dollars are concentrated (e.g., bars, restaurants, transport).\",\n      \"semantic_slot\": \"city_week_event_spending\",\n      \"testability\": 7\n    }\n  ]\n}",
+  "trace_path": null
+}

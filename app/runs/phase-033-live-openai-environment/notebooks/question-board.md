@@ -1,0 +1,22 @@
+# Question Board
+
+- Turn 1: selected `turn-01-openai-02-msa-week-coverage`; rejected 2 candidates
+- Turn 2: selected `turn-02-openai-01-city-week-event-spending`; rejected 2 candidates
+- Turn 3: selected `turn-03-openai-02-identification-risk`; rejected 2 candidates
+- Turn 4: selected `turn-04-openai-01-city-week-event-spending`; rejected 2 candidates
+- Turn 5: selected `turn-05-openai-03-msa-week-coverage`; rejected 2 candidates
+- Turn 6: selected `turn-06-openai-01-identification-risk`; rejected 2 candidates
+- Turn 7: selected `turn-07-openai-01-city-week-event-spending`; rejected 2 candidates
+- Turn 8: selected `turn-08-openai-01-identification-risk`; rejected 2 candidates
+- Turn 9: selected `turn-09-openai-03-msa-week-coverage`; rejected 2 candidates
+- Turn 10: selected `turn-10-openai-01-city-week-event-spending`; rejected 2 candidates
+- Turn 11: selected `turn-11-openai-01-identification-risk`; rejected 2 candidates
+- Turn 12: selected `turn-12-openai-02-msa-week-coverage`; rejected 2 candidates
+- Turn 13: selected `turn-13-openai-01-city-week-event-spending`; rejected 2 candidates
+- Turn 14: selected `turn-14-openai-01-identification-risk`; rejected 2 candidates
+- Turn 15: selected `turn-15-openai-03-msa-week-coverage`; rejected 2 candidates
+- Turn 16: selected `turn-16-openai-01-city-week-event-spending`; rejected 2 candidates
+- Turn 17: selected `turn-17-openai-01-identification-risk`; rejected 2 candidates
+- Turn 18: selected `turn-18-openai-02-msa-week-coverage`; rejected 2 candidates
+- Turn 19: selected `turn-19-openai-03-identification-risk`; rejected 2 candidates
+- Turn 20: selected `turn-20-openai-01-city-week-event-spending`; rejected 2 candidates
